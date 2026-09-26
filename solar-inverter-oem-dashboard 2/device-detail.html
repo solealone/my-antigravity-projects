@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Detail | Solar OEM Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .ota-metrics-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 90px;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .metric-icon {
+            float: right;
+            font-size: 1.25rem;
+            color: #94a3b8;
+        }
+
+        .tab-bar {
+            background: #0f172a;
+            padding: 0;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            margin-bottom: 0;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            color: #94a3b8;
+            font-weight: 500;
+            border: none;
+            background: transparent;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .tab-btn.active {
+            color: white;
+            border-bottom-color: #10b981;
+            background: #1e293b;
+        }
+
+        .main-card {
+            background: #f1f5f9;
+            /* Light background for this specific page style */
+            border: 1px solid #e5e7eb;
+            border-radius: 0 0 8px 8px;
+            /* Connected to tab bar */
+            padding: 1.5rem;
+        }
+
+        .search-container {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .empty-state {
+            background: white;
+            border-radius: 8px;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 1.5rem;
+            border: 1px solid #e5e7eb;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item"><i class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="models.html" class="nav-item"><i class="ph ph-stack"></i><span>Models</span></a>
+                <a href="accounts.html" class="nav-item"><i class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside>        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">System</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb">Devices</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">Device Detail</span>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn"><i class="ph ph-bell"></i><span class="badge">3</span></button>
+                    <button class="icon-btn"><i class="ph ph-gear"></i></button>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <!-- Metrics -->
+                <div class="ota-metrics-row">
+                    <div class="metric-card">
+                        <div class="metric-label">Total Dataloggers <i class="ph ph-cpu metric-icon"></i></div>
+                        <div class="metric-value">1,248</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Online <i class="ph ph-wifi-high metric-icon"></i></div>
+                        <div class="metric-value">1,214</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Offline <i class="ph ph-wifi-slash metric-icon"></i></div>
+                        <div class="metric-value">34</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Weak Signal <i class="ph ph-cell-signal-low metric-icon"></i></div>
+                        <div class="metric-value">18</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">No Data <i class="ph ph-question metric-icon"></i></div>
+                        <div class="metric-value">5</div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tab-bar">
+                    <a href="devices.html" class="tab-btn">Devices</a>
+                    <a href="device-detail.html" class="tab-btn active">Device Detail</a>
+                    <a href="add-device.html" class="tab-btn">Add Devices</a>
+                    <a href="edit-device.html" class="tab-btn">Edit Device</a>
+                </div>
+
+                <!-- Detail Search Area -->
+                <div class="main-card">
+
+                    <div style="margin-bottom: 1rem; font-weight: 700; font-size: 1.1rem;">Device Detail</div>
+                    <div style="width: 50px; height: 2px; background: #475569; margin-bottom: 1.5rem;"></div>
+
+                    <div class="search-container">
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label>Logger SN (IMEI) *</label>
+                            <input type="text" class="form-input" placeholder="Enter Logger Serial Number">
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Data Type *</label>
+                                <div style="position: relative;">
+                                    <select class="form-input" style="appearance: none; background: white;">
+                                        <option>Basic Info</option>
+                                        <option>Telemetry Calls</option>
+                                        <option>Alert History</option>
+                                        <option>OTA Logs</option>
+                                    </select>
+                                    <i class="ph ph-caret-down"
+                                        style="position: absolute; right: 15px; top: 15px; color: #94a3b8;"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Result Limit</label>
+                                <input type="number" class="form-input" value="1">
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 2rem;">
+                            <label style="font-size:0.75rem; color:#64748b;">Optional: Date Range</label>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <input type="date" class="form-input">
+                                <span style="color: #94a3b8;">→</span>
+                                <input type="date" class="form-input">
+                            </div>
+                            <div style="font-size: 0.7rem; color: #94a3b8; margin-top: 0.5rem;">Limit is applied when
+                                date range is not specified</div>
+                        </div>
+
+                        <div style="border-top: 1px solid #f1f5f9; padding-top: 1.5rem; text-align: right;">
+                            <button class="btn-black" style="display: inline-flex;">SEARCH</button>
+                        </div>
+
+                    </div>
+
+                    <div class="empty-state">
+                        <p>No data available. Please search for an Logger SN (IMEI).</p>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

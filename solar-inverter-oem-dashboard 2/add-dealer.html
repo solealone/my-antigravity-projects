@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Dealer | Solar OEM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .form-section {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            color: #0f172a;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #0f172a;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+        }
+
+        .btn-black {
+            padding: 12px 24px;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            padding: 12px 24px;
+            background: transparent;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item"><i class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="models.html" class="nav-item"><i class="ph ph-stack"></i><span>Models</span></a>
+                <a href="accounts.html" class="nav-item active"><i
+                        class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">Accounts</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">Add Dealer</span>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn"><i class="ph ph-bell"></i><span class="badge">3</span></button>
+                    <button class="icon-btn"><i class="ph ph-gear"></i></button>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="form-section">
+                    <h3 class="form-title">Dealer Information</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Dealer / Installer Name</label>
+                            <input type="text" class="form-input" placeholder="e.g. Sunny Installers LLC">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Parent Distributor</label>
+                            <select class="form-select">
+                                <option>Select Distributor</option>
+                                <option>Global Solar Dist. Inc</option>
+                                <option>EuroGreen Partners</option>
+                                <option>Asian Tech Suppliers</option>
+                            </select>
+                            <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.25rem;">The distributor this
+                                dealer primarily purchases from.</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Region / State</label>
+                            <input type="text" class="form-input" placeholder="e.g. California">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Business Address</label>
+                            <input type="text" class="form-input" placeholder="Street, City, Zip">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="form-title">Contact & Qualifications</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Primary Contact</label>
+                            <input type="text" class="form-input" placeholder="Full Name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" placeholder="contact@dealer.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-input" placeholder="+1 (555) 000-0000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Installer Certification Level</label>
+                            <select class="form-select">
+                                <option>Level 1 (Basic)</option>
+                                <option>Level 2 (Advanced)</option>
+                                <option>Level 3 (Expert Partner)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-top: 2rem;">
+                    <button class="btn-outline" onclick="window.location.href='accounts.html'">Cancel</button>
+                    <button class="btn-black" onclick="window.location.href='accounts.html'">
+                        <i class="ph ph-check"></i> Create Dealer
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

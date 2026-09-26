@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devices | Solar OEM Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Icon support -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .ota-metrics-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 90px;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .metric-icon {
+            float: right;
+            font-size: 1.25rem;
+            color: #94a3b8;
+        }
+
+        .tab-bar {
+            background: #0f172a;
+            padding: 0;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            margin-bottom: 0;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            color: #94a3b8;
+            font-weight: 500;
+            border: none;
+            background: transparent;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            color: white;
+            border-bottom-color: #10b981;
+            background: #1e293b;
+        }
+
+        .main-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0 0 8px 8px;
+            /* Connected to tab bar */
+        }
+
+        .action-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            align-items: flex-end;
+        }
+
+        /* Wide table scrolling */
+        .table-wrapper {
+            overflow-x: auto;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.85rem;
+        }
+
+        .data-table th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #475569;
+            text-align: left;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .status-active {
+            background: #10b981;
+        }
+
+        .status-inactive {
+            background: #ef4444;
+        }
+
+        .btn-black {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item"><i class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="models.html" class="nav-item"><i class="ph ph-stack"></i><span>Models</span></a>
+                <a href="accounts.html" class="nav-item"><i class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside>        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">System</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">Devices</span>
+                </div>
+
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i class="ph ph-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="ph ph-gear"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-wrapper">
+
+                <!-- Metrics -->
+                <div class="ota-metrics-row">
+                    <div class="metric-card">
+                        <div class="metric-label">Total Dataloggers <i class="ph ph-cpu metric-icon"></i></div>
+                        <div class="metric-value">1,248</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Online <i class="ph ph-wifi-high metric-icon"></i></div>
+                        <div class="metric-value">1,214</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Offline <i class="ph ph-wifi-slash metric-icon"></i></div>
+                        <div class="metric-value">34</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Weak Signal <i class="ph ph-cell-signal-low metric-icon"></i></div>
+                        <div class="metric-value">18</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">No Data <i class="ph ph-question metric-icon"></i></div>
+                        <div class="metric-value">5</div>
+                    </div>
+                </div>
+
+                <div class="tab-bar">
+                    <a href="devices.html" class="tab-btn active">Devices</a>
+                    <a href="device-detail.html" class="tab-btn">Device Detail</a>
+                    <a href="add-device.html" class="tab-btn">Add Devices</a>
+                    <a href="edit-device.html" class="tab-btn">Edit Device</a>
+                </div>
+
+                <div class="main-card">
+                    <div style="padding: 1.5rem; border-bottom: 1px solid #e5e7eb;">
+                        <h3 style="margin:0; font-size:1.1rem; font-weight:700;">Device List</h3>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="action-row">
+                        <div class="search-group text-group">
+                            <label
+                                style="font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 0.5rem;">Search
+                                Logger SN</label>
+                            <div style="position: relative;">
+                                <i class="ph ph-magnifying-glass"
+                                    style="position: absolute; left: 10px; top: 10px; color: #94a3b8;"></i>
+                                <input type="text" placeholder="Search Serial Number..."
+                                    style="width: 100%; padding: 0.5rem 0.5rem 0.5rem 2rem; border: 1px solid #cbd5e1; border-radius: 4px;">
+                            </div>
+                        </div>
+
+                        <div class="select-group">
+                            <label
+                                style="font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 0.5rem;">Comm
+                                Status</label>
+                            <div style="position: relative;">
+                                <select
+                                    style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; appearance: none; background: white;">
+                                    <option>All Status</option>
+                                    <option>Online</option>
+                                    <option>Offline</option>
+                                </select>
+                                <i class="ph ph-caret-down"
+                                    style="position: absolute; right: 10px; top: 10px; color: #94a3b8;"></i>
+                            </div>
+                        </div>
+
+                        <div class="select-group">
+                            <label
+                                style="font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 0.5rem;">Batch
+                                Number</label>
+                            <input type="text" placeholder="Enter Batch No"
+                                style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px;">
+                        </div>
+
+                        <div>
+                            <button class="btn-black" style="width:100%; justify-content: center;">SUBMIT</button>
+                        </div>
+                    </div>
+
+                    <div style="padding:1rem; text-align:right;">
+                        <button class="btn btn-secondary" style="font-size:0.8rem; padding:0.4rem 0.8rem;"><i
+                                class="ph ph-download-simple"></i> Download</button>
+                    </div>
+
+                    <!-- Data Table -->
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Client</th>
+                                    <th>Site ID / Name</th>
+                                    <th>Logger SN (IMEI)</th>
+                                    <th>Module Type</th>
+                                    <th>Comm Status</th>
+                                    <th>Config Status</th>
+                                    <th>ICCID</th>
+                                    <th>SIM Number</th>
+                                    <th>SIM Status</th>
+                                    <th>Inverter SN</th>
+                                    <th>Last Connected</th>
+                                    <th>Install Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>SolarCo Ariz</td>
+                                    <td>AZ-Site-001</td>
+                                    <td>LOG-991238475</td>
+                                    <td>WIFI-Stick-V3</td>
+                                    <td><span class="status-dot status-active"></span>Active</td>
+                                    <td>Synced</td>
+                                    <td>8991928374651029</td>
+                                    <td>+1 555-0192</td>
+                                    <td>Active</td>
+                                    <td>INV-2024-X99</td>
+                                    <td>2026-01-30 05:56 AM</td>
+                                    <td>2025-01-15</td>
+                                    <td>
+                                        <button class="icon-btn-sm"><i class="ph ph-eye"></i></button>
+                                        <button class="icon-btn-sm"><i class="ph ph-pencil-simple"></i></button>
+                                        <button class="icon-btn-sm"><i class="ph ph-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Nevada Pwr</td>
+                                    <td>NV-Desert-Alpha</td>
+                                    <td>LOG-882736451</td>
+                                    <td>4G-Box-Pro</td>
+                                    <td><span class="status-dot status-active"></span>Active</td>
+                                    <td>Pending</td>
+                                    <td>8991443322110099</td>
+                                    <td>+1 555-0101</td>
+                                    <td>Active</td>
+                                    <td>INV-2023-Y55</td>
+                                    <td>2026-01-30 03:01 PM</td>
+                                    <td>2024-11-20</td>
+                                    <td>
+                                        <button class="icon-btn-sm"><i class="ph ph-eye"></i></button>
+                                        <button class="icon-btn-sm"><i class="ph ph-pencil-simple"></i></button>
+                                        <button class="icon-btn-sm"><i class="ph ph-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>CalSun Residential</td>
+                                    <td>CA-Home-442</td>
+                                    <td>LOG-773829102</td>
+                                    <td>WIFI-Stick-V2</td>
+                                    <td><span class="status-dot status-inactive"></span>Offline</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>INV-2021-A12</td>
+                                    <td>2026-01-29 02:00 PM</td>
+                                    <td>2022-05-10</td>
+                                    <td>
+                                        <button class="icon-btn-sm"><i class="ph ph-eye"></i></button>
+                                        <button class="icon-btn-sm"><i class="ph ph-pencil-simple"></i></button>
+                                        <button class="icon-btn-sm"><i class="ph ph-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Texas Ind.</td>
+                                    <td>TX-Factory-09</td>
+                                    <td>LOG-662837465</td>
+                                    <td>LAN-Gate-01</td>
+                                    <td><span class="status-dot status-active"></span>Active</td>
+                                    <td>Synced</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>INV-2025-Z01</td>
+                                    <td>2026-01-30 04:00 PM</td>
+                                    <td>2025-02-01</td>
+                                    <td>
+                                        <button class="icon-btn-sm"><i class="ph ph-eye"></i></button>
+                                        <button class="icon-btn-sm"><i class="ph ph-pencil-simple"></i></button>
+                                        <button class="icon-btn-sm"><i class="ph ph-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination -->
+                    <div class="pagination-footer">
+                        <span>Rows per page: 10</span>
+                        <div class="page-controls">
+                            <span>1-4 of 26</span>
+                            <button disabled><i class="ph ph-caret-left"></i></button>
+                            <button><i class="ph ph-caret-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

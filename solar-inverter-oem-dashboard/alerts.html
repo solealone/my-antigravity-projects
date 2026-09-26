@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerts | Solar OEM Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Icon support -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .ota-metrics-row {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 90px;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .metric-icon {
+            float: right;
+            font-size: 1.25rem;
+            color: #94a3b8;
+        }
+
+        /* Wide table specific */
+        .table-container-wide {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .alert_severity {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .severity-critical {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fca5a5;
+        }
+
+        .severity-medium {
+            background: #fff7ed;
+            color: #c2410c;
+            border: 1px solid #fdba74;
+        }
+
+        .severity-low {
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #86efac;
+        }
+
+        .filters-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 1rem;
+            align-items: flex-end;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item"><i class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="models.html" class="nav-item"><i class="ph ph-stack"></i><span>Models</span></a>
+                <a href="accounts.html" class="nav-item"><i class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside>        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">System</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">Alerts</span>
+                </div>
+
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i class="ph ph-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="ph ph-gear"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-wrapper">
+
+                <!-- Metrics Grid -->
+                <!-- Adapted from Vehicle Alerts -> Solar Inverter Alerts -->
+                <div class="ota-metrics-row">
+                    <div class="metric-card">
+                        <div class="metric-label">Total Inverters <i class="ph ph-solar-panel metric-icon"></i></div>
+                        <div class="metric-value">1,248</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Generating <i class="ph ph-lightning metric-icon"></i></div>
+                        <div class="metric-value">982</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Standby <i class="ph ph-pause-circle metric-icon"></i></div>
+                        <div class="metric-value">215</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Faulted <i class="ph ph-warning-circle metric-icon"></i></div>
+                        <div class="metric-value">12</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Offline <i class="ph ph-wifi-slash metric-icon"></i></div>
+                        <div class="metric-value">34</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">No Data <i class="ph ph-question metric-icon"></i></div>
+                        <div class="metric-value">5</div>
+                    </div>
+                </div>
+
+                <div class="card form-card">
+                    <!-- Filter Area -->
+                    <div class="card-header p-4">
+
+                        <!-- Alert Type Selector -->
+                        <div style="margin-bottom: 1.5rem; position: relative; width: 300px;">
+                            <label
+                                style="position: absolute; top: -8px; left: 10px; background: white; padding: 0 5px; font-size: 0.7rem; color: #64748b;">Select
+                                Alert Type</label>
+                            <select
+                                style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 4px; appearance: none; background: white; font-weight: 600;">
+                                <option>Grid Over-Voltage</option>
+                                <option>Inverter Over-Temp</option>
+                                <option>PV Insulation Resistance Low</option>
+                                <option>Arc Fault Detection</option>
+                                <option>Fan Failure</option>
+                            </select>
+                            <i class="ph ph-caret-down"
+                                style="position: absolute; right: 15px; top: 15px; color: #94a3b8;"></i>
+                        </div>
+
+                        <!-- Global Filters -->
+                        <div class="filters-row">
+                            <div class="search-group text-group">
+                                <div style="position: relative;">
+                                    <i class="ph ph-magnifying-glass"
+                                        style="position: absolute; left: 10px; top: 10px; color: #94a3b8;"></i>
+                                    <input type="text" placeholder="Search Serial Number..."
+                                        style="width: 100%; padding: 0.5rem 0.5rem 0.5rem 2rem; border: 1px solid #cbd5e1; border-radius: 4px;">
+                                </div>
+                            </div>
+
+                            <div class="select-group text-group">
+                                <input type="text" value="2026-01-30"
+                                    style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; color: #475569;">
+                            </div>
+
+                            <div class="select-group text-group">
+                                <div style="position: relative;">
+                                    <select
+                                        style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; appearance: none; background: white;">
+                                        <option>All Regions</option>
+                                    </select>
+                                    <i class="ph ph-caret-down"
+                                        style="position: absolute; right: 10px; top: 10px; color: #94a3b8;"></i>
+                                </div>
+                            </div>
+
+                            <div class="select-group text-group">
+                                <div style="position: relative;">
+                                    <select
+                                        style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; appearance: none; background: white;">
+                                        <option>All Installers</option>
+                                    </select>
+                                    <i class="ph ph-caret-down"
+                                        style="position: absolute; right: 10px; top: 10px; color: #94a3b8;"></i>
+                                </div>
+                            </div>
+
+                            <div class="select-group text-group">
+                                <div style="position: relative;">
+                                    <select
+                                        style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; appearance: none; background: white;">
+                                        <option>All Status</option>
+                                    </select>
+                                    <i class="ph ph-caret-down"
+                                        style="position: absolute; right: 10px; top: 10px; color: #94a3b8;"></i>
+                                </div>
+                            </div>
+
+                            <div class="action-group">
+                                <button class="btn btn-primary"
+                                    style="width: 100%; background: #475569; border-color: #475569;">SUBMIT</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-title-row"
+                        style="padding: 1rem 1.5rem; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="font-size: 1rem; font-weight: 700;">Grid Over-Voltage Alerts</h3>
+                        <span class="badge"
+                            style="background: #e2e8f0; color: #475569; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.75rem;">4
+                            alerts found</span>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <div class="table-container-wide">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Sl.No.</th>
+                                        <th>Alert ID</th>
+                                        <th>Serial Number</th>
+                                        <th>Alert Code</th>
+                                        <th>Description</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Duration</th>
+                                        <th>Value</th>
+                                        <th>Region</th>
+                                        <th>Severity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>ALT-2026-9001</td>
+                                        <td><strong>SN-INV-2024-X99</strong></td>
+                                        <td>E003</td>
+                                        <td>Grid Voltage > 255V</td>
+                                        <td>2026-01-30 11:46:23</td>
+                                        <td>2026-01-30 11:47:02</td>
+                                        <td>0:39</td>
+                                        <td style="color: #ef4444; font-weight: 700;">258V</td>
+                                        <td>Arizona, USA</td>
+                                        <td><span class="alert_severity severity-critical">Critical</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>ALT-2026-9002</td>
+                                        <td><strong>SN-INV-2024-X99</strong></td>
+                                        <td>E003</td>
+                                        <td>Grid Voltage > 255V</td>
+                                        <td>2026-01-30 11:51:49</td>
+                                        <td>2026-01-30 11:52:49</td>
+                                        <td>1:00</td>
+                                        <td style="color: #ef4444; font-weight: 700;">261V</td>
+                                        <td>Arizona, USA</td>
+                                        <td><span class="alert_severity severity-critical">Critical</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>ALT-2026-9003</td>
+                                        <td><strong>SN-INV-2023-Y55</strong></td>
+                                        <td>W008</td>
+                                        <td>Grid Voltage High Warn</td>
+                                        <td>2026-01-30 11:52:08</td>
+                                        <td>2026-01-30 11:52:28</td>
+                                        <td>0:20</td>
+                                        <td style="color: #f97316; font-weight: 700;">252V</td>
+                                        <td>Nevada, USA</td>
+                                        <td><span class="alert_severity severity-medium">High</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>ALT-2026-9004</td>
+                                        <td><strong>SN-INV-2021-A12</strong></td>
+                                        <td>E003</td>
+                                        <td>Grid Voltage > 255V</td>
+                                        <td>2026-01-30 11:54:06</td>
+                                        <td>-</td>
+                                        <td>Active</td>
+                                        <td style="color: #ef4444; font-weight: 700;">259V</td>
+                                        <td>California, USA</td>
+                                        <td><span class="alert_severity severity-critical">Critical</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pagination-footer">
+                            <span>Rows per page: 10</span>
+                            <div class="page-controls">
+                                <span>1-4 of 4</span>
+                                <button disabled><i class="ph ph-caret-left"></i></button>
+                                <button disabled><i class="ph ph-caret-right"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

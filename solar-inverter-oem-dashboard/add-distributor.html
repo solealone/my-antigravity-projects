@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Distributor | Solar OEM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .form-section {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            color: #0f172a;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #0f172a;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+        }
+
+        .btn-black {
+            padding: 12px 24px;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            padding: 12px 24px;
+            background: transparent;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item"><i class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="models.html" class="nav-item"><i class="ph ph-stack"></i><span>Models</span></a>
+                <a href="accounts.html" class="nav-item active"><i
+                        class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">Accounts</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">Add Distributor</span>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn"><i class="ph ph-bell"></i><span class="badge">3</span></button>
+                    <button class="icon-btn"><i class="ph ph-gear"></i></button>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="form-section">
+                    <h3 class="form-title">Business Information</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Distributor Name</label>
+                            <input type="text" class="form-input" placeholder="e.g. Global Solar Distribution Inc.">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tax ID / Business Reg Number</label>
+                            <input type="text" class="form-input" placeholder="e.g. TAX-9988776655">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Region / Territory</label>
+                            <select class="form-select">
+                                <option>Select Region</option>
+                                <option>North America</option>
+                                <option>EMEA</option>
+                                <option>APAC</option>
+                                <option>LATAM</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Headquarters Address</label>
+                            <input type="text" class="form-input" placeholder="Street, City, State, Country">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="form-title">Primary Contact</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Contact Person Name</label>
+                            <input type="text" class="form-input" placeholder="Full Name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Role / Title</label>
+                            <input type="text" class="form-input" placeholder="e.g. VP of Procurement">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" placeholder="name@company.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-input" placeholder="+1 (555) 000-0000">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="form-title">Contract & Agreement</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Contract Start Date</label>
+                            <input type="date" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Contract End Date</label>
+                            <input type="date" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Upload Agreement (PDF)</label>
+                            <div style="border: 2px dashed #cbd5e1; padding: 2rem; border-radius: 6px; text-align: center; cursor: pointer; transition: 0.2s;"
+                                onmouseover="this.style.borderColor='#0f172a'"
+                                onmouseout="this.style.borderColor='#cbd5e1'">
+                                <i class="ph ph-file-pdf"
+                                    style="font-size: 2rem; color: #64748b; margin-bottom: 0.5rem;"></i>
+                                <div style="font-size: 0.9rem; color: #475569;">Click to upload signed contract</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-top: 2rem;">
+                    <button class="btn-outline" onclick="window.location.href='accounts.html'">Cancel</button>
+                    <button class="btn-black" onclick="window.location.href='accounts.html'">
+                        <i class="ph ph-check"></i> Create Distributor
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

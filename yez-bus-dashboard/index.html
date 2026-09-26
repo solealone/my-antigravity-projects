@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yez Bus — Admin Control Center</title>
+  
+  <!-- CSS files -->
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/views.css">
+  
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-logo">Y</div>
+        <div class="brand-info">
+          <span class="brand-text">Yez Bus</span>
+          <span class="brand-subtitle">Holy Grace</span>
+        </div>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a class="sidebar-link active" data-view="dashboard">
+            <i data-lucide="layout-dashboard"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" data-view="routes">
+            <i data-lucide="route"></i>
+            <span>Route Optimization</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" data-view="students">
+            <i data-lucide="users"></i>
+            <span>Students</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" data-view="tracking">
+            <i data-lucide="map-pin"></i>
+            <span>Live Tracking</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" data-view="trips">
+            <i data-lucide="milestone"></i>
+            <span>Trip Manager</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" data-view="trip-history">
+            <i data-lucide="history"></i>
+            <span>Trip History & Audits</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" data-view="drivers">
+            <i data-lucide="user-check"></i>
+            <span>Drivers</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" data-view="fleet">
+            <i data-lucide="bus"></i>
+            <span>Fleet Manager</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" data-view="alerts">
+            <i data-lucide="bell"></i>
+            <span>Alerts & Logs</span>
+          </a>
+        </li>
+      </ul>
+      
+      <div class="sidebar-footer">
+        <img class="user-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=60" alt="Admin Avatar">
+        <div class="user-info">
+          <span class="user-name">Thomas Kurian</span>
+          <span class="user-role">Transport Head</span>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Panel -->
+    <main class="main-layout">
+      
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-title-area">
+          <h1 id="view-title">Dashboard</h1>
+          <p id="view-subtitle">Holy Grace Institution, Mala - Fleet Overview & Analytics</p>
+        </div>
+        
+        <div class="header-actions">
+          <div class="search-box">
+            <i data-lucide="search"></i>
+            <input type="text" id="global-search" placeholder="Search students, buses, drivers...">
+          </div>
+          
+          <button class="header-button" id="alerts-trigger">
+            <i data-lucide="bell"></i>
+            <span class="badge-dot" id="header-alert-badge"></span>
+          </button>
+          
+          <button class="btn btn-primary" id="btn-reoptimize">
+            <i data-lucide="wand2"></i>
+            <span>Auto Optimize Routes</span>
+          </button>
+        </div>
+      </header>
+      
+      <!-- Views Viewport -->
+      <div class="view-viewport">
+        
+        <!-- 1. DASHBOARD VIEW -->
+        <section id="view-dashboard" class="view-container active">
+          <div class="dashboard-grid">
+            <div class="stat-widget">
+              <div class="widget-icon icon-yellow"><i data-lucide="bus"></i></div>
+              <div class="widget-data">
+                <span class="widget-value" id="dash-active-buses">0</span>
+                <span class="widget-label">Active Buses</span>
+              </div>
+            </div>
+            <div class="stat-widget">
+              <div class="widget-icon icon-blue"><i data-lucide="users"></i></div>
+              <div class="widget-data">
+                <span class="widget-value" id="dash-boarded-students">0</span>
+                <span class="widget-label">Students Boarded</span>
+              </div>
+            </div>
+            <div class="stat-widget">
+              <div class="widget-icon icon-green"><i data-lucide="check-circle2"></i></div>
+              <div class="widget-data">
+                <span class="widget-value" id="dash-completed-trips">0</span>
+                <span class="widget-label">Completed Trips</span>
+              </div>
+            </div>
+            <div class="stat-widget">
+              <div class="widget-icon icon-red"><i data-lucide="alert-triangle"></i></div>
+              <div class="widget-data">
+                <span class="widget-value" id="dash-alerts-count">0</span>
+                <span class="widget-label">Critical Alerts</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dashboard-charts-grid">
+            <div class="card chart-card">
+              <div class="card-title">
+                <span>Trip Dispatch Timeline</span>
+                <span class="badge badge-info">Real-time</span>
+              </div>
+              <div class="chart-container">
+                <canvas id="tripDispatchChart"></canvas>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                <span>Recent Fleet Events</span>
+                <button class="btn btn-secondary btn-sm" id="btn-clear-alerts">Clear All</button>
+              </div>
+              <div class="recent-alerts-timeline" id="dash-alerts-timeline">
+                <!-- Alerts dynamic loading -->
+              </div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-title">Route Optimization Overview (Annual Constraint Check)</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+              <div style="text-align: center; padding: 20px; border-right: 1px solid var(--light-border);">
+                <h3 style="font-size: 2.2rem; font-weight: 800; color: var(--success);" id="dash-optimal-percent">98.2%</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">Within 45 Min Threshold</p>
+              </div>
+              <div style="text-align: center; padding: 20px; border-right: 1px solid var(--light-border);">
+                <h3 style="font-size: 2.2rem; font-weight: 800; color: var(--info);" id="dash-avg-ridetime">26.5m</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">Average Student Ride Time</p>
+              </div>
+              <div style="text-align: center; padding: 20px;">
+                <h3 style="font-size: 2.2rem; font-weight: 800; color: var(--warning);" id="dash-exceeded-count">2</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">Students Exceeding 45 Min</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- 2. ROUTE OPTIMIZATION VIEW -->
+        <section id="view-routes" class="view-container">
+          <div class="route-split-layout">
+            <div class="route-sidebar">
+              <div class="card" style="padding: 16px;">
+                <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 12px;">Optimized Bus Routes</h3>
+                <div class="route-list-container" id="routes-list">
+                  <!-- Dynamic loading of routes -->
+                </div>
+              </div>
+            </div>
+            <div class="route-detail-panel">
+              <div class="route-map-pane" id="routes-map"></div>
+              <div class="route-stops-sequence">
+                <div style="display: flex; gap: 40px; overflow-x: auto; padding-bottom: 10px;" id="stops-sequence-list">
+                  <!-- Stop nodes loaded dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- 3. STUDENTS VIEW -->
+        <section id="view-students" class="view-container">
+          <div class="table-filters">
+            <input type="text" class="filter-select" id="student-search-name" placeholder="Search by name..." style="width: 250px;">
+            <select class="filter-select" id="student-filter-class">
+              <option value="">All Classes</option>
+            </select>
+            <select class="filter-select" id="student-filter-route">
+              <option value="">All Routes</option>
+            </select>
+            <select class="filter-select" id="student-filter-status">
+              <option value="">All Boarding Statuses</option>
+              <option value="Not Boarded">Not Boarded</option>
+              <option value="Boarded">Boarded</option>
+              <option value="Reached School">Reached School</option>
+            </select>
+            
+            <div style="margin-left: auto; display: flex; gap: 12px;">
+              <button class="btn btn-secondary" id="btn-bulk-upload"><i data-lucide="file-spreadsheet"></i> Bulk Upload Excel</button>
+              <button class="btn btn-primary" id="btn-add-student"><i data-lucide="user-plus"></i> Allocate Student</button>
+            </div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+            <div class="card student-table-card">
+              <div class="data-table-container">
+                <table class="data-table" id="students-data-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Student</th>
+                      <th>Class</th>
+                      <th>Route</th>
+                      <th>Boarding Stop</th>
+                      <th>Ride Time</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="students-table-body">
+                    <!-- Dynamic rendering -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <div class="card" id="student-pass-container" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+              <h3 style="align-self: flex-start; font-size: 1.1rem; font-weight: 600;">Student Bus Pass (NFC / QR)</h3>
+              <div class="digital-pass" id="student-digital-pass">
+                <!-- Pass template dynamic selection -->
+                <div style="text-align: center; color: var(--text-light); margin-top: 40px;">
+                  <i data-lucide="credit-card" style="width: 48px; height: 48px; margin-bottom: 12px;"></i>
+                  <p>Select a student to display their digital bus pass</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- 4. LIVE TRACKING VIEW -->
+        <section id="view-tracking" class="view-container" style="padding: 0;">
+          <div class="live-tracking-layout">
+            <div class="fullscreen-map" id="live-tracking-map"></div>
+            
+            <div class="map-overlay-panel">
+              <div class="map-overlay-header">
+                <div class="map-overlay-title">Live Tracking</div>
+                <div class="map-overlay-search">
+                  <i data-lucide="search"></i>
+                  <input type="text" id="tracking-search" placeholder="Search bus number...">
+                </div>
+              </div>
+              <div class="map-overlay-list" id="tracking-bus-list">
+                <!-- Dynamic bus loading -->
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- 5. TRIP MANAGER VIEW -->
+        <section id="view-trips" class="view-container">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h2 style="font-size: 1.25rem; font-weight: 700;">Trip Lifecycle Board</h2>
+            <div style="display: flex; gap: 12px;">
+              <button class="btn btn-secondary" id="btn-trip-scheduler"><i data-lucide="calendar"></i> Master Schedule</button>
+              <button class="btn btn-primary" id="btn-start-trip"><i data-lucide="play"></i> Start Ad-hoc Trip</button>
+            </div>
+          </div>
+          
+          <div class="trip-board">
+            <div class="trip-lane" id="lane-not-started">
+              <div class="trip-lane-header">
+                <span>Not Started</span>
+                <span class="badge badge-info" id="count-not-started">0</span>
+              </div>
+              <!-- Dynamic loading -->
+            </div>
+            
+            <div class="trip-lane" id="lane-in-progress">
+              <div class="trip-lane-header">
+                <span>In Progress</span>
+                <span class="badge badge-warning" id="count-in-progress">0</span>
+              </div>
+              <!-- Dynamic loading -->
+            </div>
+            
+            <div class="trip-lane" id="lane-delayed">
+              <div class="trip-lane-header">
+                <span>Delayed</span>
+                <span class="badge badge-danger" id="count-delayed">0</span>
+              </div>
+              <!-- Dynamic loading -->
+            </div>
+            
+            <div class="trip-lane" id="lane-completed">
+              <div class="trip-lane-header">
+                <span>Completed</span>
+                <span class="badge badge-success" id="count-completed">0</span>
+              </div>
+              <!-- Dynamic loading -->
+            </div>
+          </div>
+        </section>
+        
+        <!-- 6. DRIVERS VIEW -->
+        <section id="view-drivers" class="view-container">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h2 style="font-size: 1.25rem; font-weight: 700;">Transight GPS Performance Scorecard</h2>
+            <div style="display: flex; gap: 12px;">
+              <button class="btn btn-secondary" id="btn-coaching-report"><i data-lucide="file-bar-chart"></i> Safety Coaching</button>
+              <button class="btn btn-primary" id="btn-add-driver-trigger"><i data-lucide="user-plus"></i> Add Driver</button>
+            </div>
+          </div>
+          
+          <div class="drivers-grid" id="drivers-cards-container">
+            <!-- Loaded dynamically -->
+          </div>
+        </section>
+        
+        <!-- 7. FLEET MANAGER VIEW -->
+        <section id="view-fleet" class="view-container">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h2 style="font-size: 1.25rem; font-weight: 700;">Vehicle Registry & Compliance</h2>
+            <button class="btn btn-primary" id="btn-add-bus"><i data-lucide="bus"></i> Register Vehicle</button>
+          </div>
+          
+          <div class="fleet-grid" id="fleet-cards-container">
+            <!-- Loaded dynamically -->
+          </div>
+        </section>
+        
+        <!-- 8. ALERTS & LOGS VIEW -->
+        <section id="view-alerts" class="view-container">
+          <div class="alerts-layout">
+            <div class="card">
+              <div class="card-title">Real-time GPS Alert Feed</div>
+              <div class="alerts-log-container" id="alerts-log-feed">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+              <div class="card">
+                <div class="card-title">Alert Threshold Settings</div>
+                <div class="threshold-slider-group">
+                  <div class="threshold-row">
+                    <div class="threshold-header">
+                      <span>Over-Speeding Limit</span>
+                      <span id="label-speed-limit">50 km/h</span>
+                    </div>
+                    <input type="range" class="threshold-slider" id="slider-speed-limit" min="30" max="80" value="50">
+                  </div>
+                  <div class="threshold-row">
+                    <div class="threshold-header">
+                      <span>Excessive Idling Duration</span>
+                      <span id="label-idle-limit">10 min</span>
+                    </div>
+                    <input type="range" class="threshold-slider" id="slider-idle-limit" min="5" max="30" value="10">
+                  </div>
+                  <div class="threshold-row">
+                    <div class="threshold-header">
+                      <span>Route Deviation Radius</span>
+                      <span id="label-deviation-limit">500 m</span>
+                    </div>
+                    <input type="range" class="threshold-slider" id="slider-deviation-limit" min="100" max="1000" step="50" value="500">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card">
+                <div class="card-title">Simulate Tracker Telemetry</div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Trigger simulated events representing data coming from Transight GPS trackers in real-time.</p>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  <button class="btn btn-secondary" id="sim-speeding-btn"><i data-lucide="gauge"></i> Trigger Speeding Event</button>
+                  <button class="btn btn-secondary" id="sim-deviation-btn"><i data-lucide="navigation"></i> Trigger Route Deviation</button>
+                  <button class="btn btn-danger" id="sim-sos-btn"><i data-lucide="alert-circle"></i> Trigger SOS / Panic Button</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- 9. TRIP HISTORY & AUDITS VIEW -->
+        <section id="view-trip-history" class="view-container">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div>
+              <h2 style="font-size: 1.25rem; font-weight: 700;">Trip History & Student Rosters</h2>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Audits of completed trips, vehicle parameters, and student boarding logs</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">Date Range:</span>
+                <input type="date" class="filter-select" id="history-filter-start-date" value="2026-07-01">
+                <span style="font-size: 0.8rem; color: var(--text-muted);">to</span>
+                <input type="date" class="filter-select" id="history-filter-end-date" value="2026-07-02">
+              </div>
+              <select class="filter-select" id="history-filter-route">
+                <option value="">All Routes</option>
+              </select>
+              <select class="filter-select" id="history-filter-bus">
+                <option value="">All Vehicles</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="trip-history-layout">
+            <!-- Left Pane: completed trips list -->
+            <div class="card history-list-card">
+              <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 16px;">Completed Trips Log</h3>
+              <div class="data-table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Trip ID</th>
+                      <th>Vehicle</th>
+                      <th>Route</th>
+                      <th>Start Landmark</th>
+                      <th>Enrolled Roster</th>
+                      <th>Completion</th>
+                    </tr>
+                  </thead>
+                  <tbody id="history-trips-table-body">
+                    <!-- Loaded dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Right Pane: roster details -->
+            <div class="card history-roster-card" id="history-roster-container">
+              <div style="text-align: center; color: var(--text-light); padding: 60px 20px;">
+                <i data-lucide="clipboard-list" style="width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.7;"></i>
+                <h3>Select a completed trip</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Click any row in the log to inspect the students boarding list</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+      </div>
+      
+    </main>
+    
+  </div>
+  
+  </div>
+
+  <!-- Bulk Spreadsheet Upload Modal -->
+  <div class="modal-overlay" id="modal-bulk-upload">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Bulk Student Spreadsheet Upload</h2>
+        <button class="modal-close" id="close-bulk-upload"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
+          Upload your school transport roster spreadsheet (.xlsx, .csv). Yez Bus route optimization engine will automatically geocode addresses, cluster routes, and balance loads within the <b>45-minute maximum travel time</b> constraint.
+        </p>
+        
+        <div class="upload-dropzone" id="dropzone">
+          <i data-lucide="file-spreadsheet" style="width: 48px; height: 48px; color: var(--primary); margin-bottom: 12px;"></i>
+          <span style="font-weight: 600; font-size: 0.95rem;">Drag and drop Excel/CSV here</span>
+          <span style="font-size: 0.8rem; color: var(--text-light); margin-top: 4px;">or click to select file</span>
+          <input type="file" id="bulk-file-input" accept=".csv,.xlsx,.xls" style="display: none;">
+          <div class="selected-file-indicator" id="file-indicator" style="display: none;">
+            <i data-lucide="check-circle" style="color: var(--success); width: 16px; height: 16px;"></i>
+            <span id="file-name-text">holy_grace_students_2026.xlsx</span>
+          </div>
+        </div>
+
+        <div class="columns-mapping-section" style="margin-top: 20px;">
+          <h4 style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 10px;">Roster Columns Auto-Mapping</h4>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+            <div class="mapping-chip"><i data-lucide="user"></i> Name &rarr; <b>Column A (Name)</b></div>
+            <div class="mapping-chip"><i data-lucide="graduation-cap"></i> Class &rarr; <b>Column B (Class)</b></div>
+            <div class="mapping-chip"><i data-lucide="layout-grid"></i> Division &rarr; <b>Column C (Division)</b></div>
+            <div class="mapping-chip"><i data-lucide="map-pin"></i> Location &rarr; <b>Column D (Address)</b></div>
+          </div>
+        </div>
+
+        <div class="optimization-progress-panel" id="opt-progress" style="display: none;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px;">
+            <span id="opt-progress-status">Geocoding addresses...</span>
+            <span id="opt-progress-percent">0%</span>
+          </div>
+          <div class="trip-progress-bar" style="height: 8px;">
+            <div class="trip-progress-fill" id="opt-progress-bar" style="width: 0%; background: var(--primary-gradient);"></div>
+          </div>
+        </div>
+
+        <!-- Dynamic Optimization Results Output -->
+        <div class="opt-results-box" id="opt-results" style="display: none;">
+          <h4 style="font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+            <i data-lucide="check-circle" style="color: var(--success);"></i> Optimization Completed Successfully
+          </h4>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-size: 0.85rem;">
+            <div>Total Records Parsed: <b id="res-parsed">0</b></div>
+            <div>Geocoded Matches: <b id="res-geocoded">0</b></div>
+            <div>Generated / Balanced Routes: <b id="res-routes">0</b></div>
+            <div>Avg Student Ride Time: <b id="res-avg-time">0</b></div>
+          </div>
+          <div class="constraint-alert-box" id="res-constraint-status" style="margin-top: 12px; font-size: 0.8rem; padding: 10px; border-radius: 6px; background-color: var(--success-light); color: var(--success);">
+            <i data-lucide="shield-check" style="display: inline; width: 14px; height: 14px; margin-right: 4px; vertical-align: text-top;"></i>
+            All allocations respect the <b>45-minute ride constraint</b>.
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-bulk-upload">Cancel</button>
+        <button class="btn btn-primary" id="btn-run-opt" disabled>Run Optimization Engine</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Individual Student Solver Modal -->
+  <div class="modal-overlay" id="modal-add-student">
+    <div class="modal-card" style="max-width: 550px;">
+      <div class="modal-header">
+        <h2>Allocate Individual Student</h2>
+        <button class="modal-close" id="close-add-student"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
+          Enter the new student details. The route optimization solver will calculate coordinates and instantly determine the safest stop, route, and bus matching constraints.
+        </p>
+        
+        <form id="individual-student-form" style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label class="form-label">Student Full Name</label>
+              <input type="text" class="form-input-field" id="ind-name" placeholder="Arjun Nair" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Class & Division</label>
+              <div style="display: flex; gap: 8px;">
+                <select class="form-input-field" id="ind-class" required>
+                  <option value="V">V</option>
+                  <option value="VI">VI</option>
+                  <option value="VII">VII</option>
+                  <option value="VIII">VIII</option>
+                  <option value="IX" selected>IX</option>
+                  <option value="X">X</option>
+                  <option value="XI">XI</option>
+                  <option value="XII">XII</option>
+                </select>
+                <select class="form-input-field" id="ind-division" required>
+                  <option value="A" selected>A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Stop / Landmark Location</label>
+            <select class="form-input-field" id="ind-location" required>
+              <option value="" disabled selected>Select location around Mala area...</option>
+              <option value="Kodungallur Temple Junction">Kodungallur Temple (Route R-01)</option>
+              <option value="Vellangallur Junction">Vellangallur Junction (Route R-01)</option>
+              <option value="Chalakudy Railway Station Stop">Chalakudy Railway Station (Route R-02)</option>
+              <option value="Potta Bypass Corner">Potta Bypass Corner (Route R-02)</option>
+              <option value="Angamaly KSRTC Stand">Angamaly KSRTC Stand (Route R-03)</option>
+              <option value="Kidangoor Junction">Kidangoor Junction (Route R-03)</option>
+              <option value="Irinjalakuda Koodalmanikyam Temple">Irinjalakuda Temple (Route R-04)</option>
+              <option value="Poyya Village Office">Poyya Village Office (Route R-05)</option>
+              <option value="Mala Private Bus Stand">Mala Private Bus Stand (Route R-05)</option>
+            </select>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+            <div class="form-group">
+              <label class="form-label">Parent / Guardian Name</label>
+              <input type="text" class="form-input-field" id="ind-guardian" placeholder="K. Nair" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Emergency Phone Number</label>
+              <input type="text" class="form-input-field" id="ind-phone" placeholder="+91 94460 12345" required>
+            </div>
+          </div>
+        </form>
+
+        <!-- Solver Results Panel -->
+        <div class="solver-results-card" id="ind-solver-results" style="display: none; margin-top: 24px;">
+          <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: var(--primary);">Optimal Routing Allocation Result</h3>
+          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem;">
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--light-border); padding-bottom: 8px;">
+              <span>Assigned Vehicle:</span>
+              <span id="ind-res-bus" style="font-weight: 700;">KL-45-H-1024</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--light-border); padding-bottom: 8px;">
+              <span>Assigned Route:</span>
+              <span id="ind-res-route" style="font-weight: 700;">R-01 (Mala-Kodungallur Express)</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--light-border); padding-bottom: 8px;">
+              <span>Assigned Pickup Stop:</span>
+              <span id="ind-res-stop" style="font-weight: 700;">Pullut Bridge Stop</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--light-border); padding-bottom: 8px;">
+              <span>Estimated One-Way Ride Time:</span>
+              <span id="ind-res-time" style="font-weight: 700; color: var(--success);">32 min (Safe &lt; 45 min)</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-bottom: 8px;">
+              <span>Bus Capacity Status:</span>
+              <span id="ind-res-capacity" style="font-weight: 600;">43 / 50 seats occupied</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-add-student">Cancel</button>
+        <button class="btn btn-primary" id="btn-run-solver">Solve & Allocate</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Driver Performance Log Modal -->
+  <div class="modal-overlay" id="modal-performance-log">
+    <div class="modal-card" style="max-width: 650px;">
+      <div class="modal-header">
+        <h2>Driver Safety & Performance History Log</h2>
+        <button class="modal-close" id="close-performance-log"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body" style="padding-top: 20px;">
+        <div style="display: flex; gap: 20px; align-items: center; border-bottom: 1px solid var(--light-border); padding-bottom: 20px; margin-bottom: 20px;">
+          <img class="driver-photo" id="perf-driver-photo" src="" alt="" style="width: 80px; height: 80px; border-radius: 50%;">
+          <div>
+            <h3 id="perf-driver-name" style="font-size: 1.3rem; font-weight: 700;">Driver Name</h3>
+            <div id="perf-driver-meta" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">License: ... • Status: ...</div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+              <span id="perf-driver-score" class="badge" style="font-size: 0.8rem; font-weight: 700;">Score: 94</span>
+              <span id="perf-driver-rating" style="font-size: 0.85rem; font-weight: 600; color: var(--warning);"><i data-lucide="star" style="width: 14px; height: 14px; display: inline-block; vertical-align: text-top; fill: var(--warning);"></i> 4.8</span>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 12px;">Transight GPS Telemetry Logs</h4>
+        <div class="alerts-log-container" id="perf-log-events" style="max-height: 250px; overflow-y: auto;">
+          <!-- Loaded dynamically based on driver -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="btn-close-perf-log">Close Log</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register Vehicle Modal -->
+  <div class="modal-overlay" id="modal-add-bus">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Register School Bus</h2>
+        <button class="modal-close" id="close-add-bus"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="add-bus-form" style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+            <div class="form-group">
+              <label class="form-label">Registration Number</label>
+              <input type="text" class="form-input-field" id="bus-reg" placeholder="KL-45-H-7700" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Seating Capacity</label>
+              <input type="number" class="form-input-field" id="bus-capacity" placeholder="45" min="10" max="60" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+            <div class="form-group">
+              <label class="form-label">Transight Tracker IMEI</label>
+              <input type="text" class="form-input-field" id="bus-imei" placeholder="358942109843250" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Odometer Reading (km)</label>
+              <input type="text" class="form-input-field" id="bus-odo" placeholder="12,500 km" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+            <div class="form-group">
+              <label class="form-label">Insurance Expiry</label>
+              <input type="date" class="form-input-field" id="bus-ins" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Fitness Expiry</label>
+              <input type="date" class="form-input-field" id="bus-fit" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">PUC Expiry</label>
+              <input type="date" class="form-input-field" id="bus-puc" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Assign Primary Driver</label>
+            <select class="form-input-field" id="bus-assign-driver">
+              <!-- Loaded dynamically from standby drivers -->
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-add-bus">Cancel</button>
+        <button class="btn btn-primary" id="btn-submit-bus">Register & Bind Driver</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Onboard Driver Modal -->
+  <div class="modal-overlay" id="modal-add-driver">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Onboard Bus Driver</h2>
+        <button class="modal-close" id="close-add-driver"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="add-driver-form" style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label class="form-label">Driver Full Name</label>
+              <input type="text" class="form-input-field" id="driver-name" placeholder="Mohan Lal" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <select class="form-input-field" id="driver-status" required>
+                <option value="Active">Active</option>
+                <option value="Standby" selected>Standby</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input type="text" class="form-input-field" id="driver-phone" placeholder="+91 98470 99999" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Commercial License ID</label>
+              <input type="text" class="form-input-field" id="driver-license" placeholder="DL-45/2020/5502" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Avatar Photo URL (Optional)</label>
+            <input type="text" class="form-input-field" id="driver-avatar" placeholder="https://images.unsplash.com/photo-...">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Assign Vehicle</label>
+            <select class="form-input-field" id="driver-assign-bus">
+              <!-- Loaded dynamically from buses without drivers -->
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-add-driver">Cancel</button>
+        <button class="btn btn-primary" id="btn-submit-driver">Onboard Driver</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Leaflet map logic -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- JavaScript Files -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

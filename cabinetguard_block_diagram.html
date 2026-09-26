@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CabinetGuard Block Diagram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2;
+        }
+        .diagram-container {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        svg {
+            background-color: #f2f2f2;
+        }
+        text {
+            font-size: 11px;
+            fill: #000;
+        }
+        .bold-text {
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .title-text {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .small-text {
+            font-size: 9px;
+            fill: #333;
+        }
+        .box {
+            fill: none;
+            stroke: #000;
+            stroke-width: 1.5;
+        }
+        .dashed-box {
+            fill: none;
+            stroke: #000;
+            stroke-width: 2;
+            stroke-dasharray: 6 4;
+        }
+        .line {
+            fill: none;
+            stroke: #000;
+            stroke-width: 1;
+        }
+        .arrow {
+            fill: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="diagram-container">
+        <svg width="900" height="600" viewBox="0 0 900 600">
+            <!-- Definitions for markers -->
+            <defs>
+                <marker id="arrowhead" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
+                    <polygon points="0 0, 6 2.5, 0 5" fill="#000" />
+                </marker>
+                <marker id="arrowhead-reverse" markerWidth="6" markerHeight="5" refX="0" refY="2.5" orient="auto">
+                    <polygon points="6 0, 0 2.5, 6 5" fill="#000" />
+                </marker>
+                <marker id="both-arrows" markerWidth="12" markerHeight="5" refX="6" refY="2.5" orient="auto">
+                    <polygon points="0 2.5, 3 0, 3 5" fill="#000" />
+                    <polygon points="12 2.5, 9 0, 9 5" fill="#000" />
+                </marker>
+            </defs>
+
+            <!-- Outer Dashed Box -->
+            <rect x="250" y="50" width="500" height="480" class="dashed-box" />
+            <text x="500" y="515" class="title-text" text-anchor="middle">Transight CabinetGuard Gateway</text>
+
+            <!-- MCU -->
+            <rect x="300" y="100" width="130" height="180" class="box" fill="#fff"/>
+            <text x="365" y="195" class="bold-text" text-anchor="middle">MCU</text>
+            <text x="365" y="210" class="small-text" text-anchor="middle">(Edge Rules Engine)</text>
+
+            <!-- Cellular Module -->
+            <rect x="580" y="100" width="130" height="140" class="box" fill="#fff"/>
+            <text x="645" y="175" class="bold-text" text-anchor="middle">Cellular Module</text>
+
+            <!-- DALI Master -->
+            <rect x="440" y="270" width="100" height="40" class="box" fill="#fff"/>
+            <text x="490" y="295" class="bold-text" text-anchor="middle">DALI Master</text>
+
+            <!-- Flash Memory -->
+            <rect x="580" y="270" width="130" height="40" class="box" fill="#fff"/>
+            <text x="645" y="290" class="bold-text" text-anchor="middle">Flash Memory</text>
+            <text x="645" y="303" class="small-text" text-anchor="middle">4 MB</text>
+
+            <!-- Power Supply Unit -->
+            <rect x="300" y="360" width="410" height="80" class="box" fill="#fff"/>
+            <text x="505" y="380" class="bold-text" text-anchor="middle">POWER SUPPLY UNIT</text>
+            <text x="505" y="395" class="small-text" text-anchor="middle">9V-36V DC Input, Reverse Polarity Protection,</text>
+            <text x="505" y="408" class="small-text" text-anchor="middle">Resettable Fuse, TVS Protection, Last-Gasp Battery Charger</text>
+
+            <!-- Battery inside PSU -->
+            <rect x="430" y="415" width="150" height="20" class="box" fill="#fff"/>
+            <text x="505" y="428" class="small-text" text-anchor="middle">Internal Li-Po Battery (3.7V, 2000mAh)</text>
+
+            <!-- External Connections Left -->
+            
+            <!-- RS485 -->
+            <line x1="80" y1="120" x2="250" y2="120" class="line" marker-end="url(#arrowhead)" marker-start="url(#arrowhead-reverse)"/>
+            <text x="165" y="115" text-anchor="middle">RS485 (Metering)</text>
+            <!-- Routing inside to MCU -->
+            <line x1="250" y1="120" x2="300" y2="120" class="line" />
+
+            <!-- CT Inputs -->
+            <line x1="80" y1="150" x2="250" y2="150" class="line" marker-end="url(#arrowhead)"/>
+            <text x="165" y="145" text-anchor="middle">7X CT Inputs (Analog)</text>
+            <line x1="250" y1="150" x2="300" y2="150" class="line" />
+
+            <!-- Voltage Presence -->
+            <line x1="80" y1="180" x2="250" y2="180" class="line" marker-end="url(#arrowhead)"/>
+            <text x="165" y="175" text-anchor="middle">Voltage Presence (DI)</text>
+            <line x1="250" y1="180" x2="300" y2="180" class="line" />
+
+            <!-- Contactors -->
+            <line x1="80" y1="210" x2="250" y2="210" class="line" marker-start="url(#arrowhead-reverse)"/>
+            <text x="165" y="205" text-anchor="middle">8X Contactor Ctrl (DO)</text>
+            <line x1="250" y1="210" x2="300" y2="210" class="line" />
+
+            <!-- Magnetic Door -->
+            <line x1="80" y1="240" x2="250" y2="240" class="line" marker-end="url(#arrowhead)"/>
+            <text x="165" y="235" text-anchor="middle">Magnetic Door (DI)</text>
+            <line x1="250" y1="240" x2="300" y2="240" class="line" />
+
+            <!-- Vibration / Tamper -->
+            <line x1="80" y1="270" x2="250" y2="270" class="line" marker-end="url(#arrowhead)"/>
+            <text x="165" y="265" text-anchor="middle">Vibration/Tamper (DI)</text>
+            <line x1="250" y1="270" x2="300" y2="270" class="line" />
+
+            <!-- DALI Bus -->
+            <line x1="80" y1="300" x2="250" y2="300" class="line" marker-end="url(#arrowhead)" marker-start="url(#arrowhead-reverse)"/>
+            <text x="165" y="295" text-anchor="middle">DALI Bus (2-wire)</text>
+            <line x1="250" y1="300" x2="270" y2="300" class="line" />
+            <line x1="270" y1="300" x2="270" y2="290" class="line" />
+            <line x1="270" y1="290" x2="440" y2="290" class="line" />
+
+            <!-- Notes -->
+            <text x="80" y="340" class="small-text">* Multiplex, Configurable inputs</text>
+            <text x="80" y="355" class="small-text">based on field harness requirements.</text>
+
+            <!-- Internal MCU to Cellular Lines -->
+            <line x1="430" y1="120" x2="580" y2="120" class="line" />
+            <text x="505" y="115" class="small-text" text-anchor="middle">Network Status</text>
+
+            <line x1="430" y1="140" x2="580" y2="140" class="line" />
+            <text x="505" y="135" class="small-text" text-anchor="middle">Reset</text>
+
+            <line x1="430" y1="160" x2="580" y2="160" class="line" />
+            <text x="505" y="155" class="small-text" text-anchor="middle">Power Key</text>
+
+            <line x1="430" y1="180" x2="580" y2="180" class="line" />
+            <text x="505" y="175" class="small-text" text-anchor="middle">UART</text>
+            
+            <line x1="430" y1="200" x2="580" y2="200" class="line" />
+            <text x="505" y="195" class="small-text" text-anchor="middle">Interrupt</text>
+
+            <!-- MCU to DALI Master -->
+            <line x1="390" y1="280" x2="390" y2="290" class="line" />
+            <line x1="390" y1="290" x2="440" y2="290" class="line" />
+            <text x="415" y="285" class="small-text" text-anchor="middle">UART</text>
+
+            <!-- Cellular to Flash -->
+            <line x1="610" y1="240" x2="610" y2="270" class="line" />
+            <text x="600" y="260" class="small-text" text-anchor="middle">I2C</text>
+
+            <line x1="680" y1="240" x2="680" y2="270" class="line" />
+            <text x="670" y="260" class="small-text" text-anchor="middle">SPI</text>
+            
+            <!-- Flash to MCU -->
+            <line x1="430" y1="240" x2="520" y2="240" class="line" />
+            <line x1="520" y1="240" x2="520" y2="270" class="line" />
+            <line x1="520" y1="270" x2="580" y2="270" class="line" />
+            <text x="475" y="235" class="small-text" text-anchor="middle">SPI</text>
+
+            <!-- PSU to MCU & Cellular (Power lines) -->
+            <line x1="360" y1="360" x2="360" y2="280" class="line" />
+            <line x1="645" y1="360" x2="645" y2="310" class="line" />
+            <!-- Antenna (Right) -->
+            <!-- Antenna pole -->
+            <line x1="750" y1="130" x2="820" y2="130" class="line" />
+            <line x1="820" y1="130" x2="820" y2="100" class="line" />
+            <line x1="810" y1="100" x2="830" y2="100" class="line" />
+            <!-- Ant symbol -->
+            <line x1="820" y1="100" x2="820" y2="80" class="line" />
+            <line x1="810" y1="80" x2="830" y2="80" class="line" />
+            <polygon points="820,65 810,80 830,80" fill="none" stroke="#000" stroke-width="1.5" />
+            <text x="820" y="150" class="bold-text" text-anchor="middle">Internal Cellular</text>
+            <text x="820" y="165" class="bold-text" text-anchor="middle">Antenna (4G)</text>
+
+            <!-- GPS Antenna (Right) -->
+            <line x1="750" y1="200" x2="820" y2="200" class="line" />
+            <line x1="820" y1="200" x2="820" y2="180" class="line" />
+            <rect x="810" y="170" width="20" height="10" fill="none" stroke="#000" stroke-width="1.5" />
+            <text x="820" y="220" class="bold-text" text-anchor="middle">Internal GPS</text>
+            <text x="820" y="235" class="bold-text" text-anchor="middle">Antenna</text>
+
+            <!-- Footer -->
+            <text x="450" y="570" class="bold-text" text-anchor="middle">Figure 2.2.1</text>
+        </svg>
+    </div>
+</body>
+</html>

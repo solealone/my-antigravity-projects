@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Stability Report | Solar OEM Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Icon support -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .grid-status-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .event-reason-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background: #e2e8f0;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item"><i class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="models.html" class="nav-item"><i class="ph ph-stack"></i><span>Models</span></a>
+                <a href="accounts.html" class="nav-item"><i class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside> <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">Analytics</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">Reports</span>
+                </div>
+
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i class="ph ph-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="ph ph-gear"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-wrapper">
+
+                <!-- Report Navigation Pills -->
+                <div class="report-nav-grid">
+                    <button class="report-pill" onclick="window.location.href='reports.html'">Last Data Report</button>
+                    <button class="report-pill" onclick="window.location.href='inverter-summary.html'">Inverter
+                        Summary</button>
+                    <button class="report-pill" onclick="window.location.href='monthly-summary.html'">Monthly
+                        Summary</button>
+                    <button class="report-pill" onclick="window.location.href='device-report.html'">Device Data</button>
+                    <button class="report-pill" onclick="window.location.href='inverter-data.html'">Inverter
+                        Data</button>
+                    <button class="report-pill"
+                        onclick="window.location.href='generation-report.html'">Generation</button>
+                    <button class="report-pill" onclick="window.location.href='fault-report.html'">Faults</button>
+                    <button class="report-pill"
+                        onclick="window.location.href='efficiency-report.html'">Efficiency</button>
+                    <button class="report-pill active" onclick="window.location.href='grid-stability-report.html'">Grid
+                        Stability</button>
+                    <button class="report-pill" onclick="window.location.href='firmware-report.html'">Firmware</button>
+                    <button class="report-pill" onclick="window.location.href='warranty-report.html'">Warranty</button>
+                </div>
+
+                <div class="card form-card mt-4">
+                    <!-- Filter Area -->
+                    <div class="card-header p-4">
+                        <div class="filter-grid">
+                            <div class="search-group">
+                                <i class="ph ph-magnifying-glass"></i>
+                                <input type="text" placeholder="Search Inverter...">
+                            </div>
+
+                            <div class="date-group">
+                                <input type="text" value="30 Jan 2026 -> 30 Jan 2026">
+                                <i class="ph ph-calendar"></i>
+                            </div>
+
+                            <div class="select-group">
+                                <select>
+                                    <option>All Event Types</option>
+                                </select>
+                                <i class="ph ph-caret-down"></i>
+                            </div>
+
+                            <div class="action-group">
+                                <button class="btn btn-primary">SUBMIT</button>
+                                <button class="btn btn-secondary"><i class="ph ph-download-simple"></i>
+                                    Download</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grid Availability Stats -->
+                    <div
+                        style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; padding: 1.5rem; border-bottom: 1px solid #e5e7eb;">
+                        <div class="grid-status-card">
+                            <div>
+                                <div
+                                    style="font-size: 0.85rem; color: #64748b; font-weight: 600; text-transform: uppercase;">
+                                    Grid Availability</div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #0f172a; margin-top: 0.5rem;">
+                                    98.2%</div>
+                                <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.25rem;">Last 24 Hours</div>
+                            </div>
+                            <i class="ph ph-plug" style="font-size: 3rem; color: #10b981; opacity: 0.2;"></i>
+                        </div>
+                        <div class="grid-status-card">
+                            <div>
+                                <div
+                                    style="font-size: 0.85rem; color: #64748b; font-weight: 600; text-transform: uppercase;">
+                                    Total Grid Events</div>
+                                <div style="font-size: 2rem; font-weight: 700; color: #0f172a; margin-top: 0.5rem;">3
+                                </div>
+                                <div style="font-size: 0.8rem; color: #ef4444; margin-top: 0.25rem;">Affected Inverters:
+                                    2</div>
+                            </div>
+                            <i class="ph ph-warning" style="font-size: 3rem; color: #ef4444; opacity: 0.2;"></i>
+                        </div>
+                    </div>
+
+                    <div class="card-title-row" style="padding: 1rem 1.5rem; border-bottom: 1px solid #e5e7eb;">
+                        <h3 style="font-size: 1rem; font-weight: 700;">Grid Connection Log (Events)</h3>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Inverter Serial</th>
+                                        <th>Event Time</th>
+                                        <th>Event Cause</th>
+                                        <th>Grid Voltage (V)</th>
+                                        <th>Grid Freq (Hz)</th>
+                                        <th>Duration</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>SN-INV-2023-Y99</strong></td>
+                                        <td>2026-01-30 14:15:22</td>
+                                        <td><span class="event-reason-tag">Grid Over-Voltage</span></td>
+                                        <td><span style="color: #ef4444; font-weight: 700;">272.5 V</span></td>
+                                        <td>50.1 Hz</td>
+                                        <td>5 min 12s</td>
+                                        <td><span class="status-btn success">Reconnected</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SN-INV-2023-Y99</strong></td>
+                                        <td>2026-01-30 11:30:05</td>
+                                        <td><span class="event-reason-tag">Grid Over-Voltage</span></td>
+                                        <td><span style="color: #ef4444; font-weight: 700;">275.1 V</span></td>
+                                        <td>50.0 Hz</td>
+                                        <td>12 min 00s</td>
+                                        <td><span class="status-btn success">Reconnected</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SN-INV-2025-A12</strong></td>
+                                        <td>2026-01-30 09:45:10</td>
+                                        <td><span class="event-reason-tag">Grid Under-Freq</span></td>
+                                        <td>228.0 V</td>
+                                        <td><span style="color: #ef4444; font-weight: 700;">47.5 Hz</span></td>
+                                        <td>2 min 30s</td>
+                                        <td><span class="status-btn success">Reconnected</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pagination-footer">
+                            <span>Rows per page: 10</span>
+                            <div class="page-controls">
+                                <span>1-3 of 3</span>
+                                <button disabled><i class="ph ph-caret-left"></i></button>
+                                <button disabled><i class="ph ph-caret-right"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

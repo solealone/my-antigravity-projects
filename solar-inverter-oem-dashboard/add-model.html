@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Site Model | Solar OEM Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Icon support -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item"><i class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="models.html" class="nav-item"><i class="ph ph-stack"></i><span>Models</span></a>
+                <a href="accounts.html" class="nav-item"><i class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside> <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">Inverter Management</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb">Inverter Models</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">Add Model</span>
+                </div>
+
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <i class="ph ph-magnifying-glass"></i>
+                        <input type="text" placeholder="Search...">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-wrapper">
+                <div class="page-title-section">
+                    <h1>Add New Inverter Model</h1>
+                </div>
+
+                <div class="tab-bar">
+                    <a href="sites.html" class="tab-btn">Site List</a>
+                    <a href="add-site.html" class="tab-btn">Add Site</a>
+                    <a href="models.html" class="tab-btn">Inverter Model List</a>
+                    <a href="add-model.html" class="tab-btn active">Add Model</a>
+                </div>
+
+                <div class="card form-card">
+                    <div class="card-body">
+
+                        <!-- Section: Basic Information -->
+                        <div class="form-section">
+                            <h3 class="section-title">
+                                <i class="ph ph-car-profile"></i> Basic Model Information
+                            </h3>
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label>Model Name <span class="required">*</span></label>
+                                    <input type="text" placeholder="e.g. SunKing Pro-X 5000">
+                                    <i class="ph ph-car input-icon"></i>
+                                </div>
+                                <div class="form-group">
+                                    <label>Series / Family <span class="required">*</span></label>
+                                    <div class="select-wrapper">
+                                        <select>
+                                            <option>Select Series</option>
+                                            <option>Pro-X Series</option>
+                                            <option>EcoMax Series</option>
+                                        </select>
+                                        <i class="ph ph-caret-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section: Performance Specs -->
+                        <div class="form-section">
+                            <h3 class="section-title">
+                                <i class="ph ph-lightning"></i> Electrical Specifications
+                            </h3>
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label>Max DC Input Voltage (V) <span class="required">*</span></label>
+                                    <input type="number" placeholder="e.g. 600">
+                                    <i class="ph ph-lightning input-icon"></i>
+                                </div>
+                                <div class="form-group">
+                                    <label>Max AC Output Current (A) <span class="required">*</span></label>
+                                    <input type="number" placeholder="e.g. 25">
+                                    <i class="ph ph-lightning input-icon"></i>
+                                </div>
+                            </div>
+                            <div class="grid-3 mt-4">
+                                <div class="form-group">
+                                    <label>Euro Efficiency (%) <span class="required">*</span></label>
+                                    <input type="number" placeholder="e.g. 97.5">
+                                    <i class="ph ph-car input-icon"></i>
+                                </div>
+                                <div class="form-group">
+                                    <label>Max Efficiency (%) <span class="required">*</span></label>
+                                    <input type="number" placeholder="e.g. 98.2">
+                                    <i class="ph ph-car input-icon"></i>
+                                </div>
+                                <div class="form-group">
+                                    <label>MPPT Efficiency (%) <span class="required">*</span></label>
+                                    <input type="number" placeholder="e.g. 99.9">
+                                    <i class="ph ph-car input-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section: System Compatibility (Battery Info) -->
+                        <div class="form-section">
+                            <h3 class="section-title">
+                                <i class="ph ph-battery-charging"></i> System Compatibility
+                            </h3>
+                            <div class="form-group">
+                                <label>Grid Connection Type <span class="required">*</span></label>
+                                <input type="text" placeholder="Enter connection type (e.g. Single Phase, Split Phase)">
+                                <i class="ph ph-battery-full input-icon"></i>
+                            </div>
+                        </div>
+
+                        <!-- Section: Model Images -->
+                        <div class="form-section">
+                            <h3 class="section-title">
+                                <i class="ph ph-camera"></i> Product Images <span class="badge-pill">0/4</span>
+                            </h3>
+
+                            <div class="info-box">
+                                <i class="ph ph-info"></i>
+                                <div class="info-content">
+                                    <strong>Upload PNG images from different angles of the inverter. At least one image
+                                        is required.</strong>
+                                    <ul>
+                                        <li>Format: PNG only</li>
+                                        <li>Maximum size: 1MB per image</li>
+                                        <li>Recommended resolution: 1200x1200 pixels</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="upload-grid">
+                                <!-- Front View -->
+                                <div class="upload-box">
+                                    <div class="box-label">Front View</div>
+                                    <div class="dash-area">
+                                        <i class="ph ph-camera"></i>
+                                        <div class="upload-text">
+                                            <strong>Upload Front View</strong>
+                                            <span>Front view of the inverter</span>
+                                            <span class="red-text">PNG ONLY • Max 1MB</span>
+                                        </div>
+                                    </div>
+                                    <span class="tag-label">FRONT</span>
+                                </div>
+
+                                <!-- Bottom Port View -->
+                                <div class="upload-box">
+                                    <div class="box-label">Port View</div>
+                                    <div class="dash-area">
+                                        <i class="ph ph-camera"></i>
+                                        <div class="upload-text">
+                                            <strong>Upload Port View</strong>
+                                            <span>Bottom ports view</span>
+                                            <span class="red-text">PNG ONLY • Max 1MB</span>
+                                        </div>
+                                    </div>
+                                    <span class="tag-label">PORTS</span>
+                                </div>
+
+                                <!-- Side Label View -->
+                                <div class="upload-box">
+                                    <div class="box-label">Label View</div>
+                                    <div class="dash-area">
+                                        <i class="ph ph-camera"></i>
+                                        <div class="upload-text">
+                                            <strong>Upload Label View</strong>
+                                            <span>Side specification label</span>
+                                            <span class="red-text">PNG ONLY • Max 1MB</span>
+                                        </div>
+                                    </div>
+                                    <span class="tag-label">LABEL</span>
+                                </div>
+
+                                <!-- Angled View -->
+                                <div class="upload-box">
+                                    <div class="box-label">Angled View</div>
+                                    <div class="dash-area">
+                                        <i class="ph ph-camera"></i>
+                                        <div class="upload-text">
+                                            <strong>Upload Angled View</strong>
+                                            <span>Isometric view</span>
+                                            <span class="red-text">PNG ONLY • Max 1MB</span>
+                                        </div>
+                                    </div>
+                                    <span class="tag-label">ANGLE</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section: Documentation -->
+                        <div class="form-section">
+                            <h3 class="section-title">
+                                <i class="ph ph-file-text"></i> Documentation
+                            </h3>
+                            <div class="form-group">
+                                <label>Manual Document (Optional)</label>
+                                <div class="file-input-row">
+                                    <button class="btn btn-secondary"><i class="ph ph-upload-simple"></i> Upload
+                                        Manual</button>
+                                    <span class="help-text">Upload inverter manual or documentation (PDF, DOC, DOCX) •
+                                        Max size: 10MB</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary">Reset Form</button>
+                            <button type="submit" class="btn btn-primary">+ Add New Model</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

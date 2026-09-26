@@ -1,0 +1,2313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Changer Prophetical Church | Mobile App</title>
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #000000;
+            --color-surface: rgba(12, 12, 16, 0.7);
+            --color-card: rgba(12, 12, 16, 0.7);
+            --color-surface-hover: rgba(255, 255, 255, 0.08);
+            --color-primary: #8b5cf6; /* Neon Violet */
+            --color-secondary: rgba(255, 255, 255, 0.03);
+            --color-gold: #fbbf24; 
+            --color-gold-glow: rgba(251, 191, 36, 0.15);
+            --color-indigo-muted: rgba(139, 92, 246, 0.12);
+            --color-green: #34d399; /* Neon Green */
+            --color-green-muted: rgba(52, 211, 153, 0.15);
+            --color-red: #ef4444; /* Neon Red */
+            --color-red-muted: rgba(239, 68, 68, 0.15);
+            --color-text: #ffffff;
+            --color-text-muted: #94a3b8;
+            --color-border: rgba(139, 92, 246, 0.25);
+            --font-display: 'Outfit', sans-serif;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            background-color: #000000;
+            color: var(--color-text);
+            font-family: var(--font-sans);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        /* Simulator Container */
+        .simulator-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Top Simulation Bar (Controls outside the phone) */
+        .simulation-controls {
+            background-color: rgba(18, 18, 20, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--color-border);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.8), 0 0 15px rgba(139, 92, 246, 0.1);
+            z-index: 100;
+        }
+
+        .control-label {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--color-gold);
+        }
+
+        .role-selector {
+            background-color: #000;
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 8px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Desktop Smartphone Frame Simulator */
+        .simulator-wrapper {
+            position: relative;
+            width: 390px;
+            height: 844px;
+            background: #000000;
+            border: 10px solid #1a1a1d;
+            border-radius: 44px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.95),
+                        0 0 30px rgba(139, 92, 246, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Screen notches */
+        .simulator-bezel {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 28px;
+            background: #1a1a1d;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 4px;
+        }
+
+        .simulator-speaker {
+            width: 40px;
+            height: 3px;
+            background: #111;
+            border-radius: 2px;
+        }
+
+        /* App Content */
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(34, 211, 238, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.08) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(251, 191, 36, 0.08) 0px, transparent 50%);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding-top: 28px;
+            padding-bottom: 8px;
+        }
+
+        /* Scrollable area */
+        .scrollable-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            scrollbar-width: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .scrollable-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* App Header */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px 12px 16px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            background-color: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 100;
+        }
+
+        .app-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .app-logo svg {
+            color: var(--color-gold);
+            filter: drop-shadow(0 0 4px rgba(251,191,36,0.3));
+        }
+
+        .app-logo span {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-bubble {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background-color: rgba(255, 255, 255, 0.03);
+            padding: 4px 10px;
+            border-radius: 16px;
+            border: 1px solid var(--color-border);
+        }
+
+        .profile-avatar {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: var(--color-primary);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 8px;
+            font-weight: 700;
+        }
+
+        .profile-name {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        /* Bottom Tab Navigation */
+        .bottom-nav {
+            height: 64px;
+            background-color: rgba(5, 5, 5, 0.98);
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 6px;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            width: 20%;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item svg {
+            transition: transform 0.2s ease;
+        }
+
+        .nav-item span {
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        .nav-item.active {
+            color: var(--color-gold);
+            text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+        }
+
+        .nav-item.active svg {
+            transform: scale(1.15);
+            color: var(--color-gold);
+            filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.5));
+        }
+
+        /* Page Layout & Titles */
+        .page-section {
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+            animation: slideUp 0.25s cubic-bezier(0.1, 0.76, 0.55, 0.94);
+        }
+
+        .page-section.active {
+            display: flex;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-header-group {
+            margin-bottom: 2px;
+        }
+
+        .page-title {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--color-text);
+            letter-spacing: -0.2px;
+        }
+
+        .page-subtitle {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            margin-top: 1px;
+        }
+
+        /* Card and Panel Designs */
+        .card {
+            background: rgba(12, 12, 16, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+            opacity: 0.5;
+            transform: translate(20%, -20%);
+            pointer-events: none;
+        }
+
+        .card:active {
+            transform: scale(0.98);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ffffff, var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-title svg {
+            color: var(--color-gold);
+            filter: drop-shadow(0 0 4px var(--color-gold-glow));
+        }
+
+        .card-subtitle {
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .stat-card {
+            background: rgba(12, 12, 16, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+            opacity: 0.5;
+            transform: translate(20%, -20%);
+            pointer-events: none;
+        }
+
+        .stat-card:active {
+            transform: scale(0.96);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .stat-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stat-icon.gold { background-color: var(--color-gold-muted); color: var(--color-gold); }
+        .stat-icon.indigo { background-color: var(--color-indigo-muted); color: var(--color-primary); }
+        .stat-icon.green { background-color: var(--color-green-muted); color: var(--color-green); }
+        .stat-icon.red { background-color: var(--color-red-muted); color: var(--color-red); }
+
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-val {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 800;
+        }
+
+        .stat-lbl {
+            font-size: 0.65rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 600;
+        }
+
+        /* List Headers */
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+        }
+
+        .list-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .list-action-btn {
+            background: none;
+            border: none;
+            color: var(--color-primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* Task Cards */
+        .task-item {
+            background-color: #1a191d;
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: border-color 0.2s;
+        }
+
+        .task-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .urgency-badge {
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 1px 5px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .urgency-badge.urgent { background-color: var(--color-red-muted); color: var(--color-red); }
+        .urgency-badge.standard { background-color: var(--color-indigo-muted); color: var(--color-primary); }
+
+        .task-desc {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            line-height: 1.35;
+        }
+
+        .task-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+            border-top: 1px dashed rgba(255,255,255,0.05);
+            padding-top: 8px;
+        }
+
+        .task-assignee {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+        }
+
+        .mini-avatar {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--color-secondary);
+            font-size: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .task-complete-btn {
+            background-color: var(--color-green-muted);
+            color: var(--color-green);
+            border: 1px solid rgba(52,211,153,0.2);
+            border-radius: 6px;
+            padding: 3px 8px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .task-complete-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Toggle Sub-tabs */
+        .sub-tab-bar {
+            display: flex;
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            padding: 3px;
+            border-radius: 10px;
+        }
+
+        .sub-tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--color-text-muted);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sub-tab-item.active {
+            background-color: var(--color-secondary);
+            color: var(--color-text);
+        }
+
+        /* Inputs */
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 8px 12px 8px 30px;
+            color: var(--color-text);
+            font-size: 0.8rem;
+            outline: none;
+            transition: all 0.2s ease;
+            box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.5), inset -1px -1px 4px rgba(255, 255, 255, 0.01);
+        }
+
+        .search-input:focus { 
+            border-color: var(--color-primary); 
+            box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.5), 0 0 8px rgba(139, 92, 246, 0.25);
+            background-color: rgba(10, 10, 15, 0.6);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-text-muted);
+            pointer-events: none;
+        }
+
+        /* Expandable family card */
+        .family-card {
+            background-color: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .family-header {
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .family-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .family-meta {
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            margin-top: 1px;
+        }
+
+        .family-details {
+            display: none;
+            padding: 10px 12px 12px 12px;
+            background-color: rgba(255,255,255,0.01);
+            border-top: 1px solid var(--color-border);
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .family-details.active { display: flex; }
+
+        .believer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .believer-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+        .believer-info-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .believer-name { font-size: 0.8rem; font-weight: 500; }
+        .believer-role { font-size: 0.65rem; color: var(--color-text-muted); background-color: rgba(255,255,255,0.04); padding: 1px 4px; border-radius: 4px; }
+        .badge-baptism { font-size: 0.6rem; font-weight: 800; padding: 1px 4px; border-radius: 4px; text-transform: uppercase; }
+        .badge-baptism.baptized { background-color: var(--color-green-muted); color: var(--color-green); }
+        .badge-baptism.unbaptized { background-color: var(--color-red-muted); color: var(--color-red); }
+
+        /* Pastor Workloads */
+        .pastor-workload-card {
+            background-color: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .pastor-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pastor-name { font-size: 0.85rem; font-weight: 700; }
+        .pastor-role { font-size: 0.7rem; color: var(--color-gold); font-weight: 600; }
+
+        .workload-bar-container {
+            width: 100%;
+            height: 6px;
+            background-color: var(--color-secondary);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .workload-bar {
+            height: 100%;
+            background-color: var(--color-primary);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .workload-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.65rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 4px 10px rgba(139, 92, 246, 0.2);
+        }
+
+        .btn:active { transform: scale(0.97); }
+        .btn-outline { 
+            background-color: transparent; 
+            border: 1px solid rgba(139, 92, 246, 0.25); 
+            color: var(--color-text); 
+            box-shadow: none;
+        }
+        .btn-outline:hover { background-color: rgba(255,255,255,0.03); }
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--color-primary), #6d28d9); 
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.4), inset 1px 1px 2px rgba(255,255,255,0.2), inset -1px -1px 2px rgba(0,0,0,0.4); 
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        .btn-primary:hover { opacity: 0.95; }
+        .btn-gold { 
+            background: linear-gradient(135deg, var(--color-gold), #d97706); 
+            color: #000; 
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.4), inset 1px 1px 2px rgba(255,255,255,0.3), inset -1px -1px 2px rgba(0,0,0,0.4); 
+        }
+        .btn-gold:hover { opacity: 0.95; }
+
+        .floating-action-bar {
+            margin-top: auto;
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Bottom Sheet Form */
+        .bottom-sheet-backdrop {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .bottom-sheet-backdrop.active { display: block; opacity: 1; }
+
+        .bottom-sheet {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--color-surface);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            border-top: 1px solid var(--color-border);
+            padding: 16px 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transform: translateY(100%);
+            transition: transform 0.25s cubic-bezier(0.1, 0.76, 0.55, 0.94);
+            z-index: 1001;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
+        .bottom-sheet.active { transform: translateY(0); }
+
+        .sheet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 8px;
+        }
+
+        .sheet-title { font-family: var(--font-display); font-size: 1rem; font-weight: 800; }
+        .sheet-close { background: none; border: none; color: var(--color-text-muted); font-size: 1.2rem; cursor: pointer; outline: none; }
+
+        .form-group { display: flex; flex-direction: column; gap: 4px; }
+        .form-label { font-size: 0.7rem; font-weight: 700; color: var(--color-text-muted); text-transform: uppercase; }
+        .form-control {
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 8px 10px;
+            color: var(--color-text);
+            font-size: 0.8rem;
+            outline: none;
+            font-family: var(--font-sans);
+            box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.5), inset -1px -1px 4px rgba(255, 255, 255, 0.01);
+            transition: all 0.2s ease;
+        }
+        .form-control:focus { 
+            border-color: var(--color-primary); 
+            box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.5), 0 0 8px rgba(139, 92, 246, 0.25);
+            background-color: rgba(10, 10, 15, 0.6);
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        /* Attendance Toggles */
+        .attendance-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 10px 12px;
+        }
+
+        .attendance-name { font-size: 0.8rem; font-weight: 600; }
+        .attendance-actions { display: flex; gap: 6px; }
+
+        .btn-toggle {
+            border: 1px solid var(--color-border);
+            background-color: transparent;
+            color: var(--color-text-muted);
+            padding: 4px 8px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+
+        .btn-toggle.present.active { background-color: var(--color-green-muted); color: var(--color-green); border-color: var(--color-green); }
+        .btn-toggle.absent.active { background-color: var(--color-red-muted); color: var(--color-red); border-color: var(--color-red); }
+
+        /* Study checklist */
+        .study-checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .checkbox-container {
+            display: block;
+            position: relative;
+            padding-left: 24px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .checkbox-container input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
+        .checkmark { position: absolute; top: 0; left: 0; height: 16px; width: 16px; background-color: var(--color-secondary); border-radius: 4px; }
+        .checkbox-container input:checked ~ .checkmark { background-color: var(--color-gold); }
+        .checkmark:after { content: ""; position: absolute; display: none; }
+        .checkbox-container input:checked ~ .checkmark:after { display: block; }
+        .checkbox-container .checkmark:after {
+            left: 5px; top: 2px; width: 4px; height: 8px; border: solid #000; border-width: 0 2px 2px 0; transform: rotate(45deg);
+        }
+
+        .bible-study-banner {
+            background-color: var(--color-gold-muted);
+            border: 1px solid rgba(251, 191, 36, 0.25);
+            border-radius: 14px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .study-title { font-family: var(--font-display); font-size: 0.95rem; font-weight: 800; color: var(--color-gold); }
+        .study-scripture { font-size: 0.75rem; font-weight: 700; }
+        .study-text { font-size: 0.75rem; color: var(--color-text-muted); line-height: 1.35; }
+
+        /* Governance: tithe and budget card */
+        .finance-card {
+            background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .finance-value {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--color-green);
+        }
+
+        .budget-bar-container {
+            display: flex;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: var(--color-secondary);
+            margin-top: 4px;
+        }
+
+        .budget-segment { height: 100%; }
+        .budget-segment.admin { background-color: var(--color-primary); }
+        .budget-segment.charity { background-color: var(--color-gold); }
+        .budget-segment.event { background-color: var(--color-green); }
+        .budget-segment.maintenance { background-color: var(--color-red); }
+
+        .budget-legend {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.6rem;
+            color: var(--color-text-muted);
+            margin-top: 2px;
+        }
+
+        .legend-item { display: flex; align-items: center; gap: 4px; }
+        .legend-color { width: 6px; height: 6px; border-radius: 50%; }
+        .legend-color.admin { background-color: var(--color-primary); }
+        .legend-color.charity { background-color: var(--color-gold); }
+        .legend-color.event { background-color: var(--color-green); }
+        .legend-color.maintenance { background-color: var(--color-red); }
+
+        /* Announcement Display */
+        .announcement-card {
+            background-color: rgba(129, 140, 248, 0.08);
+            border: 1px solid rgba(129, 140, 248, 0.25);
+            border-radius: 12px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .announcement-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.65rem;
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        .announcement-title { font-size: 0.8rem; font-weight: 700; }
+        .announcement-text { font-size: 0.75rem; color: var(--color-text-muted); line-height: 1.3; }
+
+        /* Audit Logs List */
+        .audit-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 140px;
+            overflow-y: auto;
+            padding-right: 4px;
+            scrollbar-width: thin;
+        }
+
+        .audit-item {
+            background-color: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 0.65rem;
+            line-height: 1.3;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 2px solid var(--color-secondary);
+        }
+
+        .audit-msg { color: var(--color-text-muted); }
+        .audit-time { color: var(--color-gold); font-weight: 600; font-family: monospace; font-size: 0.6rem; }
+
+        /* UI elements toggles based on role class */
+        .rbac-super, .rbac-pastor { display: none; }
+        .is-super .rbac-super { display: flex; }
+        .is-pastor .rbac-pastor { display: flex; }
+
+        /* Media queries for phone view scale */
+        @media (max-width: 500px) {
+            body { padding: 0; background-color: var(--color-bg); }
+            .simulator-wrapper { width: 100vw; height: 100vh; border: none; border-radius: 0; box-shadow: none; }
+            .simulator-bezel { display: none; }
+            .phone-screen { padding-top: 10px; }
+            .simulation-controls { border-radius: 0; width: 100%; border-left: none; border-right: none; }
+        }
+    </style>
+    <!-- React & Babel CDNs (UMD builds) -->
+    <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.26.10/babel.min.js"></script>
+
+    <!-- Error Handling for script loads -->
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                if (typeof React === 'undefined' || typeof ReactDOM === 'undefined' || typeof Babel === 'undefined') {
+                    document.getElementById('root').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;flex-direction:column;gap:16px;background:#000;color:#fff"><h2 style="color:#ef4444">⚠ Failed to load React Scripts</h2><p style="color:#94a3b8;max-width:500px;text-align:center">Please check your internet connection and reload the page.</p><button onclick="location.reload()" style="padding:12px 24px;background:#8b5cf6;color:white;border:none;border-radius:8px;font-weight:bold;cursor:pointer">Retry</button></div>';
+                } else {
+                    const rootEl = document.getElementById('root');
+                    const isStuck = rootEl && rootEl.textContent && rootEl.textContent.indexOf('Initializing') !== -1;
+                    if (isStuck) {
+                        console.warn("React initialization timeout in simulator. Resetting local database cache...");
+                        const keys = ['sanctus_clergy', 'sanctus_families', 'sanctus_believers', 'sanctus_tasks', 'sanctus_study_plans', 'sanctus_attendance', 'sanctus_announcements', 'sanctus_auditlogs', 'sanctus_currentuser'];
+                        keys.forEach(function(k) { localStorage.removeItem(k); });
+                        document.getElementById('root').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;flex-direction:column;gap:16px;background:#000;color:#fff"><h2 style="color:#fbbf24">⚠ Database Cache Reset</h2><p style="color:#94a3b8;max-width:500px;text-align:center">We detected an initialization failure in the simulator. The local database cache has been reset to fix loading conflicts.</p><button onclick="location.reload()" style="padding:12px 24px;background:#8b5cf6;color:white;border:none;border-radius:8px;font-weight:bold;cursor:pointer">Reload to Launch</button></div>';
+                    }
+                }
+            }, 6000);
+        });
+    </script>
+</head>
+<body class="is-super">
+    <div id="root">
+        <!-- React App mounts here -->
+        <div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;color:#94a3b8;background:#000;">
+            <div style="text-align:center;">
+                <div style="width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top-color:#8b5cf6;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px;"></div>
+                <p style="font-family:'Outfit',sans-serif; font-weight:500; font-size:14px; letter-spacing:0.5px;">Initializing Life Changer Prophetical Church Mobile App...</p>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        function App() {
+            // 1. STATE & ROUTING
+            const [currentUser, setCurrentUser] = useState('thomas');
+            const [activeTab, setActiveTab] = useState('dashboard');
+            const [directorySubtab, setDirectorySubtab] = useState('families');
+            const [directorySearch, setDirectorySearch] = useState('');
+            const [activeBottomSheet, setActiveBottomSheet] = useState(null);
+            const [expandedFamilies, setExpandedFamilies] = useState({});
+
+            // Lists
+            const [clergy, setClergy] = useState([]);
+            const [families, setFamilies] = useState([]);
+            const [believers, setBelievers] = useState([]);
+            const [tasks, setTasks] = useState([]);
+            const [studyPlans, setStudyPlans] = useState([]);
+            const [attendance, setAttendance] = useState({});
+            const [announcements, setAnnouncements] = useState([]);
+            const [auditLogsList, setAuditLogsList] = useState([]);
+
+            // Form inputs state:
+            const [formMemberName, setFormMemberName] = useState('');
+            const [formMemberGender, setFormMemberGender] = useState('Male');
+            const [formMemberBaptism, setFormMemberBaptism] = useState('Baptized');
+            const [formMemberFamily, setFormMemberFamily] = useState('');
+            const [formMemberPastor, setFormMemberPastor] = useState('p1');
+            const [formMemberPrayer, setFormMemberPrayer] = useState('');
+
+            const [formFamilyName, setFormFamilyName] = useState('');
+            const [formFamilyLocation, setFormFamilyLocation] = useState('');
+            const [formFamilyPastor, setFormFamilyPastor] = useState('p1');
+
+            const [formTaskTitle, setFormTaskTitle] = useState('');
+            const [formTaskDesc, setFormTaskDesc] = useState('');
+            const [formTaskPastor, setFormTaskPastor] = useState('p1');
+            const [formTaskUrgency, setFormTaskUrgency] = useState('standard');
+            const [formTaskBeliever, setFormTaskBeliever] = useState('');
+
+            const [formStudyTitle, setFormStudyTitle] = useState('');
+            const [formStudyScripture, setFormStudyScripture] = useState('');
+            const [formStudyText, setFormStudyText] = useState('');
+
+            const [formAnnouncementTitle, setFormAnnouncementTitle] = useState('');
+            const [formAnnouncementText, setFormAnnouncementText] = useState('');
+
+            const [formVisitBeliever, setFormVisitBeliever] = useState('');
+            const [formVisitNote, setFormVisitNote] = useState('');
+
+            const loadState = () => {
+                const cachedClergy = localStorage.getItem('sanctus_clergy');
+                const cachedFamilies = localStorage.getItem('sanctus_families');
+                const cachedBelievers = localStorage.getItem('sanctus_believers');
+                const cachedTasks = localStorage.getItem('sanctus_tasks');
+                const cachedPlans = localStorage.getItem('sanctus_study_plans');
+                const cachedAttendance = localStorage.getItem('sanctus_attendance');
+                const cachedAnnouncements = localStorage.getItem('sanctus_announcements');
+                const cachedAuditLogs = localStorage.getItem('sanctus_auditlogs');
+                const cachedCurrentUser = localStorage.getItem('sanctus_currentuser');
+
+                try {
+                    if (cachedClergy && cachedFamilies && cachedBelievers && cachedTasks && cachedPlans && cachedAttendance) {
+                        const parsedClergy = JSON.parse(cachedClergy);
+                        const parsedFamilies = JSON.parse(cachedFamilies);
+                        const parsedBelievers = JSON.parse(cachedBelievers);
+                        const parsedTasks = JSON.parse(cachedTasks);
+                        const parsedPlans = JSON.parse(cachedPlans);
+                        const parsedAttendance = JSON.parse(cachedAttendance);
+
+                        // Validate schemas to prevent rendering crashes
+                        const isValidClergy = Array.isArray(parsedClergy) && parsedClergy.every(c => c && c.id && c.name);
+                        const isValidFamilies = Array.isArray(parsedFamilies) && parsedFamilies.every(f => f && f.id && f.name);
+                        const isValidBelievers = Array.isArray(parsedBelievers) && parsedBelievers.every(b => b && b.id && b.name && typeof b.growthRate === 'number');
+                        const isValidTasks = Array.isArray(parsedTasks) && parsedTasks.every(t => t && t.id && t.title && typeof t.status === 'string');
+                        const isValidPlans = Array.isArray(parsedPlans) && parsedPlans.every(p => p && p.id && p.title);
+                        const isValidAttendance = typeof parsedAttendance === 'object' && parsedAttendance !== null;
+
+                        if (isValidClergy && isValidFamilies && isValidBelievers && isValidTasks && isValidPlans && isValidAttendance) {
+                            setClergy(parsedClergy);
+                            setFamilies(parsedFamilies);
+                            setBelievers(parsedBelievers);
+                            setTasks(parsedTasks);
+                            setStudyPlans(parsedPlans);
+                            setAttendance(parsedAttendance);
+                            if (cachedAnnouncements) setAnnouncements(JSON.parse(cachedAnnouncements));
+                            if (cachedAuditLogs) setAuditLogsList(JSON.parse(cachedAuditLogs));
+                            if (cachedCurrentUser) setCurrentUser(cachedCurrentUser);
+                        } else {
+                            throw new Error("Invalid schema detected in cache");
+                        }
+                    } else {
+                        seedMockData();
+                    }
+                } catch (err) {
+                    console.warn("Storage parse error in simulator, seeding defaults...", err);
+                    seedMockData();
+                }
+            };
+
+            const seedMockData = () => {
+                const seedClergy = [
+                    { id: 'p1', name: 'Pastor Joseph', district: 'North District', avatar: 'PJ' },
+                    { id: 'p2', name: 'Pastor Matthew', district: 'East District', avatar: 'PM' },
+                    { id: 'p3', name: 'Pastor Luke', district: 'South District', avatar: 'PL' }
+                ];
+
+                const seedFamilies = [
+                    { id: 'f1', name: 'Adams Family', subPriestId: 'p1', location: 'North District' },
+                    { id: 'f2', name: 'Carter Family', subPriestId: 'p2', location: 'East District' },
+                    { id: 'f3', name: 'Evans Family', subPriestId: 'p3', location: 'South District' },
+                    { id: 'f4', name: 'Davis Family', subPriestId: 'p2', location: 'East District' }
+                ];
+
+                const seedBelievers = [
+                    { id: 'b1', name: 'John Adams', gender: 'Male', email: 'john.adams@example.com', phone: '+1 (555) 101-2020', address: '45 Way', location: 'North District', dateJoined: '2024-01-15', religion: 'Baptist', baptism: 'Baptized', familyId: 'f1', role: 'Father', subPriestId: 'p1', prayer: 'Family spiritual growth.', studyCompleted: true, studyDate: '2026-06-08', growthRate: 85 },
+                    { id: 'b2', name: 'Mary Adams', gender: 'Female', email: 'mary.adams@example.com', phone: '+1 (555) 101-2021', address: '45 Way', location: 'North District', dateJoined: '2024-01-15', religion: 'Methodist', baptism: 'Baptized', familyId: 'f1', role: 'Mother', subPriestId: 'p1', prayer: 'Raising children in faith.', studyCompleted: true, studyDate: '2026-06-08', growthRate: 90 },
+                    { id: 'b3', name: 'David Adams', gender: 'Male', email: 'david.adams@example.com', phone: '+1 (555) 101-2022', address: '45 Way', location: 'North District', dateJoined: '2024-01-15', religion: 'Baptist', baptism: 'Baptized', familyId: 'f1', role: 'Son', subPriestId: 'p1', prayer: 'Focus in high school studies.', studyCompleted: false, studyDate: null, growthRate: 60 },
+                    { id: 'b4', name: 'Sarah Adams', gender: 'Female', email: 'sarah.adams@example.com', phone: '+1 (555) 101-2023', address: '45 Way', location: 'North District', dateJoined: '2024-01-15', religion: 'Baptist', baptism: 'Non-Baptized', familyId: 'f1', role: 'Daughter', subPriestId: 'p1', prayer: 'Preparing for water baptism.', studyCompleted: false, studyDate: null, growthRate: 70 },
+                    { id: 'b5', name: 'Robert Carter', gender: 'Male', email: 'robert.c@example.com', phone: '+1 (555) 202-3030', address: '12 Road', location: 'East District', dateJoined: '2025-03-10', religion: 'None', baptism: 'Baptized', familyId: 'f2', role: 'Father', subPriestId: 'p2', prayer: 'Job security.', studyCompleted: true, studyDate: '2026-06-09', growthRate: 75 },
+                    { id: 'b6', name: 'Helen Carter', gender: 'Female', email: 'helen.c@example.com', phone: '+1 (555) 202-3031', address: '12 Road', location: 'East District', dateJoined: '2025-03-10', religion: 'Lutheran', baptism: 'Baptized', familyId: 'f2', role: 'Mother', subPriestId: 'p2', prayer: 'Recovery from surgery.', studyCompleted: true, studyDate: '2026-06-09', growthRate: 80 },
+                    { id: 'b7', name: 'Chloe Carter', gender: 'Female', email: 'chloe.c@example.com', phone: '+1 (555) 202-3032', address: '12 Road', location: 'East District', dateJoined: '2025-04-12', religion: 'None', baptism: 'Non-Baptized', familyId: 'f2', role: 'Daughter', subPriestId: 'p2', prayer: 'Spiritual guidance for college.', studyCompleted: false, studyDate: null, growthRate: 40 },
+                    { id: 'b8', name: 'James Davis', gender: 'Male', email: 'james.d@example.com', phone: '+1 (555) 404-5050', address: '39 Heaven St', location: 'East District', dateJoined: '2024-11-20', religion: 'Anglican', baptism: 'Baptized', familyId: 'f4', role: 'Father', subPriestId: 'p2', prayer: 'Wisdom for parenting.', studyCompleted: true, studyDate: '2026-06-08', growthRate: 85 },
+                    { id: 'b9', name: 'Patricia Davis', gender: 'Female', email: 'patricia.d@example.com', phone: '+1 (555) 404-5051', address: '39 Heaven St', location: 'East District', dateJoined: '2024-11-20', religion: 'Anglican', baptism: 'Baptized', familyId: 'f4', role: 'Mother', subPriestId: 'p2', prayer: 'Health in the household.', studyCompleted: true, studyDate: '2026-06-08', growthRate: 80 },
+                    { id: 'b10', name: 'Michael Davis', gender: 'Male', email: 'mike.d@example.com', phone: '+1 (555) 404-5052', address: '39 Heaven St', location: 'East District', dateJoined: '2024-11-20', religion: 'Anglican', baptism: 'Non-Baptized', familyId: 'f4', role: 'Son', subPriestId: 'p2', prayer: 'Overcoming mental stress.', studyCompleted: false, studyDate: null, growthRate: 50 },
+                    { id: 'b11', name: 'William Evans', gender: 'Male', email: 'william.e@example.com', phone: '+1 (555) 505-6060', address: '88 Way', location: 'South District', dateJoined: '2025-08-14', religion: 'Presbyterian', baptism: 'Baptized', familyId: 'f3', role: 'Father', subPriestId: 'p3', prayer: 'Leading local Bible group.', studyCompleted: true, studyDate: '2026-06-09', growthRate: 95 },
+                    { id: 'b12', name: 'Karen Evans', gender: 'Female', email: 'karen.e@example.com', phone: '+1 (555) 505-6061', address: '88 Way', location: 'South District', dateJoined: '2025-08-14', religion: 'Baptist', baptism: 'Baptized', familyId: 'f3', role: 'Mother', subPriestId: 'p3', prayer: 'Recovery for parents.', studyCompleted: true, studyDate: '2026-06-09', growthRate: 90 },
+                    { id: 'b13', name: 'Thomas Evans', gender: 'Male', email: 'tom.e@example.com', phone: '+1 (555) 505-6062', address: '88 Way', location: 'South District', dateJoined: '2025-08-14', religion: 'Baptist', baptism: 'Baptized', familyId: 'f3', role: 'Son', subPriestId: 'p3', prayer: 'Guidance in choices.', studyCompleted: false, studyDate: null, growthRate: 65 },
+                    { id: 'b14', name: 'Elizabeth Baker', gender: 'Female', email: 'liz.baker@example.com', phone: '+1 (555) 303-4040', address: '78 Faith Blvd', location: 'North District', dateJoined: '2026-05-01', religion: 'Catholic', baptism: 'Non-Baptized', familyId: '', role: '', subPriestId: 'p1', prayer: 'Newcomer adjustment.', studyCompleted: false, studyDate: null, growthRate: 50 },
+                    { id: 'b15', name: 'Christopher King', gender: 'Male', email: 'chris.k@example.com', phone: '+1 (555) 909-8080', address: '11 Lane', location: 'South District', dateJoined: '2026-05-20', religion: 'Pentecostal', baptism: 'Baptized', familyId: '', role: '', subPriestId: 'p3', prayer: 'Spiritual grounding.', studyCompleted: true, studyDate: '2026-06-09', growthRate: 70 }
+                ];
+
+                const seedTasks = [
+                    { id: 't1', title: 'Visit the Carter Family', desc: 'Check in on Helen Carter after her surgery and pray for recovery.', priestId: 'p2', urgency: 'Critical', believerId: 'b6', status: 'pending', dateCreated: '2026-06-07' },
+                    { id: 't2', title: 'Baptism Preparation Class', desc: 'Host baptism class for Sarah Adams and Elizabeth Baker.', priestId: 'p1', urgency: 'Urgent', believerId: '', status: 'in_progress', dateCreated: '2026-06-05' },
+                    { id: 't3', title: 'Deliver Welcome Basket to Baker Home', desc: 'Deliver newcomer basket to Elizabeth Baker and run intake counseling.', priestId: 'p1', urgency: 'Standard', believerId: 'b14', status: 'completed', dateCreated: '2026-05-02' },
+                    { id: 't4', title: 'Counsel Michael Davis on anxiety', desc: 'Discuss biblical strategies for managing academic stress.', priestId: 'p2', urgency: 'Standard', believerId: 'b10', status: 'pending', dateCreated: '2026-06-08' }
+                ];
+
+                const seedPlans = [
+                    { id: 'sp1', title: 'The Power of Grace', scripture: 'Ephesians 2:8-9', content: 'Grace is a free gift, not something earned. We are saved through faith, not works, so that no one can boast.', action: 'Write down 3 things you are thankful for.' }
+                ];
+
+                const seedAttendance = {
+                    '2026-06-07': {
+                        'b1': true, 'b2': true, 'b3': true, 'b4': false,
+                        'b5': true, 'b6': true, 'b7': false,
+                        'b8': true, 'b9': true, 'b10': false,
+                        'b11': true, 'b12': true, 'b13': true,
+                        'b14': true, 'b15': true
+                    }
+                };
+
+                const seedAnnouncements = [
+                    { id: "a1", title: "Monthly Leaders Assembly", sender: "Pastor Thomas", text: "All staff pastors, please prepare your district attendance sheets for the governance meeting this Saturday at 9 AM.", time: "10:15" },
+                    { id: "a2", title: "Baptism Service", sender: "Pastor Thomas", text: "We will conduct a water baptism assembly next Sunday.", time: "Yesterday" }
+                ];
+
+                const seedAuditLogs = [
+                    { msg: "Pastor Thomas initialized Sanctus Web portal dashboard.", time: "10:00" },
+                    { msg: "Pastor Joseph updated task 'Visit the Carter Family' status to Pending.", time: "10:05" }
+                ];
+
+                setClergy(seedClergy);
+                setFamilies(seedFamilies);
+                setBelievers(seedBelievers);
+                setTasks(seedTasks);
+                setStudyPlans(seedPlans);
+                setAttendance(seedAttendance);
+                setAnnouncements(seedAnnouncements);
+                setAuditLogsList(seedAuditLogs);
+
+                localStorage.setItem('sanctus_clergy', JSON.stringify(seedClergy));
+                localStorage.setItem('sanctus_families', JSON.stringify(seedFamilies));
+                localStorage.setItem('sanctus_believers', JSON.stringify(seedBelievers));
+                localStorage.setItem('sanctus_tasks', JSON.stringify(seedTasks));
+                localStorage.setItem('sanctus_study_plans', JSON.stringify(seedPlans));
+                localStorage.setItem('sanctus_attendance', JSON.stringify(seedAttendance));
+                localStorage.setItem('sanctus_announcements', JSON.stringify(seedAnnouncements));
+                localStorage.setItem('sanctus_auditlogs', JSON.stringify(seedAuditLogs));
+                localStorage.setItem('sanctus_currentuser', 'thomas');
+            };
+
+            useEffect(() => {
+                loadState();
+                const handleStorage = () => {
+                    loadState();
+                };
+                window.addEventListener('storage', handleStorage);
+                return () => window.removeEventListener('storage', handleStorage);
+            }, []);
+
+            useEffect(() => {
+                if (currentUser === 'thomas') {
+                    document.body.className = 'is-super';
+                } else {
+                    document.body.className = 'is-pastor';
+                }
+            }, [currentUser]);
+
+            const activeClergyId = currentUser === 'joseph' ? 'p1' : (currentUser === 'matthew' ? 'p2' : 'p3');
+
+            // Default visit believer when list changes
+            useEffect(() => {
+                if (currentUser !== 'thomas') {
+                    const list = believers.filter(b => b.subPriestId === activeClergyId);
+                    if (list.length > 0) {
+                        setFormVisitBeliever(list[0].id);
+                    } else {
+                        setFormVisitBeliever('');
+                    }
+                }
+            }, [currentUser, believers]);
+
+            const saveFamilies = (data) => { setFamilies(data); localStorage.setItem('sanctus_families', JSON.stringify(data)); };
+            const saveBelievers = (data) => { setBelievers(data); localStorage.setItem('sanctus_believers', JSON.stringify(data)); };
+            const saveTasks = (data) => { setTasks(data); localStorage.setItem('sanctus_tasks', JSON.stringify(data)); };
+            const saveStudyPlans = (data) => { setStudyPlans(data); localStorage.setItem('sanctus_study_plans', JSON.stringify(data)); };
+            const saveAttendance = (data) => { setAttendance(data); localStorage.setItem('sanctus_attendance', JSON.stringify(data)); };
+            const saveAnnouncements = (data) => { setAnnouncements(data); localStorage.setItem('sanctus_announcements', JSON.stringify(data)); };
+            const saveAuditLogs = (data) => { setAuditLogsList(data); localStorage.setItem('sanctus_auditlogs', JSON.stringify(data)); };
+
+            const getActivePastorName = () => {
+                if (currentUser === 'thomas') return 'Pastor Thomas';
+                const p = clergy.find(c => c.id === activeClergyId);
+                return p ? p.name : 'Pastor';
+            };
+
+            const addAuditLog = (msg) => {
+                const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+                const newLog = { msg, time };
+                setAuditLogsList(prev => {
+                    const updated = [newLog, ...prev];
+                    localStorage.setItem('sanctus_auditlogs', JSON.stringify(updated));
+                    return updated;
+                });
+            };
+
+            const getActiveBelievers = () => {
+                if (currentUser === 'thomas') return believers;
+                return believers.filter(b => b.subPriestId === activeClergyId);
+            };
+
+            const getActiveFamilies = () => {
+                if (currentUser === 'thomas') return families;
+                return families.filter(f => f.subPriestId === activeClergyId);
+            };
+
+            const activeBelievers = getActiveBelievers();
+            const activeFamilies = getActiveFamilies();
+
+            const SundayDate = '2026-06-07';
+            const dayAttendance = attendance[SundayDate] || {};
+            const presentCount = activeBelievers.filter(b => dayAttendance[b.id] === true).length;
+            const attendanceRate = activeBelievers.length > 0 ? Math.round((presentCount / activeBelievers.length) * 100) : 0;
+
+            const studyCount = activeBelievers.filter(b => b.studyCompleted).length;
+            const studyRate = activeBelievers.length > 0 ? Math.round((studyCount / activeBelievers.length) * 100) : 0;
+
+            const submitAddMember = (e) => {
+                e.preventDefault();
+                if (!formMemberName.trim()) {
+                    alert('Please fill name field.');
+                    return;
+                }
+                const newId = 'b_' + Date.now();
+                const subPriestId = currentUser === 'thomas' ? formMemberPastor : activeClergyId;
+                const newBeliever = {
+                    id: newId,
+                    name: formMemberName,
+                    gender: formMemberGender,
+                    email: 'N/A',
+                    phone: 'N/A',
+                    address: 'N/A',
+                    location: currentUser === 'thomas' ? 'North District' : (clergy.find(c => c.id === subPriestId)?.district || 'North District'),
+                    dateJoined: new Date().toISOString().split('T')[0],
+                    religion: 'None',
+                    baptism: formMemberBaptism,
+                    familyId: formMemberFamily === 'None' || !formMemberFamily ? '' : formMemberFamily,
+                    role: '',
+                    subPriestId,
+                    prayer: formMemberPrayer || 'Spiritual growth.',
+                    studyCompleted: false,
+                    studyDate: null,
+                    growthRate: 50
+                };
+
+                const updated = [...believers, newBeliever];
+                saveBelievers(updated);
+                addAuditLog(`${getActivePastorName()} registered new believer: ${formMemberName}.`);
+
+                setFormMemberName('');
+                setFormMemberPrayer('');
+                setFormMemberFamily('');
+                setActiveBottomSheet(null);
+            };
+
+            const submitAddFamily = (e) => {
+                e.preventDefault();
+                if (!formFamilyName.trim() || !formFamilyLocation.trim()) {
+                    alert('Please fill out all family fields.');
+                    return;
+                }
+                const newId = 'f_' + Date.now();
+                const subPriestId = currentUser === 'thomas' ? formFamilyPastor : activeClergyId;
+                const newFam = {
+                    id: newId,
+                    name: formFamilyName,
+                    location: formFamilyLocation,
+                    subPriestId
+                };
+
+                const updated = [...families, newFam];
+                saveFamilies(updated);
+                addAuditLog(`${getActivePastorName()} registered family group: ${formFamilyName}.`);
+
+                setFormFamilyName('');
+                setFormFamilyLocation('');
+                setActiveBottomSheet(null);
+            };
+
+            const submitAddTask = (e) => {
+                e.preventDefault();
+                if (!formTaskTitle.trim()) {
+                    alert('Please enter a task title.');
+                    return;
+                }
+                const newId = 't_' + Date.now();
+                const newTask = {
+                    id: newId,
+                    title: formTaskTitle,
+                    desc: formTaskDesc,
+                    priestId: formTaskPastor,
+                    urgency: formTaskUrgency.charAt(0).toUpperCase() + formTaskUrgency.slice(1),
+                    believerId: formTaskBeliever || '',
+                    status: 'pending',
+                    dateCreated: new Date().toISOString().split('T')[0]
+                };
+
+                const updated = [...tasks, newTask];
+                saveTasks(updated);
+                const assignedPastorName = clergy.find(c => c.id === formTaskPastor)?.name || 'Pastor';
+                addAuditLog(`Pastor Thomas assigned task '${formTaskTitle}' to ${assignedPastorName}.`);
+
+                setFormTaskTitle('');
+                setFormTaskDesc('');
+                setFormTaskBeliever('');
+                setActiveBottomSheet(null);
+            };
+
+            const submitPublishStudy = (e) => {
+                e.preventDefault();
+                if (!formStudyTitle.trim() || !formStudyScripture.trim()) {
+                    alert('Please fill details.');
+                    return;
+                }
+                const newId = 'sp_' + Date.now();
+                const newPlan = {
+                    id: newId,
+                    title: formStudyTitle,
+                    scripture: formStudyScripture,
+                    content: formStudyText,
+                    action: 'Reflect on scripture and pray.'
+                };
+
+                const updatedBelievers = believers.map(b => ({
+                    ...b,
+                    studyCompleted: false,
+                    studyDate: null
+                }));
+
+                saveBelievers(updatedBelievers);
+                saveStudyPlans([...studyPlans, newPlan]);
+                addAuditLog(`Pastor Thomas updated active Bible Study Plan: '${formStudyTitle}'.`);
+
+                setFormStudyTitle('');
+                setFormStudyScripture('');
+                setFormStudyText('');
+                setActiveBottomSheet(null);
+            };
+
+            const submitPostAnnouncement = (e) => {
+                e.preventDefault();
+                if (!formAnnouncementTitle.trim() || !formAnnouncementText.trim()) {
+                    alert('Please enter announcement text.');
+                    return;
+                }
+                const newId = 'a' + (announcements.length + 1);
+                const newAnnounce = {
+                    id: newId,
+                    title: formAnnouncementTitle,
+                    sender: 'Pastor Thomas',
+                    text: formAnnouncementText,
+                    time: 'Just now'
+                };
+
+                saveAnnouncements([newAnnounce, ...announcements]);
+                addAuditLog(`Pastor Thomas broadcasted announcement: '${formAnnouncementTitle}'.`);
+
+                setFormAnnouncementTitle('');
+                setFormAnnouncementText('');
+                setActiveBottomSheet(null);
+            };
+
+            const submitVisitLog = (e) => {
+                e.preventDefault();
+                if (!formVisitBeliever || !formVisitNote.trim()) {
+                    alert('Please choose a believer and write a note.');
+                    return;
+                }
+
+                const updatedBelievers = believers.map(b => {
+                    if (b.id === formVisitBeliever) {
+                        return { ...b, prayer: formVisitNote };
+                    }
+                    return b;
+                });
+
+                saveBelievers(updatedBelievers);
+                const believerName = believers.find(b => b.id === formVisitBeliever)?.name || 'Believer';
+                addAuditLog(`${getActivePastorName()} logged visitation note for ${believerName}: "${formVisitNote}"`);
+
+                setFormVisitNote('');
+                alert('Visitation log posted successfully to the audit trail!');
+            };
+
+            const completeTask = (taskId) => {
+                const updatedTasks = tasks.map(t => {
+                    if (t.id === taskId) {
+                        return { ...t, status: 'completed' };
+                    }
+                    return t;
+                });
+                saveTasks(updatedTasks);
+                const t = tasks.find(x => x.id === taskId);
+                addAuditLog(`${getActivePastorName()} marked task '${t ? t.title : 'Task'}' as Completed.`);
+            };
+
+            const toggleStudyCheck = (believerId, checked) => {
+                const updatedBelievers = believers.map(b => {
+                    if (b.id === believerId) {
+                        const nextCompleted = checked;
+                        const nextGrowth = checked ? Math.min(100, b.growthRate + 10) : Math.max(0, b.growthRate - 10);
+                        return {
+                            ...b,
+                            studyCompleted: nextCompleted,
+                            studyDate: checked ? new Date().toISOString().split('T')[0] : null,
+                            growthRate: nextGrowth
+                        };
+                    }
+                    return b;
+                });
+                saveBelievers(updatedBelievers);
+                const name = believers.find(b => b.id === believerId)?.name || 'Believer';
+                addAuditLog(`${getActivePastorName()} updated Bible study progress for ${name}.`);
+            };
+
+            const toggleAttendance = (believerId, present) => {
+                const dayRecord = { ...dayAttendance };
+                dayRecord[believerId] = present;
+                const updated = {
+                    ...attendance,
+                    [SundayDate]: dayRecord
+                };
+                saveAttendance(updated);
+                const name = believers.find(b => b.id === believerId)?.name || 'Believer';
+                addAuditLog(`${getActivePastorName()} marked ${name} as ${present ? 'Present' : 'Absent'}.`);
+            };
+
+            const changeSimulationRole = (role) => {
+                setCurrentUser(role);
+                localStorage.setItem('sanctus_currentuser', role);
+            };
+
+            const toggleFamilyExpand = (id) => {
+                setExpandedFamilies(prev => ({ ...prev, [id]: !prev[id] }));
+            };
+
+            const activeTasks = tasks.filter(t => t.status === 'pending');
+            const myActiveTasks = currentUser === 'thomas' ? activeTasks : activeTasks.filter(t => t.priestId === activeClergyId);
+
+            // Search filtering
+            const filteredDirectoryBelievers = activeBelievers.filter(b => {
+                const q = directorySearch.toLowerCase();
+                return b.name.toLowerCase().includes(q) || b.baptism.toLowerCase().includes(q);
+            });
+
+            const filteredDirectoryFamilies = activeFamilies.filter(f => {
+                const q = directorySearch.toLowerCase();
+                return f.name.toLowerCase().includes(q) || f.location.toLowerCase().includes(q);
+            });
+
+            const currentStudyPlan = studyPlans[studyPlans.length - 1] || null;
+
+            return (
+                <div className="simulator-container">
+                    {/* Simulation controls toolbar */}
+                    <div className="simulation-controls">
+                        <span className="control-label">SIMULATOR PROFILE:</span>
+                        <select className="role-selector" value={currentUser} onChange={(e) => changeSimulationRole(e.target.value)}>
+                            <option value="thomas">Pr. Thomas (Super Admin)</option>
+                            <option value="joseph">Pr. Joseph (Assistant Pastor)</option>
+                            <option value="matthew">Pr. Matthew (Assistant Pastor)</option>
+                            <option value="luke">Pr. Luke (Assistant Pastor)</option>
+                        </select>
+                    </div>
+
+                    {/* Phone Shell */}
+                    <div className="simulator-wrapper">
+                        <div className="simulator-bezel">
+                            <div className="simulator-speaker"></div>
+                        </div>
+
+                        <div className="phone-screen">
+                            {/* App Header */}
+                            <header className="app-header">
+                                <div className="app-logo">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <path d="M12 2v20M5 9h14"/>
+                                    </svg>
+                                    <span style={{ fontSize: '12px', fontWeight: 800, lineHeight: 1.2, whiteSpace: 'normal', width: '130px' }}>
+                                        Life Changer Prophetical Church
+                                    </span>
+                                </div>
+                                <div className="profile-bubble">
+                                    <div className="profile-avatar">
+                                        {currentUser === 'thomas' ? 'PT' : (clergy.find(c => c.id === activeClergyId)?.avatar || 'P')}
+                                    </div>
+                                    <span className="profile-name">
+                                        {currentUser === 'thomas' ? 'Pr. Thomas' : (clergy.find(c => c.id === activeClergyId)?.name || 'Pastor').replace('Pastor ', 'Pr. ')}
+                                    </span>
+                                </div>
+                            </header>
+
+                            {/* Scrollable Content */}
+                            <div className="scrollable-content">
+                                {/* SECTION: Dashboard */}
+                                <div className={`page-section ${activeTab === 'dashboard' ? 'active' : ''}`}>
+                                    <div className="page-header-group">
+                                        <h2 className="page-title">Dashboard</h2>
+                                        <p className="page-subtitle">
+                                            {currentUser === 'thomas' ? 'Global Church Administration' : `Parish District Work - ${getActivePastorName()}`}
+                                        </p>
+                                    </div>
+
+                                    {/* Stats Grid */}
+                                    <div className="stats-grid">
+                                        <div className="stat-card">
+                                            <div className="stat-icon gold">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                                </svg>
+                                            </div>
+                                            <div className="stat-info">
+                                                <span className="stat-val">{activeBelievers.length}</span>
+                                                <span className="stat-lbl">Believers</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="stat-card">
+                                            <div className="stat-icon indigo">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                                                </svg>
+                                            </div>
+                                            <div className="stat-info">
+                                                <span className="stat-val">{activeFamilies.length}</span>
+                                                <span className="stat-lbl">Families</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="stat-card">
+                                            <div className="stat-icon green">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                                                </svg>
+                                            </div>
+                                            <div className="stat-info">
+                                                <span className="stat-val">{attendanceRate}%</span>
+                                                <span className="stat-lbl">Attendance</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="stat-card">
+                                            <div className="stat-icon red">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                                </svg>
+                                            </div>
+                                            <div className="stat-info">
+                                                <span className="stat-val">{studyRate}%</span>
+                                                <span className="stat-lbl">Study Rate</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* GOVERNANCE PANEL: Tithe and Finances (Thomas-only) */}
+                                    {currentUser === 'thomas' && (
+                                        <div className="finance-card rbac-super">
+                                            <div className="card-header">
+                                                <span className="card-title">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <rect x="2" y="4" width="20" height="16" rx="2"/><line x1="12" y1="10" x2="12" y2="10"/><path d="M22 10h-4a2 2 0 0 0-2 2v0a2 2 0 0 0 2 2h4"/>
+                                                    </svg>
+                                                    Governance: Tithes & Funds
+                                                </span>
+                                                <span style={{ fontSize: '0.6rem', color: 'var(--color-green)', fontWeight: 700 }}>Active Month</span>
+                                            </div>
+                                            <span className="finance-value">$14,250.00</span>
+                                            <span className="card-subtitle" style={{ marginTop: '-6px' }}>Ministry Budget Distribution:</span>
+                                            <div className="budget-bar-container">
+                                                <div className="budget-segment admin" style={{ width: '40%' }} title="Admin"></div>
+                                                <div className="budget-segment charity" style={{ width: '25%' }} title="Charity"></div>
+                                                <div className="budget-segment event" style={{ width: '20%' }} title="Events"></div>
+                                                <div className="budget-segment maintenance" style={{ width: '15%' }} title="Maintenance"></div>
+                                            </div>
+                                            <div className="budget-legend">
+                                                <div className="legend-item"><div className="legend-color admin"></div><span>Admin (40%)</span></div>
+                                                <div className="legend-item"><div className="legend-color charity"></div><span>Charity (25%)</span></div>
+                                                <div className="legend-item"><div className="legend-color event"></div><span>Outreach (20%)</span></div>
+                                                <div className="legend-item"><div className="legend-color maintenance"></div><span>Facilities (15%)</span></div>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* GOVERNANCE PANEL: Pastor Workloads (Thomas-only) */}
+                                    {currentUser === 'thomas' && (
+                                        <div className="card rbac-super" style={{ gap: '8px' }}>
+                                            <span className="card-title">Pastoral Load & Delegation</span>
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                                {clergy.map(pastor => {
+                                                    const activeCount = tasks.filter(t => t.priestId === pastor.id && t.status === 'pending').length;
+                                                    const percentage = Math.min((activeCount / 4) * 100, 100);
+                                                    return (
+                                                        <div key={pastor.id} style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}>
+                                                                <span style={{ fontWeight: 600 }}>{pastor.name}</span>
+                                                                <span style={{ color: 'var(--color-text-muted)' }}>{activeCount} active task{activeCount === 1 ? '' : 's'}</span>
+                                                            </div>
+                                                            <div className="workload-bar-container">
+                                                                <div className="workload-bar" style={{ width: `${percentage}%` }}></div>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* PANEL: Announcements */}
+                                    <div className="card">
+                                        <div className="list-header">
+                                            <span className="list-title">Ministry Announcements</span>
+                                            {currentUser === 'thomas' && (
+                                                <button className="list-action-btn rbac-super" onClick={() => setActiveBottomSheet('post-announcement')}>+ Broadcast</button>
+                                            )}
+                                        </div>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                            {announcements.map(a => (
+                                                <div key={a.id} className="announcement-card">
+                                                    <div className="announcement-header">
+                                                        <span>From: {a.sender}</span>
+                                                        <span>{a.time}</span>
+                                                    </div>
+                                                    <span className="announcement-title">{a.title}</span>
+                                                    <p className="announcement-text">{a.text}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* PANEL: Active Tasks List (All roles) */}
+                                    <div className="item-list">
+                                        <div className="list-header">
+                                            <span className="list-title">
+                                                {currentUser === 'thomas' ? 'Active Tasks' : 'My Assigned Tasks'}
+                                            </span>
+                                            <button className="list-action-btn" onClick={() => setActiveTab('pastors')}>View All</button>
+                                        </div>
+                                        <div className="item-list">
+                                            {myActiveTasks.length === 0 ? (
+                                                <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textAlign: 'center', padding: '10px' }}>
+                                                    No pending active tasks.
+                                                </p>
+                                            ) : (
+                                                myActiveTasks.map(task => {
+                                                    const pastor = clergy.find(c => c.id === task.priestId);
+                                                    const believer = believers.find(b => b.id === task.believerId);
+                                                    return (
+                                                        <div key={task.id} className="task-item text-muted">
+                                                            <div className="task-meta">
+                                                                <span className="task-title" style={{ color: '#fff' }}>{task.title}</span>
+                                                                <span className={`urgency-badge ${task.urgency.toLowerCase() === 'critical' || task.urgency.toLowerCase() === 'urgent' ? 'urgent' : 'standard'}`}>
+                                                                    {task.urgency}
+                                                                </span>
+                                                            </div>
+                                                            <p className="task-desc">{task.desc} {believer ? `(${believer.name})` : ''}</p>
+                                                            <div className="task-footer">
+                                                                <div className="task-assignee">
+                                                                    <div className="mini-avatar">{pastor ? pastor.avatar : 'P'}</div>
+                                                                    <span>{pastor ? pastor.name : 'Unassigned'}</span>
+                                                                </div>
+                                                                <button className="task-complete-btn" onClick={() => completeTask(task.id)}>Complete</button>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* GOVERNANCE PANEL: Global Audit Trail (Thomas-only) */}
+                                    {currentUser === 'thomas' && (
+                                        <div className="card rbac-super">
+                                            <span className="card-title">Global Governance Audit Trail</span>
+                                            <div className="audit-list">
+                                                {auditLogsList.map((log, idx) => (
+                                                    <div key={idx} className="audit-item">
+                                                        <span className="audit-msg">{log.msg}</span>
+                                                        <span className="audit-time">{log.time}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* STAFF PANEL: Quick Parish Visit Logger (Pastor-only) */}
+                                    {currentUser !== 'thomas' && (
+                                        <div className="card rbac-pastor">
+                                            <span className="card-title">Quick Care Visit Log</span>
+                                            <div className="form-group">
+                                                <label className="form-label">Parishioner Visited</label>
+                                                <select className="form-control" value={formVisitBeliever} onChange={(e) => setFormVisitBeliever(e.target.value)}>
+                                                    {believers.filter(b => b.subPriestId === activeClergyId).map(b => (
+                                                        <option key={b.id} value={b.id}>{b.name}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            <div className="form-group">
+                                                <label className="form-label">Counsel Note</label>
+                                                <input 
+                                                    type="text" 
+                                                    className="form-control" 
+                                                    value={formVisitNote} 
+                                                    onChange={(e) => setFormVisitNote(e.target.value)} 
+                                                    placeholder="E.g., Conducted home prayer..." 
+                                                />
+                                            </div>
+                                            <button className="btn btn-primary" onClick={submitVisitLog}>Post Note to Log</button>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* SECTION: Directory */}
+                                <div className={`page-section ${activeTab === 'directory' ? 'active' : ''}`}>
+                                    <div className="page-header-group">
+                                        <h2 className="page-title">Directory</h2>
+                                        <p className="page-subtitle">Congregational Membership Database</p>
+                                    </div>
+
+                                    {/* Sub-tabs */}
+                                    <div className="sub-tab-bar">
+                                        <div className={`sub-tab-item ${directorySubtab === 'families' ? 'active' : ''}`} onClick={() => setDirectorySubtab('families')}>Families</div>
+                                        <div className={`sub-tab-item ${directorySubtab === 'individuals' ? 'active' : ''}`} onClick={() => setDirectorySubtab('individuals')}>Individuals</div>
+                                    </div>
+
+                                    {/* Search */}
+                                    <div className="search-container">
+                                        <svg className="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                        </svg>
+                                        <input 
+                                            type="text" 
+                                            className="search-input" 
+                                            value={directorySearch} 
+                                            onChange={(e) => setDirectorySearch(e.target.value)} 
+                                            placeholder="Search by name, location or pastor..." 
+                                        />
+                                    </div>
+
+                                    {/* List Content */}
+                                    <div className="item-list">
+                                        {directorySubtab === 'families' ? (
+                                            filteredDirectoryFamilies.length === 0 ? (
+                                                <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textAlign: 'center', padding: '16px' }}>No families found.</p>
+                                            ) : (
+                                                filteredDirectoryFamilies.map(fam => {
+                                                    const pastor = clergy.find(c => c.id === fam.subPriestId);
+                                                    const members = believers.filter(b => b.familyId === fam.id);
+                                                    const isExpanded = expandedFamilies[fam.id];
+                                                    return (
+                                                        <div key={fam.id} className="family-card" style={{ marginBottom: '8px' }}>
+                                                            <div className="family-header" onClick={() => toggleFamilyExpand(fam.id)}>
+                                                                <div>
+                                                                    <span className="family-title">{fam.name}</span>
+                                                                    <p className="family-meta">{fam.location} &bull; {pastor ? pastor.name : 'Unassigned'}</p>
+                                                                </div>
+                                                                <svg 
+                                                                    width="14" 
+                                                                    height="14" 
+                                                                    viewBox="0 0 24 24" 
+                                                                    fill="none" 
+                                                                    stroke="currentColor" 
+                                                                    strokeWidth="2"
+                                                                    style={{ transform: isExpanded ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+                                                                >
+                                                                    <polyline points="6 9 12 15 18 9"/>
+                                                                </svg>
+                                                            </div>
+                                                            <div className={`family-details ${isExpanded ? 'active' : ''}`}>
+                                                                {members.length === 0 ? (
+                                                                    <p style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', fontStyle: 'italic' }}>No registered members.</p>
+                                                                ) : (
+                                                                    members.map(m => (
+                                                                        <div key={m.id} className="believer-row">
+                                                                            <div className="believer-info-group">
+                                                                                <span className="believer-name">{m.name}</span>
+                                                                                <span className="believer-role">{m.role || 'Member'}</span>
+                                                                            </div>
+                                                                            <span className={`badge-baptism ${m.baptism === 'Baptized' ? 'baptized' : 'unbaptized'}`}>{m.baptism}</span>
+                                                                        </div>
+                                                                    ))
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })
+                                            )
+                                        ) : (
+                                            filteredDirectoryBelievers.length === 0 ? (
+                                                <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textAlign: 'center', padding: '16px' }}>No believers found.</p>
+                                            ) : (
+                                                filteredDirectoryBelievers.map(b => {
+                                                    const fam = families.find(f => f.id === b.familyId);
+                                                    return (
+                                                        <div key={b.id} className="card" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: '10px 12px', gap: '8px', marginBottom: '8px' }}>
+                                                            <div>
+                                                                <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{b.name}</span>
+                                                                <p style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)' }}>{fam ? fam.name : 'Individual'}</p>
+                                                            </div>
+                                                            <span className={`badge-baptism ${b.baptism === 'Baptized' ? 'baptized' : 'unbaptized'}`}>{b.baptism}</span>
+                                                        </div>
+                                                    );
+                                                })
+                                            )
+                                        )}
+                                    </div>
+
+                                    <div className="floating-action-bar">
+                                        <button className="btn btn-outline" style={{ flex: 1 }} onClick={() => setActiveBottomSheet('add-family')}>
+                                            + Add Family
+                                        </button>
+                                        <button className="btn btn-primary" style={{ flex: 1 }} onClick={() => setActiveBottomSheet('add-member')}>
+                                            + Add Believer
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* SECTION: Pastors/Tasks delegation */}
+                                <div className={`page-section ${activeTab === 'pastors' ? 'active' : ''}`}>
+                                    <div className="page-header-group">
+                                        <h2 className="page-title">Pastors & Tasks</h2>
+                                        <p className="page-subtitle">Administrative work tracking</p>
+                                    </div>
+
+                                    <div className="item-list">
+                                        {clergy.map(pastor => {
+                                            const activeTasksForPastor = tasks.filter(t => t.priestId === pastor.id && t.status === 'pending');
+                                            const taskCount = activeTasksForPastor.length;
+                                            const percentage = Math.min((taskCount / 4) * 100, 100);
+                                            return (
+                                                <div key={pastor.id} className="pastor-workload-card">
+                                                    <div className="pastor-info">
+                                                        <span className="pastor-name">{pastor.name}</span>
+                                                        <span className="pastor-role">Assistant Pastor</span>
+                                                    </div>
+                                                    <div className="workload-bar-container">
+                                                        <div className="workload-bar" style={{ width: `${percentage}%` }}></div>
+                                                    </div>
+                                                    <div className="workload-meta">
+                                                        <span>Delegation Load</span>
+                                                        <span>{taskCount} Active task{taskCount === 1 ? '' : 's'}</span>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+
+                                    {currentUser === 'thomas' && (
+                                        <button className="btn btn-primary rbac-super" style={{ marginTop: '4px' }} onClick={() => setActiveBottomSheet('add-task')}>
+                                            + Assign Task
+                                        </button>
+                                    )}
+                                </div>
+
+                                {/* SECTION: Bible Study Plans */}
+                                <div className={`page-section ${activeTab === 'study' ? 'active' : ''}`}>
+                                    <div className="page-header-group">
+                                        <h2 className="page-title">Bible Studies</h2>
+                                        <p className="page-subtitle">Discipleship lesson completion metrics</p>
+                                    </div>
+
+                                    {/* Study plan display */}
+                                    {currentStudyPlan && (
+                                        <div className="bible-study-banner">
+                                            <div className="list-header">
+                                                <span className="study-title">{currentStudyPlan.title}</span>
+                                                {currentUser === 'thomas' && (
+                                                    <button className="list-action-btn rbac-super" style={{ color: '#000' }} onClick={() => setActiveBottomSheet('publish-study')}>Edit</button>
+                                                )}
+                                            </div>
+                                            <span className="study-scripture">{currentStudyPlan.scripture}</span>
+                                            <p className="study-text">{currentStudyPlan.content}</p>
+                                        </div>
+                                    )}
+
+                                    {/* Completion check list */}
+                                    <div className="item-list">
+                                        <span className="list-title">Parishioner study completion</span>
+                                        <div className="item-list">
+                                            {activeBelievers.map(b => (
+                                                <div key={b.id} className="study-checklist-item">
+                                                    <label className="checkbox-container">
+                                                        {b.name}
+                                                        <input type="checkbox" checked={b.studyCompleted} onChange={(e) => toggleStudyCheck(b.id, e.target.checked)} />
+                                                        <span className="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* SECTION: Attendance logging */}
+                                <div className={`page-section ${activeTab === 'attendance' ? 'active' : ''}`}>
+                                    <div className="page-header-group">
+                                        <h2 className="page-title">Attendance</h2>
+                                        <p className="page-subtitle">Weekly church gathering logs</p>
+                                    </div>
+
+                                    <div className="card" style={{ padding: '10px 12px', gap: '4px' }}>
+                                        <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-gold)' }}>Sunday Service Tracking</span>
+                                        <p style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)' }}>Mark attendance records for your designated parish members.</p>
+                                    </div>
+
+                                    <div className="item-list">
+                                        {activeBelievers.map(b => {
+                                            const isPresent = dayAttendance[b.id] === true;
+                                            return (
+                                                <div key={b.id} className="attendance-row">
+                                                    <span className="attendance-name">{b.name}</span>
+                                                    <div className="attendance-actions">
+                                                        <button className={`btn-toggle present ${isPresent ? 'active' : ''}`} onClick={() => toggleAttendance(b.id, true)}>Present</button>
+                                                        <button className={`btn-toggle absent ${!isPresent ? 'active' : ''}`} onClick={() => toggleAttendance(b.id, false)}>Absent</button>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Bottom Navigation Bar */}
+                            <nav className="bottom-nav">
+                                <div className={`nav-item ${activeTab === 'dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('dashboard')}>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect>
+                                    </svg>
+                                    <span>Home</span>
+                                </div>
+                                <div className={`nav-item ${activeTab === 'directory' ? 'active' : ''}`} onClick={() => setActiveTab('directory')}>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                    </svg>
+                                    <span>Directory</span>
+                                </div>
+                                <div className={`nav-item ${activeTab === 'pastors' ? 'active' : ''}`} onClick={() => setActiveTab('pastors')}>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <circle cx="12" cy="12" r="4"/><path d="M16 8v5M8 8v5M12 16h.01M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                                    </svg>
+                                    <span>Tasks</span>
+                                </div>
+                                <div className={`nav-item ${activeTab === 'study' ? 'active' : ''}`} onClick={() => setActiveTab('study')}>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                                    </svg>
+                                    <span>Studies</span>
+                                </div>
+                                <div className={`nav-item ${activeTab === 'attendance' ? 'active' : ''}`} onClick={() => setActiveTab('attendance')}>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                                    </svg>
+                                    <span>Attendance</span>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+
+                    {/* SHEET: Add Member */}
+                    <div className={`bottom-sheet-backdrop ${activeBottomSheet === 'add-member' ? 'active' : ''}`} onClick={() => setActiveBottomSheet(null)}>
+                        <div className={`bottom-sheet ${activeBottomSheet === 'add-member' ? 'active' : ''}`} onClick={(e) => e.stopPropagation()}>
+                            <div className="sheet-header">
+                                <span className="sheet-title">Add Believer</span>
+                                <button className="sheet-close" onClick={() => setActiveBottomSheet(null)}>&times;</button>
+                            </div>
+                            <form onSubmit={submitAddMember}>
+                                <div className="form-group">
+                                    <label className="form-label">Full Name</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        value={formMemberName} 
+                                        onChange={(e) => setFormMemberName(e.target.value)} 
+                                        placeholder="John Doe" 
+                                    />
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group" style={{ flex: 1 }}>
+                                        <label className="form-label">Gender</label>
+                                        <select className="form-control" value={formMemberGender} onChange={(e) => setFormMemberGender(e.target.value)}>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group" style={{ flex: 1 }}>
+                                        <label className="form-label">Baptism Status</label>
+                                        <select className="form-control" value={formMemberBaptism} onChange={(e) => setFormMemberBaptism(e.target.value)}>
+                                            <option value="Baptized">Baptized</option>
+                                            <option value="Unbaptized">Unbaptized</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Family Group</label>
+                                    <select className="form-control" value={formMemberFamily} onChange={(e) => setFormMemberFamily(e.target.value)}>
+                                        <option value="">None (Individual Believer)</option>
+                                        {activeFamilies.map(fam => (
+                                            <option key={fam.id} value={fam.id}>{fam.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                {currentUser === 'thomas' && (
+                                    <div className="form-group rbac-super">
+                                        <label className="form-label">Assigned Assistant Pastor</label>
+                                        <select className="form-control" value={formMemberPastor} onChange={(e) => setFormMemberPastor(e.target.value)}>
+                                            {clergy.map(c => (
+                                                <option key={c.id} value={c.id}>{c.name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                )}
+                                <div className="form-group" style={{ marginBottom: '16px' }}>
+                                    <label className="form-label">Prayer Needs</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        value={formMemberPrayer} 
+                                        onChange={(e) => setFormMemberPrayer(e.target.value)} 
+                                        placeholder="Job search, healing, strength..." 
+                                    />
+                                </div>
+                                <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Create Member Entry</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    {/* SHEET: Add Family */}
+                    <div className={`bottom-sheet-backdrop ${activeBottomSheet === 'add-family' ? 'active' : ''}`} onClick={() => setActiveBottomSheet(null)}>
+                        <div className={`bottom-sheet ${activeBottomSheet === 'add-family' ? 'active' : ''}`} onClick={(e) => e.stopPropagation()}>
+                            <div className="sheet-header">
+                                <span className="sheet-title">Register Family Group</span>
+                                <button className="sheet-close" onClick={() => setActiveBottomSheet(null)}>&times;</button>
+                            </div>
+                            <form onSubmit={submitAddFamily}>
+                                <div className="form-group">
+                                    <label className="form-label">Family Surname</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        value={formFamilyName} 
+                                        onChange={(e) => setFormFamilyName(e.target.value)} 
+                                        placeholder="E.g., Smith Family" 
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Location / Area</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        value={formFamilyLocation} 
+                                        onChange={(e) => setFormFamilyLocation(e.target.value)} 
+                                        placeholder="E.g., West District" 
+                                    />
+                                </div>
+                                {currentUser === 'thomas' && (
+                                    <div className="form-group rbac-super">
+                                        <label className="form-label">Assigned Pastor</label>
+                                        <select className="form-control" value={formFamilyPastor} onChange={(e) => setFormFamilyPastor(e.target.value)}>
+                                            {clergy.map(c => (
+                                                <option key={c.id} value={c.id}>{c.name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                )}
+                                <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '8px' }}>Register Family</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    {/* SHEET: Add Task */}
+                    <div className={`bottom-sheet-backdrop ${activeBottomSheet === 'add-task' ? 'active' : ''}`} onClick={() => setActiveBottomSheet(null)}>
+                        <div className={`bottom-sheet ${activeBottomSheet === 'add-task' ? 'active' : ''}`} onClick={(e) => e.stopPropagation()}>
+                            <div className="sheet-header">
+                                <span className="sheet-title">Assign Pastoral Task</span>
+                                <button className="sheet-close" onClick={() => setActiveBottomSheet(null)}>&times;</button>
+                            </div>
+                            <form onSubmit={submitAddTask}>
+                                <div className="form-group">
+                                    <label className="form-label">Task Action Title</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        value={formTaskTitle} 
+                                        onChange={(e) => setFormTaskTitle(e.target.value)} 
+                                        placeholder="Home Counseling Visitation" 
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Task Description</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        value={formTaskDesc} 
+                                        onChange={(e) => setFormTaskDesc(e.target.value)} 
+                                        placeholder="Offer support for family health issues..." 
+                                    />
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group" style={{ flex: 1 }}>
+                                        <label className="form-label">Assign To</label>
+                                        <select className="form-control" value={formTaskPastor} onChange={(e) => setFormTaskPastor(e.target.value)}>
+                                            {clergy.map(c => (
+                                                <option key={c.id} value={c.id}>{c.name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <div className="form-group" style={{ flex: 1 }}>
+                                        <label className="form-label">Urgency</label>
+                                        <select className="form-control" value={formTaskUrgency} onChange={(e) => setFormTaskUrgency(e.target.value)}>
+                                            <option value="standard">Standard</option>
+                                            <option value="urgent">Urgent</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="form-group" style={{ marginBottom: '16px' }}>
+                                    <label className="form-label">Parish Believer Linked</label>
+                                    <select className="form-control" value={formTaskBeliever} onChange={(e) => setFormTaskBeliever(e.target.value)}>
+                                        <option value="">None (General Administrative Task)</option>
+                                        {believers.map(b => (
+                                            <option key={b.id} value={b.id}>{b.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Assign Task</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    {/* SHEET: Publish Study */}
+                    <div className={`bottom-sheet-backdrop ${activeBottomSheet === 'publish-study' ? 'active' : ''}`} onClick={() => setActiveBottomSheet(null)}>
+                        <div className={`bottom-sheet ${activeBottomSheet === 'publish-study' ? 'active' : ''}`} onClick={(e) => e.stopPropagation()}>
+                            <div className="sheet-header">
+                                <span className="sheet-title">Modify Bible Study Plan</span>
+                                <button className="sheet-close" onClick={() => setActiveBottomSheet(null)}>&times;</button>
+                            </div>
+                            <form onSubmit={submitPublishStudy}>
+                                <div className="form-group">
+                                    <label className="form-label">Lesson Title</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        value={formStudyTitle} 
+                                        onChange={(e) => setFormStudyTitle(e.target.value)} 
+                                        placeholder="Faith in Action" 
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Scripture Reference</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        value={formStudyScripture} 
+                                        onChange={(e) => setFormStudyScripture(e.target.value)} 
+                                        placeholder="Hebrews 11:1-6" 
+                                    />
+                                </div>
+                                <div className="form-group" style={{ marginBottom: '16px' }}>
+                                    <label className="form-label">Commentary Outline</label>
+                                    <textarea 
+                                        className="form-control" 
+                                        value={formStudyText} 
+                                        onChange={(e) => setFormStudyText(e.target.value)} 
+                                        rows="3" 
+                                        placeholder="Discussing the foundational properties of trust..." 
+                                    />
+                                </div>
+                                <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Publish Study Plan</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    {/* SHEET: Post Announcement */}
+                    <div className={`bottom-sheet-backdrop ${activeBottomSheet === 'post-announcement' ? 'active' : ''}`} onClick={() => setActiveBottomSheet(null)}>
+                        <div className={`bottom-sheet ${activeBottomSheet === 'post-announcement' ? 'active' : ''}`} onClick={(e) => e.stopPropagation()}>
+                            <div className="sheet-header">
+                                <span className="sheet-title">Broadcast Announcement</span>
+                                <button className="sheet-close" onClick={() => setActiveBottomSheet(null)}>&times;</button>
+                            </div>
+                            <form onSubmit={submitPostAnnouncement}>
+                                <div className="form-group">
+                                    <label className="form-label">Announcement Title</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        value={formAnnouncementTitle} 
+                                        onChange={(e) => setFormAnnouncementTitle(e.target.value)} 
+                                        placeholder="Special Ministry Update" 
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Broadcaster / From</label>
+                                    <input type="text" className="form-control" value="Pastor Thomas" readOnly />
+                                </div>
+                                <div className="form-group" style={{ marginBottom: '16px' }}>
+                                    <label className="form-label">Message Details</label>
+                                    <textarea 
+                                        className="form-control" 
+                                        value={formAnnouncementText} 
+                                        onChange={(e) => setFormAnnouncementText(e.target.value)} 
+                                        rows="3" 
+                                        placeholder="Write message for assistant pastors and staffs..." 
+                                    />
+                                </div>
+                                <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Broadcast Update</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const rootElement = document.getElementById('root');
+        const root = ReactDOM.createRoot(rootElement);
+        root.render(<App />);
+    </script>
+</body>
+</html>

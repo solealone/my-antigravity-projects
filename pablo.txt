@@ -1,0 +1,266 @@
+Public Lighting Control Panel Monitoring & Cable Theft Detection  
+Confidential - This document may not be shared without the prior written consent of Salvi Saudi.                                               |  Page 1 Request for Study  
+Public Lighting Control Panel Monitoring  
+& Cable Theft Detection System 
+Continuation of the PPP smart parking / Smartec platform concept  
+Technical brief to request a development proposal from Transight  
+Executive summary  
+The requested system is a complementary cabinet -level layer for Smartec. It must supervise and 
+remotely control the main contactor and feeder contactors, provide operational-grade energy 
+monitoring, detect cabinet intrusion and expose cabinet status and alarms through open APIs.  
+The cable -theft workflow should correlate door opening, tamper, loss of cabinet communication, 
+loss of feeder electrical continuity, simultaneous node outages and video evidence. The nearby 
+security camera should therefore remain independent from the targeted cabinet, preferably through 
+solar power plus battery autonomy.  
+Smartec should be able to receive telemetry, alarms and camera evidence, open live video on 
+demand, and automatically show the camera stream or clip when a critical alarm is triggered, while 
+the camera keeps recording continuously for later review.  
+ 
+Prepared for  Transight  
+Prepared by  Pablo E lizalde ( CM Salvi Saudi)  
+Date  15 April 2026  
+  
+Public Lighting Control Panel Monitoring & Cable Theft Detection  
+Confidential - This document may not be shared without the prior written consent of Salvi Saudi.                                               |  Page 2 1. Purpose of this document 
+This note is intended to help Transight understand the concept that should be developed as a 
+complementary subsystem to the Smartec platform. The objective is to supervise public lighting control panels, control main and feeder contactors remotely, obtain cabinet- level electrical data and create a 
+reliable workflow for cable theft detection.  
+The requested system should be designed as an open solution. Smartec must remain able to receive alarms, status data, energy information, cabinet connectivity status and camera evidence through APIs or standard interfaces, so that the customer sees one operational environment instead of several 
+disconnected systems. 
+2. Background and operating context  
+Smartec already provides luminaire -level intelligence. Each node can report consumption data obtained 
+from the DALI driver installed in the luminaire. However, the customer is now requesting an additional layer 
+of monitoring at the public lighting control panel, where the outgoing feeders are switched and where a cable theft event usually begins.  
+A typical public lighting control panel in this project is expected to have one main contactor and 
+approximately seven outgoing lines. Each line may feed around 15 to 30 luminaires, depending on 
+luminaire power, cable sizing and network configuration. For that reason, a feeder- level issue can affect a 
+large number of luminaires at once and should be visible immediately from the platform.  
+Key design principle: panel -level monitoring should complement luminaire -level monitoring. It should 
+not duplicate the Smartec node functionality, but add a second and more resilient layer for supervision, 
+alarm correlation, remote switching and incident verification.  
+3. Target technical concept  
+The concept is to retrofit or equip the public lighting cabinet with a controller able to monitor the main contactor, each feeder contactor and the electrical state of the cabinet. Where required, existing 
+contactors can be replaced with DALI- compatible devices already available on the market, provided that 
+the final solution remains fully compatible with Smartec and its DALI communication environment.  
+Attached Image 1 illustrates the proposed structure, where the luminaires are intelligently controlled 
+through Smartec ®, complemented by an additional smart system for control panel management. We also 
+propose installing a camera powered by a solar panel and battery to provide extra surveillance for the system. 
+ 
+Illustrative concept: The lighting system has two levels of control to enhance its reliability: each luminaire is monitored individually, 
+while each control panel and its power supply lines are monitored as a whole. Two additional security layers are also include d: an 
+alarm that detects the opening of the panel door, and a camera capable of identifying movement.  
+ 
+
+Public Lighting Control Panel Monitoring & Cable Theft Detection  
+Confidential - This document may not be shared without the prior written consent of Salvi Saudi.                                               |  Page 3  
+The attached illustration 2 represents the case in which one power line is cut. In that event, the affected 
+feeder loses power, all nodes on that line can disappear at the same time and the platform should 
+generate a suspected theft or feeder -disconnection alarm. This is why the nearby security camera should 
+not depend on the targeted cabinet for power.  
+ 
+Illustrative concept: if one feeder cable is cut, the line loses lighting and communications. The incident should raise panel  alarms 
+and node- outage alarms, while an independently powered camera remains available to verify the event.  
+ 
+Recommended architecture at cabinet level:  
+• DALI -compatible switching interface for the main contactor and feeder contactors.  
+• Auxiliary feedback from contactors so the system can verify actual state rather than only the issued 
+command.  
+• Operational -grade total panel metering together with feeder current, voltage presence or equivalent 
+feeder -health supervision.  
+• Door sensor, tamper signal and controller heartbeat so Smartec receives an alarm when the cabinet is 
+opened, manipulated or disconnected from communications.  
+• Small backup power element for the controller so it can send a final power- loss or last -gasp event if 
+the cabinet is disconnected.  
+• Nearby security camera with solar panel plus battery autonomy and open video integration into 
+Smartec. 
+• Independent or resilient communications path, preferably smartec gateway, to maintain alarm 
+reporting even when the cabinet is under attack.  
+4. Functional requirements for the proposed system  
+The table below captures the minimum scope that should be addressed in Transight's proposal. The final 
+implementation can improve on this baseline, but should not fall below it.  
+Area  Minimum requirement  Reason / intended value  
+Panel architecture  Controller or gateway inside the public lighting 
+cabinet, connected to the main contactor and each 
+outgoing feeder contactor. Typical configuration 
+assumed: approximately 7 feeders per panel and 
+around 15 -30 luminaires per feeder.  Creates one clear point of supervision at cabinet level and reflects the real panel 
+topology described for the project.
+ 
+Contactor control  Remote status monitoring and remote switching of 
+both the main contactor and feeder contactors. 
+Contactor replacement is acceptable and expected if 
+DALI -compatible contactors or equivalent DALI 
+switching devices are required.  Main contactor control is required in 
+addition to feeder control so the platform 
+sees and commands the complete 
+cabinet state.  
+
+Public Lighting Control Panel Monitoring & Cable Theft Detection  
+Confidential - This document may not be shared without the prior written consent of Salvi Saudi.                                               |  Page 4 Area  Minimum requirement  Reason / intended value  
+Operational 
+metering  Operational -grade metering at cabinet level, with 
+preference for total panel consumption plus feeder 
+current, feeder voltage presence or equivalent feeder -
+health information where practical.  Adds a second layer of visibility to 
+complement the energy data already 
+read by Smartec nodes from each DALI 
+driver at luminaire level. Revenue-grade 
+accuracy is not required  at this stage.  
+Cabinet security 
+inputs  Door -open sensor, cabinet tamper or forced -access 
+signal, and status monitoring for cabinet 
+communications availability.  Provides immediate awareness that the 
+cabinet has been opened, manipulated 
+or disconnected from communications.  
+Communications 
+resilience  Heartbeat supervision for the cabinet controller, with 
+an alarm if communications are lost. Preferred architecture is cellular or similarly independent 
+connectivity, plus a last -gasp event if the cabinet 
+loses power.  A theft event is only useful if the platform 
+knows the cabinet has disappeared or is 
+under attack.  
+Cable theft workflow  Correlation of multiple alarms: cabinet opening, 
+tamper, loss of feeder voltage or current, mass 
+outage of nodes on one feeder or across the full 
+panel, controller communication loss and optional 
+video confirmation.  Reduces false positives and gives the 
+operator a much stronger indication that 
+cable theft or deliberate disconnection is 
+occurring.  
+Security camera 
+resilience  Camera mounted on a nearby pole with direct sight of 
+the cabinet and powered independently from the target cabinet, preferably by solar panel plus battery autonomy.
+ If a feeder or the cabinet supply is cut, the camera must remain available to verify who is manipulating the panel.
+ 
+Video integration  Open video integration so Smartec can open live 
+video on demand, automatically display video or a 
+clip when a critical alarm occurs, and retrieve 
+recorded evidence for later review.  The customer wants one operational 
+workflow inside Smartec instead of a 
+separate video silo.  
+Open integration  Open APIs or standard interfaces capable of sending 
+alarms, telemetry, event history, video references and snapshots to Smartec. REST API plus webhook, 
+MQTT-style event push, ONVIF or RTSP are preferred 
+where relevant.
+ The customer requirement is for an open system, not a closed standalone 
+platform.
+ 
+5. Recommended cable theft detection logic  
+The cable -theft feature should not rely on a single signal. A better design is to correlate several indicators 
+and escalate the event according to severity.  
+Trigger  Primary source  Interpretation  Required action  
+Cabinet door opened 
+outside authorised 
+maintenance window  Magnetic door sensor or dry 
+contact  Possible intrusion or preparation 
+for tampering  Immediate alarm to 
+Smartec plus event log  
+Panel manipulated or 
+unexpected forced 
+access  Cabinet tamper input or 
+vibration sensor  Higher-risk physical attack on the cabinet
+ Escalated alarm plus 
+trigger camera video  
+Cabinet controller 
+heartbeat lost  Communications supervision 
+from controller and platform  Possible cabinet disconnection, 
+SIM failure, power loss or 
+deliberate attack  Communications -loss 
+alarm and incident 
+escalation  
+Main incomer or all 
+feeders lost unexpectedly  Voltage presence, meter and 
+controller last -gasp message  Possible deliberate 
+disconnection before cable theft  Critical alarm and 
+operator notification  
+Public Lighting Control Panel Monitoring & Cable Theft Detection  
+Confidential - This document may not be shared without the prior written consent of Salvi Saudi.                                               |  Page 5 Trigger  Primary source  Interpretation  Required action  
+One feeder loses power 
+and all nodes on that 
+feeder go offline at the 
+same time  Feeder measurement plus 
+Smartec node fleet behaviour  Strong indicator of cable cut, 
+feeder disconnection or severe 
+downstream fault  Raise suspected theft 
+event and open 
+associated camera 
+view  
+Main or feeder contactor 
+shows ON but no current 
+is detected  Auxiliary contact plus current 
+transformer or meter  Electrical discontinuity downstream or feeder cut
+ Generate feeder 
+anomaly alarm  
+Camera sees activity near 
+panel during alarm 
+window  Pole-mounted independent 
+security camera  Visual confirmation of 
+intervention on site  Attach live stream, 
+image or clip reference 
+to incident record  
+6. Camera requirement near the cabinet 
+A security camera should be proposed as part of the solution and installed on a nearby pole with direct 
+visibility of the control panel. The key requirement is that this camera must remain operational even if the 
+public lighting cabinet is disconnected, one feeder cable is cut or the cabinet is deliberately attacked.  
+For this reason, the preferred design is a solar- powered camera with local battery autonomy. This point is 
+important because if the cabinet or feeder supply is interrupted, a cabinet -powered camera may fail at 
+exactly the moment when visual verification is most needed.  
+• Acceptable day and night visibility, sufficient to identify movement and confirm that someone is 
+manipulating the cabinet or nearby infrastructure.  
+• Continuous recording, preferably 24 hours a day, so operators can review the period before and after 
+an event.  
+• Live video view available inside Smartec on demand.  
+• Automatic opening of live video, snapshot or event clip inside Smartec when a critical cabinet alarm is 
+triggered.  
+• Open video integration, ideally through ONVIF, RTSP or equivalent API access to snapshots, clips or event references. 
+• Ability to send image evidence or a retrievable media reference into Smartec.  
+7. Design recommendations to strengthen the proposal  
+Below are practical improvements that, from a public -lighting control perspective, would make the 
+concept easier to deploy and more credible for the customer:  
+• Prefer DALI -2 compatible devices where available, or provide a clear compatibility statement with the 
+Smartec environment.  
+• Use auxiliary contacts and feeder measurements together so the platform can distinguish commanded OFF, electrical fault and possible theft or disconnection.  
+• Provide a local rules engine or alarm correlation layer at edge level so several weak alarms can be 
+converted into one stronger incident.  
+• Include timestamped event history, communications heartbeat logs and diagnostics to support 
+maintenance teams and incident investigation.  
+• Keep all interfaces open and documented. The value of the system is much higher if the customer can integrate it into the existing Smartec platform rather than operate it as a separate silo.  
+Important implementation note: the system should not depend exclusively on cabinet mains power at 
+the exact moment when theft begins. The controller should support a last -gasp event or small backup 
+supply, and the camera should have its own autonomous power source; otherwise the most critical 
+alarm and the most useful video evidence may disappear at the same moment the cabinet is 
+disconnected. 
+Public Lighting Control Panel Monitoring & Cable Theft Detection  
+Confidential - This document may not be shared without the prior written consent of Salvi Saudi.                                               |  Page 6 8. What Transight should include in its proposal  
+To make the next discussion productive, Transight should be asked to respond with both technical and 
+commercial content. The proposal should ideally include:  
+• High -level architecture of the cabinet solution, including controller, metering, main and feeder 
+contactors, sensors, communications and camera components.  
+• Explanation of how DALI compatibility with Smartec will be achieved.  
+• Proposed API model for alarms, telemetry, command exchange, live video access and camera 
+evidence.  
+• Alarm matrix showing how a suspected cable theft event will be detected, prioritised and visualised.  
+• Description of cabinet connectivity supervision, heartbeat logic and communications -loss alarm 
+behaviour.  
+• Description of the camera power architecture, storage or retention approach and night- visibility 
+performance.  
+• Indicative bill of materials and installation assumptions per cabinet.  
+• Any platform software required, clearly identifying what remains open and what is proprietary.  
+• Pilot deployment scope, commissioning methodology and support responsibilities.  
+9. Confirmed design assumptions for proposal preparation  
+The following points are now considered confirmed requirements and should be reflected in the proposal 
+rather than treated as open questions:  
+• Main contactor control is required, in addition to feeder contactor control.  
+• Operational -grade metering is sufficient; revenue -grade metering is not required.  
+• The cabinet solution must supervise communications health and generate an alarm if connectivity is 
+lost.  
+• Every cabinet door opening must generate an alarm, and cabinet tamper detection is strongly 
+recommended.  
+• Smartec should be able to open live video on demand and automatically display video, snapshot or 
+clip when a critical alarm occurs.  
+• The camera should record continuously so that earlier events can be reviewed after an incident.  
+• The camera must provide acceptable night visibility for movement verification around the cabinet.  
+• The camera power supply should be independent from the targeted cabinet, preferably by solar panel plus battery autonomy.  
+With these clarifications, the brief gives Transight a more precise target: cabinet- level electrical 
+supervision, remote control of main and feeder contactors, multi -source theft detection and open 
+integration of alarms and video into Smartec.  

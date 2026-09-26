@@ -1,0 +1,56 @@
+# OS Files
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# Heavy Binaries & Virtual Environments
+jdk/
+pdf_venv/
+meeting.wav
+*.wav
+*.mp4
+whisper.cpp/
+
+# Node / Web Dependencies & Builds
+node_modules/
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+dist/
+build/
+.next/
+.cache/
+
+# Java / Android / Gradle
+.gradle/
+**/.gradle/
+**/build/
+**/.kotlin/
+local.properties
+**/local.properties
+*.apk
+*.aab
+
+# Python
+__pycache__/
+**/*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+.eggs/
+
+# Archive & temporary bundles
+*.zip
+*.tar.gz
+*.tar
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo

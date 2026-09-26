@@ -1,0 +1,497 @@
+--- Slide 1 ---
+
+
+
+
+
+
+
+
+TRANSIGHT
+SYSTEMS
+
+IoT & Telematics
+
+500,000+ Devices
+
+200,000+ Vehicles
+
+1B+ Pings / Day
+
+15 AIS 140 States
+×
+Rapido
+
+Fleet Intelligence Partnership
+End-to-End Fleet Management for Rapido's Aggregator Network
+Powered by Transight Compass — Telematics + Miles Fleet Accounting
+
+Real-Time Telematics
+
+Fleet Accounting — Miles
+
+Web + Mobile
+
+Single Login
+Transight Compass — One Platform. Complete Fleet Intelligence.
+Prepared by Transight Systems Pvt. Ltd.   |   Confidential
+--- Slide 2 ---
+MARKET CONTEXT
+Rapido's Fleet Aggregator Challenge
+Rapido operates one of India's largest shared mobility networks — managing thousands of vehicles through fleet aggregators. Running a profitable aggregator fleet demands intelligence at every layer, but most operators are working with near-zero data.
+
+
+No Real-Time Fleet Visibility
+Aggregators manage hundreds of vehicles with no live insight into location, movement status, or whether vehicles are in active service or sitting idle.
+
+
+Vehicle Health is a Blind Spot
+Without diagnostics, SOC, or engine health data — breakdowns are unpredictable. Every surprise failure is a service gap and a revenue loss for the aggregator.
+
+
+Utilisation is Guesswork
+Without KM tracking, trip counts, and active-hour data — operators cannot tell which vehicles earn and which vehicles idle. Every fleet decision is a guess.
+
+
+Fleet Costs are Invisible
+Fuel spend, cost per km, and per-vehicle operating expense are tracked manually if at all. Fleet profitability is impossible to calculate without this foundation.
+Transight Compass answers all four — in one connected platform.
+--- Slide 3 ---
+SOLUTION OVERVIEW
+Transight Compass — One Platform for Rapido
+One login. One dashboard. Two deeply integrated capability layers — real-time telematics and fleet accounting — working together in the same interface, on web and mobile.
+
+TRANSIGHT COMPASS — RAPIDO FLEET PLATFORM
+
+
+Real-Time Telematics Layer
+
+· Live GPS tracking — all vehicles, real-time
+· SOC & battery health per vehicle
+· Remote immobilisation control
+· CAN diagnostics — engine data via OBD
+· Driver behaviour & alerts
+· Geofencing & route compliance
+
+Fleet Accounting Layer
+Powered by Transight Miles
+
+· KM per vehicle — daily, weekly, monthly
+· Utilisation rate: active hrs ÷ available hrs
+· Fuel cost per km — per vehicle & fleet
+· Over / under-utilisation intelligence
+· Total operating cost per vehicle
+· Fleet expense accounting & trends
+↔
+Web Application  +  Mobile App  |  Single Login  |  Real-Time Data
+--- Slide 4 ---
+
+ABOUT TRANSIGHT
+Transight at a Glance
+A decade of IoT and telematics expertise — designing, manufacturing, and deploying vehicle intelligence at national scale.
+
+500K+
+Devices
+Delivered
+
+200K+
+Vehicles on
+Platform
+
+1B+
+Pings
+per Day
+
+15
+AIS 140
+States
+CERTIFIED & COMPLIANT
+
+IATF 16949:2016
+
+ISO 9001:2015
+
+ISO 27001:2022
+
+CMMI Level 3
+
+AIS 140 Certified
+
+CE & UAE TDRA
+
+Trusted by Tata Motors, Bharat Benz, Indian Railways  |  India, UAE, Saudi Arabia, Africa & Australia
+50,000 devices/month  —  Scaling to 250,000/month  |  IATF-Certified Manufacturing, Cochin
+--- Slide 5 ---
+LAYER 1
+Real-Time
+Telematics
+
+Powered by Transight Discovery 4G Advanced
+
+Live GPS tracking — every vehicle, every minute
+
+SOC, battery health & CAN diagnostics
+
+Remote immobilisation & vehicle control
+
+Driver behaviour scoring & alerts
+
+Geofencing, route playback & compliance reports
+01
+--- Slide 6 ---
+REAL-TIME TELEMATICS — HARDWARE
+Discovery 4G Advanced — The Intelligence Core
+Every data point powering the Compass platform originates here — Transight's most capable commercial vehicle device, engineered for CAN depth, precise location, and always-on connectivity.
+
+DISCOVERY
+4G ADVANCED
+· ARM Cortex-M7 — 2MB ROM / 192KB RAM
+· LTE CAT 1 — 4G Internal Antenna
+· 3× CAN FD Interface (Multi-channel)
+· Internal Hardware Security Module (HSM)
+· UDS + J1939 Protocol Support
+· 3D Accelerometer + Gyroscope
+· IP 67 — Dust & Water Resistance
+· 9V–36V DC  |  1000 mAh Internal Battery
+
+
+3-Channel CAN FD — Deep Vehicle Data
+Reads 100 high-frequency + 50 low-frequency CAN signals simultaneously. Engine RPM, torque, throttle, brake events, fault codes, fuel level — direct from ECU.
+
+
+UDS Diagnostics & Remote FOTA
+Full UDS support enables ECU-level diagnostics and secure over-the-air firmware updates. Reduces field service visits across a large fleet.
+
+
+Internal HSM — Encrypted Telemetry
+TLS 1.2 secured communication with tamper-proof data integrity. Every data point from fleet to platform is encrypted in transit.
+
+
+Multi-Band GNSS + AGNSS
+Precision positioning in urban canyons, tunnels, and low-signal zones across India. GPS, GLONASS, IRNSS — full coverage, no blind spots.
+--- Slide 7 ---
+REAL-TIME TELEMATICS — PLATFORM FEATURES
+Live Fleet Tracking & Vehicle Health Intelligence
+Fleet Location & Movement
+
+◎
+Live Fleet Map
+Every vehicle plotted in real-time. Status: Running, Halted, Idle, Disconnected, Charging — at a glance across the entire aggregator fleet.
+
+⟳
+Route Playback
+Full trip history replay with timestamps, stop durations, and route deviation — for any vehicle, any time window.
+
+⬡
+Geofencing & Zones
+Operational boundary control with instant alerts for unauthorised exit, after-hours movement, or zone violations.
+
+⚡
+Remote Immobilisation
+Disable or enable any vehicle remotely via web or mobile — for theft response, contract breach, or service enforcement.
+
+Vehicle Health & Diagnostics
+
+⚡
+SOC — State of Charge
+Live battery charge level per vehicle. Know before the driver does — plan charging schedules and prevent en-route failures.
+
+♥
+Battery Health (SOH)
+Long-term health degradation tracking. Identify ageing batteries before they cause service failures in the field.
+
+▣
+CAN Engine Parameters
+Engine RPM, coolant temp, oil pressure, throttle position, DTC fault codes — live from ECU via CAN bus integration.
+
+⚑
+Fault Detection & Alerts
+Automated fault code detection with categorised alerts — Critical, Warning, Advisory — delivered instantly to operator.
+--- Slide 8 ---
+REAL-TIME TELEMATICS — ANALYTICS
+Telematics Analytics & Driver Behaviour
+Raw telematics data transformed into operational intelligence — delivered to fleet aggregators as actionable dashboards, configurable alerts, and structured reports.
+
+
+Fleet Dashboard
+Online/offline ratio, running vs halted, idle count, disconnected vehicles — fleet-wide status at a glance for the aggregator.
+
+
+Trip & Distance Reports
+Trips per vehicle, average distance per trip, cumulative monthly KM, and trip duration trends across the entire fleet.
+
+
+Overspeed & Safety Alerts
+Real-time notifications for speeding, harsh braking, sudden acceleration, and engine anomalies — with configurable thresholds.
+Driver Behaviour Intelligence
+
+Driver scoring: braking patterns, acceleration behaviour, idle time, and route adherence — per driver, per shift.
+
+Per-driver vs per-vehicle performance isolation — separates driver-led underperformance from vehicle-led issues.
+
+Data-backed remuneration or redeployment decisions — aggregators act on evidence, not instinct.
+Reports & Compliance
+
+Distance & Engine Hour Reports
+Cumulative distance per vehicle per day/week/month + engine hours for maintenance scheduling.
+
+Fuel & Efficiency Benchmarking
+Average speed, mileage trends, energy consumption per km — per vehicle and fleet-wide.
+
+AIS 140 Compliance Ready
+All data structured per government tracking standards — audit-ready reports available at any time.
+--- Slide 9 ---
+
+LAYER 2
+Fleet
+Accounting
+Powered by Transight Miles
+
+The telematics data your device already captures — odometer, fuel, engine hours, location — is the raw input. Transight Miles computes the financial and utilisation intelligence on top of it, within the same platform.
+
+Daily KM per vehicle vs utilisation target — deviation flagged automatically
+
+Active hours ÷ available hours = utilisation rate, per vehicle and fleet-wide
+
+Fuel consumption per km in ₹ — per vehicle, period-level, and fleet average
+
+Over-utilisation & under-utilisation intelligence with threshold-based alerts
+
+Total operating cost per vehicle per month — the number aggregators need most
+02
+--- Slide 10 ---
+FLEET ACCOUNTING — TRANSIGHT MILES
+Vehicle Utilisation Intelligence
+Transight Miles defines, measures, and flags utilisation at the individual vehicle level — giving aggregators precise, real-time intelligence on every asset in their fleet.
+
+
+DAILY KM PER VEHICLE
+Actual KM vs Target
+Each vehicle's daily distance plotted against a defined target (e.g. 80 km/day). Vehicles consistently below target are flagged — vehicles exceeding threshold trigger maintenance alert.
+
+
+UTILISATION RATE
+Active Hrs ÷ Available Hrs
+Trip-active hours divided by total scheduled hours, expressed as a utilisation %. A vehicle available for 12 hrs but active for 4 hrs = 33% utilisation — immediately visible to the aggregator.
+
+
+IDLE ENGINE TIME
+Engine-On Without Movement
+Engine running minutes with zero movement, as a % of total engine-on time. High idle % = fuel being burned with no revenue generated — a direct cost signal for the aggregator.
+
+
+TRIP FREQUENCY INDEX
+Trips Completed per Day
+Number of distinct trips completed per vehicle per day. Low trip count on a vehicle that is geographically available indicates deployment or driver efficiency issue.
+
+
+UNDER-UTILISATION FLAG
+< Threshold for 3+ Days
+Vehicle falling below defined daily KM or trip target for 3 or more consecutive days is flagged for aggregator review — redeploy, rotate, or investigate before cost accumulates.
+
+
+OVER-UTILISATION ALERT
+> Threshold — Maintenance Risk
+Vehicles exceeding optimal km ceiling are flagged for priority maintenance scheduling. Running beyond service thresholds is a breakdown risk — caught before failure, not after.
+--- Slide 11 ---
+FLEET ACCOUNTING — TRANSIGHT MILES
+KM per Fleet & Fuel Cost Intelligence
+Device-reported odometer and CAN fuel data — converted by Transight Miles into per-vehicle, per-fleet financial metrics that aggregators can act on daily.
+KM per Fleet — Defined Metrics
+
+
+FLEET DISTANCE SUMMARY
+Daily / Weekly / Monthly KM
+Odometer per vehicle rolled up to fleet total. Trend lines show if fleet productivity is rising or declining period-over-period.
+
+
+ENGINE HOURS VS KM RATIO
+Idle Burn Detector
+High engine hours + low KM = excessive idling. Reveals vehicles burning fuel with zero productive output — flagged immediately.
+
+
+FLEET AVERAGE VS VEHICLE
+Outlier Detection
+Vehicles consistently below fleet-average daily KM are surfaced automatically. Aggregators see laggards without reviewing each vehicle manually.
+
+
+ROUTE-LEVEL KM ANALYSIS
+Trip Distance vs Expected
+Actual vs expected trip distance — flags detours, short-trips, and unauthorised deviations that inflate operating cost.
+Fuel Cost per KM — Defined Metrics
+
+
+FUEL CONSUMED PER 100 KM
+Efficiency Benchmark (L/100km)
+CAN-reported fuel ÷ distance driven — per vehicle and fleet average. Vehicles above fleet average L/100km flagged for engine health review.
+
+
+FUEL COST PER KM (₹)
+₹/KM — Per Vehicle & Fleet
+Fuel spend ÷ km driven, per vehicle and fleet-wide. Identifies the most expensive vehicles to operate — core input for profitability decisions.
+
+
+FUEL EFFICIENCY DEGRADATION
+Month-on-Month Trend
+Declining km/l across periods = early engine maintenance warning. Transight Miles surfaces this before the vehicle fails in the field.
+
+
+IDLE FUEL BURN (₹ LOST)
+Engine-On Cost Without Movement
+Idle time × consumption rate = ₹ wasted per vehicle per period. Puts a rupee value on idle behaviour — the metric that changes operator decisions fastest.
+--- Slide 12 ---
+FLEET ACCOUNTING — TRANSIGHT MILES
+Fleet Expense Accounting & Financial Visibility
+Transight Miles brings financial clarity to every vehicle — giving aggregators the per-vehicle economics they need to manage a profitable fleet, not just a tracked one.
+
+
+TOTAL COST OF OPERATION (TCO)
+₹ per Vehicle per Month
+Fuel + maintenance + downtime cost aggregated into a single TCO figure per vehicle. The definitive number for measuring fleet profitability at vehicle level.
+
+
+COST PER KM
+₹/KM — Fleet vs Vehicle
+Total operating cost divided by distance driven — per vehicle and fleet average. Instantly identifies the most expensive vehicles relative to the distance they cover.
+
+
+REVENUE PER KM INDEX
+Earnings ÷ Distance Driven
+When trip revenue data is available — revenue generated per km driven surfaces the true earning efficiency of each vehicle, not just its operational cost.
+
+
+MAINTENANCE COST ATTRIBUTION
+₹ per 10,000 KM
+Miles-driven triggers maintenance scheduling — tyre replacement cycles, oil change intervals, service milestones. Spreads maintenance cost across actual usage, not calendar time.
+
+
+EXPENSE TREND — PERIOD ANALYSIS
+Month-on-Month per Vehicle
+Per-vehicle cost tracked over consecutive periods. Aggregators see spending trajectories and intervene before any vehicle's cost-per-km exceeds the fleet threshold.
+
+
+FLEET BUDGET VS ACTUAL
+Planned vs Consumed (₹)
+Planned fuel and maintenance spend benchmarked against actual — per vehicle and fleet-wide. Enables precise budget control for the aggregator across any fleet size.
+--- Slide 13 ---
+UNIFIED INTELLIGENCE — TRANSIGHT COMPASS
+From Device Data to Fleet Decisions
+One platform. Two layers. Every vehicle data point captured by the device feeds both real-time visibility and financial accounting — enabling fleet aggregators to act on evidence, not estimates.
+
+Device Captures
+Discovery 4G Advanced
+
+· GPS coordinates — every 30 sec
+· Odometer reading — real-time
+· Engine hours — ignition events
+· Fuel level — CAN reported
+· Battery SOC & SOH — live
+· Driver behaviour events
+· Fault codes — DTC from ECU
+· CAN RPM, throttle, temperature
+→
+
+Telematics Layer
+Computes
+Real-Time Intelligence
+
+· Live location & fleet map
+· Vehicle status classification
+· Route deviation detection
+· Geofence breach alerts
+· Driver behaviour score
+· Overspeed & safety alerts
+· Engine health indicators
+· SOC-based charging alerts
+→
+
+Miles Layer
+Computes
+Fleet Accounting Intelligence
+
+· Daily KM vs utilisation target
+· Utilisation rate % per vehicle
+· Idle time % — engine-on, no move
+· Fuel cost per km (₹/km)
+· L/100km efficiency benchmark
+· Over / under-utilisation flags
+· Total operating cost / vehicle
+· Period-over-period expense trend
+
+--- Slide 14 ---
+PLATFORM EXPERIENCE
+Web & Mobile — One Login, Complete Intelligence
+Fleet aggregators and Rapido operations teams access both telematics and accounting intelligence from a single Compass login — on web dashboard or mobile app, anytime.
+Web Application — Aggregator Dashboard
+
+
+Fleet Overview Map
+Live position of entire fleet. Filter by: Running, Halted, Idle, Disconnected. Vehicle status visible at a glance.
+
+
+Miles Accounting Tab
+Dedicated fleet accounting view — utilisation rates, KM per vehicle, fuel cost per km, operating expense and trend charts.
+
+
+Vehicle & Driver Management
+Full lifecycle records, driver assignment, behaviour scores, and service history in one place.
+
+
+Reports & Scheduled Exports
+Distance, fuel, utilisation, and cost reports — customisable and auto-delivered on schedule.
+
+
+Geofencing & Compliance
+Create operational zones, restricted areas, and receive instant boundary and compliance alerts.
+
+Mobile Application — On-the-Go Control
+
+
+Live Tracking — Anytime
+Full fleet map and individual vehicle tracking from mobile. Aggregators on-site stay fully in control.
+
+
+Miles Accounting on Mobile
+KM per fleet, utilisation status, cost per km, and expense summaries as a mobile dashboard — decisions on the go.
+
+
+Instant Alert Notifications
+Push alerts for overspeeds, geofence breaches, battery SOC warnings, and fault codes in real-time.
+
+
+Driver & Vehicle Profiles
+Active trip status, driver score, and vehicle health for any unit in the fleet — accessible instantly.
+
+
+Single Login with Compass
+No separate app. Telematics and Miles accounting are both embedded in the same Compass mobile experience.
+--- Slide 15 ---
+
+Why Transight × Rapido Makes Sense
+
+
+Data Already Flowing
+Transight devices on the fleet are already generating odometer, fuel, GPS, and engine data. Transight Miles activates the accounting layer on top — no new hardware, no new integrations.
+
+
+One Platform — No Context Switching
+Tracking and fleet accounting in the same Compass session. Aggregators don't change their workflow — they get dramatically more intelligence from the same login they already use.
+
+
+Built for Aggregator Scale
+Designed for operators managing 50 to 5,000 vehicles. Utilisation thresholds, cost benchmarks, and fleet dashboards are built for aggregator-scale decision-making — not individual vehicle management.
+
+
+Proven at India's Scale
+1.2 lakh vehicles. 1 billion data pings per day. A decade of Indian road, traffic, and regulatory conditions. Transight's reliability is demonstrated — not promised.
+
+
+1
+Technical Walkthrough
+
+2
+Pilot Fleet Design
+
+3
+Agreement & Rollout
+Transight Systems Pvt. Ltd.   |   www.transight.com   |   Kinfra Hi-Tech Park, Cochin

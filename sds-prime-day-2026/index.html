@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDS Prime Day 2026 — Driven by Purpose. Powered by Teamwork.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="video-container">
+    <canvas id="particle-canvas"></canvas>
+    <canvas id="confetti-canvas"></canvas>
+    <div class="letterbox letterbox--top"></div>
+    <div class="letterbox letterbox--bottom"></div>
+
+    <!-- ═══════════ SCENE 1: OPENING (0:00–0:12) ═══════════ -->
+    <section class="scene" id="scene-1">
+        <div class="scene-bg" style="background-image:url('img_opening.jpg')"></div>
+        <div class="scene-overlay"></div>
+        <div class="scene__content scene__content--center">
+            <div class="opening__brands" data-anim="fadeIn" data-delay="200">
+                <svg class="amazon-logo" viewBox="0 0 200 60" aria-label="Amazon">
+                    <text x="8" y="38" font-family="'Outfit',sans-serif" font-weight="800" font-size="36" fill="#fff" letter-spacing="1">amazon</text>
+                    <path d="M50 48 Q100 62 155 48" stroke="#FF9900" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                    <polygon points="150,44 160,49 151,52" fill="#FF9900"/>
+                </svg>
+                <span class="brand__x">×</span>
+                <span class="brand--sutherland">SUTHERLAND</span>
+            </div>
+            <div class="opening__logo" data-anim="scaleIn" data-delay="800">
+                <div class="prime-badge">
+                    <div class="prime-badge__line"></div>
+                    <h1 class="prime-badge__title">SDS PRIME DAY</h1>
+                    <span class="prime-badge__year">2026</span>
+                    <div class="prime-badge__line"></div>
+                </div>
+            </div>
+            <p class="opening__tagline" data-anim="fadeSlideUp" data-delay="2200">
+                &ldquo;Driven by Purpose. Powered by Teamwork.&rdquo;
+            </p>
+        </div>
+        <!-- Voice Over text (read by TTS) -->
+        <div class="vo-text" data-vo-start="2000" data-vo-end="11500">
+            Prime Day is more than a peak season. It is when dedication meets opportunity and teams come together to deliver excellence. Welcome to the story of the SDS Prime Team at Sutherland Kochi.
+        </div>
+    </section>
+
+    <!-- ═══════════ SCENE 2: WHO WE ARE (0:12–0:26) ═══════════ -->
+    <section class="scene" id="scene-2">
+        <div class="scene-bg" style="background-image:url('img_coaching.jpg')"></div>
+        <div class="scene-overlay scene-overlay--darker"></div>
+        <div class="scene__content scene__content--center">
+            <h2 class="scene__title" data-anim="fadeSlideUp" data-delay="200">
+                <span class="accent">WHO</span> WE ARE
+            </h2>
+            <div class="regions" data-anim="staggerIn" data-delay="800">
+                <div class="region-card"><span class="region-card__flag">🇺🇸</span><span class="region-card__name">United States</span></div>
+                <div class="region-card"><span class="region-card__flag">🇨🇦</span><span class="region-card__name">Canada</span></div>
+                <div class="region-card"><span class="region-card__flag">🇬🇧</span><span class="region-card__name">United Kingdom</span></div>
+            </div>
+            <div class="pillars" data-anim="fadeIn" data-delay="2800">
+                <span class="pillar">Customer Obsession</span>
+                <span class="pillar-dot">·</span>
+                <span class="pillar">Operational Excellence</span>
+            </div>
+        </div>
+        <div class="vo-text" data-vo-start="600" data-vo-end="13000">
+            Supporting Selling Partners across the United States, Canada, and the United Kingdom, our SDS team serves as a trusted partner in helping sellers succeed. Built on customer obsession and operational excellence.
+        </div>
+    </section>
+
+    <!-- ═══════════ SCENE 3: ACHIEVEMENTS (0:26–0:54) — ONE BY ONE SPOTLIGHT ═══════════ -->
+    <section class="scene" id="scene-3">
+        <div class="scene-bg" style="background-image:url('img_achievement.jpg')"></div>
+        <div class="scene-overlay scene-overlay--dark"></div>
+        <div class="scene__content scene__content--center">
+            <h2 class="scene__title" data-anim="fadeSlideUp" data-delay="200">
+                <span class="accent">OUR</span> ACHIEVEMENTS
+            </h2>
+
+            <!-- Achievement Spotlight Carousel -->
+            <div class="achievement-spotlight">
+                <div class="ach-slide" data-ach-index="0">
+                    <div class="ach-slide__icon">⚡</div>
+                    <div class="ach-slide__metric">
+                        <span class="ach-slide__from">6 min</span>
+                        <svg class="ach-slide__arrow" viewBox="0 0 60 20"><path d="M2 10h48M42 3l10 7-10 7" stroke="#FF9900" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span class="ach-slide__value counter" data-target="3" data-suffix=" min" data-decimals="0">0</span>
+                    </div>
+                    <div class="ach-slide__title">Average Handle Time Reduced</div>
+                    <div class="ach-slide__sub">US &amp; Canada Operations</div>
+                    <div class="ach-slide__badge ach-slide__badge--green">50 % Reduction ↓</div>
+                </div>
+
+                <div class="ach-slide" data-ach-index="1">
+                    <div class="ach-slide__icon">🇬🇧</div>
+                    <div class="ach-slide__metric">
+                        <span class="ach-slide__value counter" data-target="4" data-suffix=" min" data-decimals="0">0</span>
+                    </div>
+                    <div class="ach-slide__title">AHT On Target</div>
+                    <div class="ach-slide__sub">United Kingdom Operations</div>
+                    <div class="ach-slide__badge">Target Achieved ✓</div>
+                </div>
+
+                <div class="ach-slide" data-ach-index="2">
+                    <div class="ach-slide__icon">📊</div>
+                    <div class="ach-slide__metric">
+                        <span class="ach-slide__value-text">CONTROLLED</span>
+                    </div>
+                    <div class="ach-slide__title">Shrinkage Managed</div>
+                    <div class="ach-slide__sub">Across All Regions</div>
+                    <div class="ach-slide__badge ach-slide__badge--green">✓ Within Limits</div>
+                </div>
+
+                <div class="ach-slide" data-ach-index="3">
+                    <div class="ach-slide__icon">👥</div>
+                    <div class="ach-slide__metric">
+                        <span class="ach-slide__value counter" data-target="5.5" data-suffix="%" data-decimals="1">0</span>
+                    </div>
+                    <div class="ach-slide__title">Attrition Maintained</div>
+                    <div class="ach-slide__sub">Industry-Leading Retention</div>
+                    <div class="ach-slide__badge">Below Industry Average</div>
+                </div>
+
+                <div class="ach-slide" data-ach-index="4">
+                    <div class="ach-slide__icon">📈</div>
+                    <div class="ach-slide__metric">
+                        <span class="ach-slide__value counter" data-target="99" data-suffix="%" data-decimals="0" data-start="90">0</span>
+                    </div>
+                    <div class="ach-slide__title">Internal Utilization</div>
+                    <div class="ach-slide__sub">Consistently at 98–99%</div>
+                    <div class="ach-slide__badge ach-slide__badge--gold">Near Perfect ★</div>
+                </div>
+
+                <div class="ach-slide" data-ach-index="5">
+                    <div class="ach-slide__icon">🚀</div>
+                    <div class="ach-slide__metric">
+                        <span class="ach-slide__value-text">LAUNCHED</span>
+                    </div>
+                    <div class="ach-slide__title">UK Escalations Pilot</div>
+                    <div class="ach-slide__sub">Successfully Deployed &amp; Running</div>
+                    <div class="ach-slide__badge ach-slide__badge--green">✓ Live &amp; Operational</div>
+                </div>
+            </div>
+
+            <!-- Dot indicators -->
+            <div class="ach-dots" data-anim="fadeIn" data-delay="1200">
+                <span class="ach-dot active"></span>
+                <span class="ach-dot"></span>
+                <span class="ach-dot"></span>
+                <span class="ach-dot"></span>
+                <span class="ach-dot"></span>
+                <span class="ach-dot"></span>
+            </div>
+        </div>
+        <div class="vo-text" data-vo-start="600" data-vo-end="26000">
+            This Prime season, our team raised the bar. Through relentless focus and ownership, we achieved remarkable results. Let us walk through our key milestones.
+        </div>
+    </section>
+
+    <!-- ═══════════ SCENE 4: RECOGNITION (0:54–1:06) ═══════════ -->
+    <section class="scene" id="scene-4">
+        <div class="scene-bg" style="background-image:url('img_recognition.jpg')"></div>
+        <div class="scene-overlay scene-overlay--darker"></div>
+        <div class="scene__content scene__content--center">
+            <h2 class="scene__title" data-anim="fadeSlideUp" data-delay="200">
+                <span class="accent">RECOGNITION</span> &amp; SUCCESS
+            </h2>
+            <p class="recognition__quote" data-anim="fadeSlideUp" data-delay="1200">
+                Success is reflected in every recognition earned,<br>
+                every customer helped, and every team member<br>
+                who stepped up to make a difference.
+            </p>
+            <div class="rec-badges" data-anim="staggerIn" data-delay="3800">
+                <div class="rec-badge">🌟 COA Winners</div>
+                <div class="rec-badge">🎯 Top Performers</div>
+                <div class="rec-badge">💪 Team Champions</div>
+            </div>
+        </div>
+        <div class="vo-text" data-vo-start="600" data-vo-end="11000">
+            Together, we celebrated victories both big and small. Our team members earned recognition for outstanding performance and dedication.
+        </div>
+    </section>
+
+    <!-- ═══════════ SCENE 5: CULTURE (1:06–1:34) ═══════════ -->
+    <section class="scene" id="scene-5">
+        <div class="scene-bg" style="background-image:url('img_culture.jpg')"></div>
+        <div class="scene-overlay scene-overlay--darker"></div>
+        <div class="scene__content scene__content--center">
+            <h2 class="scene__title" data-anim="fadeSlideUp" data-delay="200">
+                <span class="accent">OUR</span> CULTURE
+            </h2>
+
+            <div class="culture-showcase" data-anim="fadeIn" data-delay="800">
+                <div class="culture-slide" data-slide-index="0">
+                    <div class="culture-slide__bg" style="background-image:url('img_cake.jpg')"></div>
+                    <div class="culture-slide__overlay"></div>
+                    <div class="culture-slide__label">
+                        <div class="culture-slide__title">🎂 Prime Kickoff — Cake Cutting</div>
+                    </div>
+                </div>
+                <div class="culture-slide" data-slide-index="1">
+                    <div class="culture-slide__bg" style="background-image:url('img_biriyani.jpg')"></div>
+                    <div class="culture-slide__overlay"></div>
+                    <div class="culture-slide__label">
+                        <div class="culture-slide__title">🍛 Biriyani Day — Flavors of Unity</div>
+                    </div>
+                </div>
+                <div class="culture-slide" data-slide-index="2">
+                    <div class="culture-slide__bg" style="background-image:url('img_gaming.jpg')"></div>
+                    <div class="culture-slide__overlay"></div>
+                    <div class="culture-slide__label">
+                        <div class="culture-slide__title">🎮 PS5 Gaming Tournament</div>
+                    </div>
+                </div>
+                <div class="culture-slide" data-slide-index="3">
+                    <div class="culture-slide__bg" style="background-image:url('img_lunch.jpg')"></div>
+                    <div class="culture-slide__overlay"></div>
+                    <div class="culture-slide__label">
+                        <div class="culture-slide__title">🤝 Team Lunches — Shared Moments</div>
+                    </div>
+                </div>
+            </div>
+
+            <blockquote class="culture__pull-quote" data-anim="fadeIn" data-delay="4500">
+                &ldquo;When people thrive, performance follows.&rdquo;
+            </blockquote>
+        </div>
+        <div class="vo-text" data-vo-start="600" data-vo-end="26000">
+            Behind every achievement is a culture built on trust, support, and teamwork. From cake cutting ceremonies and biriyani feasts to PS5 gaming tournaments, we strengthened the bonds that make us one team. Because when people thrive, performance follows.
+        </div>
+    </section>
+
+    <!-- ═══════════ SCENE 6: TEAM VOICES (1:34–1:46) ═══════════ -->
+    <section class="scene" id="scene-6">
+        <div class="scene-bg" style="background-image:url('img_team.jpg')"></div>
+        <div class="scene-overlay scene-overlay--dark"></div>
+        <div class="scene__content scene__content--center">
+            <h2 class="scene__title" data-anim="fadeSlideUp" data-delay="200">
+                <span class="accent">TEAM</span> VOICES
+            </h2>
+            <div class="quotes-carousel">
+                <div class="quote-card" data-quote-index="0">
+                    <div class="quote-card__mark">&ldquo;</div>
+                    <p class="quote-card__text">Prime Day taught us what we can achieve together.</p>
+                    <cite class="quote-card__cite">— Associate</cite>
+                </div>
+                <div class="quote-card" data-quote-index="1">
+                    <div class="quote-card__mark">&ldquo;</div>
+                    <p class="quote-card__text">Every challenge made us stronger.</p>
+                    <cite class="quote-card__cite">— Associate</cite>
+                </div>
+                <div class="quote-card" data-quote-index="2">
+                    <div class="quote-card__mark">&ldquo;</div>
+                    <p class="quote-card__text">We didn&rsquo;t just meet expectations — we exceeded them.</p>
+                    <cite class="quote-card__cite">— Team Lead</cite>
+                </div>
+                <div class="quote-card" data-quote-index="3">
+                    <div class="quote-card__mark">&ldquo;</div>
+                    <p class="quote-card__text">This team continuously inspires excellence.</p>
+                    <cite class="quote-card__cite">— Manager</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ SCENE 7: GRAND FINALE (1:46–1:54) ═══════════ -->
+    <section class="scene" id="scene-7">
+        <div class="scene-bg" style="background-image:url('img_finale.jpg')"></div>
+        <div class="scene-overlay scene-overlay--finale"></div>
+        <div class="scene__content scene__content--center">
+            <div class="finale__burst" data-anim="explosiveReveal" data-delay="200">
+                🎉 HAPPY PRIME DAY 2026! 🎉
+            </div>
+            <div class="finale__motto" data-anim="staggerIn" data-delay="2000">
+                <span class="motto-line">One Team.</span>
+                <span class="motto-line">One Goal.</span>
+                <span class="motto-line motto-line--accent">One Prime.</span>
+            </div>
+            <div class="finale__brand" data-anim="fadeIn" data-delay="4500">
+                <span class="finale__team">SDS Prime Team</span>
+                <span class="finale__loc">Sutherland Kochi</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ SCENE 8: CLOSING (1:54–2:00) ═══════════ -->
+    <section class="scene" id="scene-8">
+        <div class="scene-bg" style="background-image:url('img_opening.jpg')"></div>
+        <div class="scene-overlay scene-overlay--dark"></div>
+        <div class="scene__content scene__content--center">
+            <div class="closing__thanks" data-anim="fadeSlideUp" data-delay="200">
+                THANK YOU ATLANTIC TEAM
+            </div>
+            <p class="closing__tagline" data-anim="fadeIn" data-delay="1200">
+                &ldquo;Together we support. Together we succeed. Together we Prime.&rdquo;
+            </p>
+            <div class="closing__footer" data-anim="fadeIn" data-delay="2400">
+                <span>SDS Kochi</span><span class="closing__pipe">|</span><span>Prime Day 2026</span>
+            </div>
+        </div>
+        <div class="vo-text" data-vo-start="200" data-vo-end="5500">
+            Thank you, Atlantic Team. Together we support. Together we succeed. Together we Prime.
+        </div>
+    </section>
+
+    <!-- Subtitle bar (separate from scene content) -->
+    <div id="subtitle-bar"></div>
+
+    <!-- UI -->
+    <div id="progress-container"><div id="progress-bar"></div></div>
+    <div id="time-display">0:00 / 2:00</div>
+    <button id="mute-btn" aria-label="Mute" title="Toggle Music">🔊</button>
+
+    <!-- Play overlay -->
+    <div id="play-overlay">
+        <div class="play-overlay__inner">
+            <button id="play-btn" aria-label="Play">
+                <svg viewBox="0 0 100 100" width="90" height="90">
+                    <circle cx="50" cy="50" r="48" fill="rgba(255,153,0,.12)" stroke="rgba(255,153,0,.6)" stroke-width="2"/>
+                    <polygon points="40,28 72,50 40,72" fill="#FF9900"/>
+                </svg>
+            </button>
+            <p class="play-overlay__title">SDS PRIME DAY 2026</p>
+            <p class="play-overlay__sub">Click to Begin · 🔊 Enable Sound for Best Experience</p>
+            <button id="record-btn">🎬 Record &amp; Download as Video</button>
+        </div>
+    </div>
+    <!-- Recording indicator -->
+    <div id="rec-indicator">
+        <span class="rec-dot"></span> REC — Recording in progress...
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

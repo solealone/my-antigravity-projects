@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Transight - One Company. Every Layer of Connected Mobility">
+    <title>Transight - Connected Mobility</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- Ambient Burgundy Background Glow -->
+    <div class="ambient-glow"></div>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo-wrapper">
+                <!-- Inline SVG of the Transight Pin logo -->
+                <svg class="logo-pin-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" stroke="#FF003C" stroke-width="4" fill="rgba(255, 0, 60, 0.05)"/>
+                    <path d="M50 20C40 20 32 28 32 38C32 48 50 72 50 72C50 72 68 48 68 38C68 28 60 20 50 20Z" fill="#FF003C" stroke="#FFFFFF" stroke-width="2"/>
+                    <circle cx="50" cy="38" r="8" fill="#FFFFFF"/>
+                </svg>
+                <span class="logo-text">Transight</span>
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Solutions</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Company</a></li>
+                    <li><a href="#">Quality</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="btn-case-studies">Case Studies</button>
+                <button class="hamburger-menu" aria-label="Open menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Hero Content -->
+    <main class="hero-wrapper">
+        <div class="hero-grid">
+            
+            <!-- Left Column Content -->
+            <div class="hero-left">
+                
+                <!-- Main Typography Title -->
+                <div class="title-container">
+                    <h1 class="main-title">One Company.</h1>
+                    <h1 class="sub-title">Every Layer of Connected Mobility</h1>
+                </div>
+
+                <!-- 3-Layer Telematics Stack Graphic (unblurred, vignetted, placed on left) -->
+                <div class="stack-graphic-wrapper">
+                    <img src="clean_stack.png" alt="End-To-End Telematics Solution Stack" class="stack-graphic-img">
+                </div>
+
+                <!-- Bottom Left Description Block -->
+                <div class="hero-desc-block">
+                    We turn raw hardware data into decisions, uniting vehicles, assets, and workforce in a single ecosystem.
+                </div>
+
+            </div>
+
+            <!-- Right Column Content: Illuminating Company Logo Canvas -->
+            <div class="hero-right">
+                <div class="illuminating-logo-container">
+                    <canvas id="illuminatingCanvas"></canvas>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Illuminating Particle Logo Generator Script -->
+    <script>
+        const canvas = document.getElementById('illuminatingCanvas');
+        const ctx = canvas.getContext('2d');
+        const container = document.querySelector('.illuminating-logo-container');
+
+        let particles = [];
+        const numParticles = 1400;
+
+        function resizeCanvas() {
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            createLogoParticles();
+        }
+
+        class Particle {
+            constructor(targetX, targetY) {
+                this.targetX = targetX;
+                this.targetY = targetY;
+                this.x = targetX + (Math.random() - 0.5) * 8;
+                this.y = targetY + (Math.random() - 0.5) * 8;
+                this.baseSize = Math.random() * 2.2 + 0.8;
+                this.size = this.baseSize;
+                this.alpha = Math.random() * 0.7 + 0.3;
+                this.pulseSpeed = Math.random() * 0.04 + 0.01;
+                this.pulseAngle = Math.random() * Math.PI * 2;
+                
+                // Color variation around glowing pink/magenta
+                const hue = 345 + Math.random() * 15;
+                const sat = 90 + Math.random() * 10;
+                const light = 55 + Math.random() * 25;
+                this.color = `hsl(${hue}, ${sat}%, ${light}%)`;
+            }
+
+            update() {
+                // Twinkle & pulse animation
+                this.pulseAngle += this.pulseSpeed;
+                this.size = this.baseSize + Math.sin(this.pulseAngle) * 0.6;
+                this.alpha = 0.4 + Math.sin(this.pulseAngle * 0.8) * 0.45;
+
+                // Subtle organic swaying motion
+                this.x = this.targetX + Math.sin(this.pulseAngle * 0.5) * 2.5;
+                this.y = this.targetY + Math.cos(this.pulseAngle * 0.5) * 2.5;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = '#ff0055';
+                ctx.shadowBlur = 12;
+
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, Math.max(0.5, this.size), 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function createLogoParticles() {
+            particles = [];
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+
+            const cx = tempCanvas.width * 0.5;
+            const cy = tempCanvas.height * 0.44;
+            const size = Math.min(tempCanvas.width, tempCanvas.height) * 0.45;
+
+            tempCtx.fillStyle = '#ffffff';
+            tempCtx.strokeStyle = '#ffffff';
+
+            // Draw Teardrop Location Pin Contour
+            tempCtx.beginPath();
+            tempCtx.arc(cx, cy - size * 0.12, size * 0.38, -Math.PI / 5, -Math.PI * 4 / 5, true);
+            tempCtx.lineTo(cx, cy + size * 0.45);
+            tempCtx.closePath();
+            tempCtx.lineWidth = 20;
+            tempCtx.stroke();
+
+            // Draw Inner Eye / Circle Outer Ring
+            tempCtx.beginPath();
+            tempCtx.arc(cx, cy - size * 0.12, size * 0.24, 0, Math.PI * 2);
+            tempCtx.lineWidth = 14;
+            tempCtx.stroke();
+
+            // Draw Core Spiral Pupil
+            tempCtx.beginPath();
+            tempCtx.arc(cx, cy - size * 0.12, size * 0.1, 0, Math.PI * 2);
+            tempCtx.fill();
+
+            // Sample pixels to place particles
+            const imgData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+            const data = imgData.data;
+            const step = Math.max(1, Math.floor(tempCanvas.width / 110));
+
+            for (let y = 0; y < tempCanvas.height; y += step) {
+                for (let x = 0; x < tempCanvas.width; x += step) {
+                    const idx = (y * tempCanvas.width + x) * 4;
+                    if (data[idx] > 120) {
+                        particles.push(new Particle(x, y));
+                        if (particles.length >= numParticles) break;
+                    }
+                }
+                if (particles.length >= numParticles) break;
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        animate();
+    </script>
+</body>
+</html>

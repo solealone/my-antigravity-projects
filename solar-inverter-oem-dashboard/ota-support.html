@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTA Support | Solar OEM Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Icon support -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .ota-metrics-row {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 90px;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .metric-icon {
+            float: right;
+            font-size: 1.25rem;
+            color: #94a3b8;
+        }
+
+        .tab-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .tab-btn {
+            background: #f1f5f9;
+            border: 1px solid #e5e7eb;
+            border-bottom: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #64748b;
+            border-radius: 6px 6px 0 0;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            background: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
+
+        .toggle-btn-group {
+            display: flex;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            overflow: hidden;
+            width: fit-content;
+        }
+
+        .toggle-btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            background: #f1f5f9;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .toggle-btn.active {
+            background: #475569;
+            color: white;
+        }
+
+        .toggle-btn i {
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item"><i class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="models.html" class="nav-item"><i class="ph ph-stack"></i><span>Models</span></a>
+                <a href="accounts.html" class="nav-item"><i class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside>        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">System</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">OTA Management</span>
+                </div>
+
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i class="ph ph-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="ph ph-gear"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-wrapper">
+
+                <!-- Metrics Grid -->
+                <div class="ota-metrics-row">
+                    <div class="metric-card">
+                        <div class="metric-label">Total Inverters <i class="ph ph-solar-panel metric-icon"></i></div>
+                        <div class="metric-value">1,248</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Generating <i class="ph ph-lightning metric-icon"></i></div>
+                        <div class="metric-value">982</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Standby <i class="ph ph-pause-circle metric-icon"></i></div>
+                        <div class="metric-value">215</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Faulted <i class="ph ph-warning-circle metric-icon"></i></div>
+                        <div class="metric-value">12</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Offline <i class="ph ph-wifi-slash metric-icon"></i></div>
+                        <div class="metric-value">34</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">No Data <i class="ph ph-question metric-icon"></i></div>
+                        <div class="metric-value">5</div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tab-bar">
+                    <button class="tab-btn" onclick="window.location.href='ota.html'">OTA Logs</button>
+                    <button class="tab-btn active">OTA Support</button>
+                </div>
+
+                <div class="card form-card" style="border-top-left-radius: 0;">
+
+                    <div class="card-title-row" style="padding: 1rem 1.5rem; border-bottom: 1px solid #e5e7eb;">
+                        <h3 style="font-size: 1rem; font-weight: 700;">OTA Support</h3>
+                    </div>
+
+                    <!-- Filter Area -->
+                    <div class="card-header p-4" style="border-bottom: 1px solid #e5e7eb;">
+                        <div class="filter-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                            <div class="search-group text-group">
+                                <label
+                                    style="display:block; font-size: 0.75rem; color: #64748b; font-weight: 600; margin-bottom: 0.25rem;">Search
+                                    Inverter</label>
+                                <div style="position: relative;">
+                                    <i class="ph ph-magnifying-glass"
+                                        style="position: absolute; left: 10px; top: 10px; color: #94a3b8;"></i>
+                                    <input type="text" placeholder="Search Serial Number..."
+                                        style="width: 100%; padding: 0.5rem 0.5rem 0.5rem 2rem; border: 1px solid #cbd5e1; border-radius: 4px;">
+                                </div>
+                            </div>
+
+                            <div class="select-group text-group">
+                                <label
+                                    style="display:block; font-size: 0.75rem; color: #64748b; font-weight: 600; margin-bottom: 0.25rem;">Select
+                                    Serial Number</label>
+                                <div style="position: relative;">
+                                    <select
+                                        style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; appearance: none; background: white;">
+                                        <option>Select Serial #</option>
+                                    </select>
+                                    <i class="ph ph-caret-down"
+                                        style="position: absolute; right: 10px; top: 10px; color: #94a3b8;"></i>
+                                </div>
+                            </div>
+
+                            <div class="action-group" style="align-items: flex-end;">
+                                <button class="btn btn-primary"
+                                    style="width: 100%; background: #475569; border-color: #475569;">SUBMIT</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card-body p-4">
+                        <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem;">Command Management</h4>
+
+                        <!-- Mode Selection -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label
+                                style="display:block; font-size: 0.75rem; color: #64748b; font-weight: 600; margin-bottom: 0.5rem;">Mode
+                                Selection</label>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div class="toggle-btn-group">
+                                    <button class="toggle-btn"><i class="ph ph-eye"></i> READ</button>
+                                    <button class="toggle-btn active"><i class="ph ph-pencil-simple"></i> WRITE</button>
+                                </div>
+
+                                <div style="flex-grow: 1; position: relative;">
+                                    <label
+                                        style="position: absolute; top: -10px; left: 10px; background: white; padding: 0 5px; font-size: 0.7rem; color: #64748b;">Command
+                                        Details</label>
+                                    <select
+                                        style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 4px; appearance: none; background: white;">
+                                        <option>Grid Profile Set</option>
+                                        <option>Active Power Limit</option>
+                                        <option>Reactive Power Control</option>
+                                        <option>Firmware Update</option>
+                                    </select>
+                                    <i class="ph ph-caret-down"
+                                        style="position: absolute; right: 15px; top: 15px; color: #94a3b8;"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Comments -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label
+                                style="display:block; font-size: 0.75rem; color: #64748b; font-weight: 600; margin-bottom: 0.5rem;">Comments</label>
+                            <textarea placeholder="Enter your comments here..."
+                                style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 4px; min-height: 80px; font-family: inherit;"></textarea>
+                        </div>
+
+                        <!-- Data Input -->
+                        <div style="margin-bottom: 2rem;">
+                            <label
+                                style="display:block; font-size: 0.75rem; color: #64748b; font-weight: 600; margin-bottom: 0.5rem;">DATA</label>
+                            <input type="text" value="SET_GRID_PROFILE_CA_RULE21"
+                                style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 4px; font-family: monospace; color: #475569;">
+                        </div>
+
+                        <!-- Actions -->
+                        <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+                            <button class="btn btn-secondary"
+                                style="background: #e2e8f0; color: #64748b; border: none;">SEND</button>
+                            <button class="btn btn-warning"
+                                style="background: #f59e0b; color: white; border: none;">CLEAR COMMAND</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

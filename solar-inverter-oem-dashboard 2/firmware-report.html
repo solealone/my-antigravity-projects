@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firmware Report | Solar OEM Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Icon support -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .version-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background: #e2e8f0;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+
+        .version-latest {
+            background: #d1fae5;
+            color: #065f46;
+            border-color: #a7f3d0;
+        }
+
+        .version-outdated {
+            background: #fee2e2;
+            color: #991b1b;
+            border-color: #fecaca;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item"><i class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="models.html" class="nav-item"><i class="ph ph-stack"></i><span>Models</span></a>
+                <a href="accounts.html" class="nav-item"><i class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside> <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">Analytics</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">Reports</span>
+                </div>
+
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i class="ph ph-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="ph ph-gear"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-wrapper">
+
+                <!-- Report Navigation Pills -->
+                <div class="report-nav-grid">
+                    <button class="report-pill" onclick="window.location.href='reports.html'">Last Data Report</button>
+                    <button class="report-pill" onclick="window.location.href='inverter-summary.html'">Inverter
+                        Summary</button>
+                    <button class="report-pill" onclick="window.location.href='monthly-summary.html'">Monthly
+                        Summary</button>
+                    <button class="report-pill" onclick="window.location.href='device-report.html'">Device Data</button>
+                    <button class="report-pill" onclick="window.location.href='inverter-data.html'">Inverter
+                        Data</button>
+                    <button class="report-pill"
+                        onclick="window.location.href='generation-report.html'">Generation</button>
+                    <button class="report-pill" onclick="window.location.href='fault-report.html'">Faults</button>
+                    <button class="report-pill"
+                        onclick="window.location.href='efficiency-report.html'">Efficiency</button>
+                    <button class="report-pill" onclick="window.location.href='grid-stability-report.html'">Grid
+                        Stability</button>
+                    <button class="report-pill active"
+                        onclick="window.location.href='firmware-report.html'">Firmware</button>
+                    <button class="report-pill" onclick="window.location.href='warranty-report.html'">Warranty</button>
+                </div>
+
+                <div class="card form-card mt-4">
+                    <!-- Filter Area -->
+                    <div class="card-header p-4">
+                        <div class="filter-grid">
+                            <div class="search-group">
+                                <i class="ph ph-magnifying-glass"></i>
+                                <input type="text" placeholder="Search Inverter...">
+                            </div>
+
+                            <div class="select-group">
+                                <select>
+                                    <option>All Models</option>
+                                </select>
+                                <i class="ph ph-caret-down"></i>
+                            </div>
+
+                            <div class="select-group">
+                                <select>
+                                    <option>Status: Outdated</option>
+                                </select>
+                                <i class="ph ph-caret-down"></i>
+                            </div>
+
+                            <div class="action-group">
+                                <button class="btn btn-primary">SUBMIT</button>
+                                <button class="btn btn-secondary"><i class="ph ph-download-simple"></i>
+                                    Download</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Firmware Stats Overview -->
+                    <div
+                        style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; padding: 1.5rem; border-bottom: 1px solid #e5e7eb;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #0f172a;">85%</div>
+                            <div
+                                style="font-size: 0.8rem; color: #64748b; font-weight: 600; text-transform: uppercase;">
+                                Compliance Rate</div>
+                            <div style="font-size: 0.75rem; color: #10b981; margin-top: 0.5rem;">Running Latest Version
+                            </div>
+                        </div>
+                        <div
+                            style="border-left: 1px solid #e5e7eb; border-right: 1px solid #e5e7eb; text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #ef4444;">12</div>
+                            <div
+                                style="font-size: 0.8rem; color: #64748b; font-weight: 600; text-transform: uppercase;">
+                                Critical Updates Pending</div>
+                            <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem;">Security Patch v2.1.4
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <!-- Simple CSS Pie Chart Placeholder -->
+                            <div
+                                style="width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(#10b981 0% 85%, #ef4444 85% 100%); margin: 0 auto;">
+                            </div>
+                            <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem;">Distribution (v2.x vs
+                                v1.x)</div>
+                        </div>
+                    </div>
+
+                    <div class="card-title-row"
+                        style="padding: 1rem 1.5rem; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="font-size: 1rem; font-weight: 700;">Device Firmware Status</h3>
+                        <button class="btn btn-primary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">Push Update
+                            (OTA)</button>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Inverter Serial</th>
+                                        <th>Model</th>
+                                        <th>Current Version</th>
+                                        <th>Hardware Rev</th>
+                                        <th>Last Update</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>SN-INV-2024-X01</strong></td>
+                                        <td>Pro-5000</td>
+                                        <td><span class="version-badge version-latest">v2.2.0</span></td>
+                                        <td>Rev B</td>
+                                        <td>2026-01-15</td>
+                                        <td><span style="color: #059669; font-weight: 600;">Compliant</span></td>
+                                        <td><button class="icon-btn" disabled><i class="ph ph-check"></i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SN-INV-2024-X02</strong></td>
+                                        <td>Pro-5000</td>
+                                        <td><span class="version-badge version-outdated">v2.1.0</span></td>
+                                        <td>Rev B</td>
+                                        <td>2025-11-20</td>
+                                        <td><span style="color: #dc2626; font-weight: 600;">Update Available</span></td>
+                                        <td><button class="icon-btn" title="Push Update"><i
+                                                    class="ph ph-upload-simple"></i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SN-INV-2023-Y99</strong></td>
+                                        <td>Eco-3000</td>
+                                        <td><span class="version-badge version-latest">v1.5.4</span></td>
+                                        <td>Rev A</td>
+                                        <td>2025-12-05</td>
+                                        <td><span style="color: #059669; font-weight: 600;">Compliant</span></td>
+                                        <td><button class="icon-btn" disabled><i class="ph ph-check"></i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SN-INV-2024-X05</strong></td>
+                                        <td>Pro-5000</td>
+                                        <td><span class="version-badge version-outdated">v2.0.0</span></td>
+                                        <td>Rev B</td>
+                                        <td>2025-09-10</td>
+                                        <td><span style="color: #dc2626; font-weight: 600;">Critical Security</span>
+                                        </td>
+                                        <td><button class="icon-btn" title="Push Update"><i
+                                                    class="ph ph-upload-simple"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pagination-footer">
+                            <span>Rows per page: 10</span>
+                            <div class="page-controls">
+                                <span>1-4 of 4</span>
+                                <button disabled><i class="ph ph-caret-left"></i></button>
+                                <button disabled><i class="ph ph-caret-right"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

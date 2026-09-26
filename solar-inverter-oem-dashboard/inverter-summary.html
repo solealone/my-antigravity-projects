@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inverter Summary | Solar OEM Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Icon support -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item"><i class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="models.html" class="nav-item"><i class="ph ph-stack"></i><span>Models</span></a>
+                <a href="accounts.html" class="nav-item"><i class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside> <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">Analytics</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">Reports</span>
+                </div>
+
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i class="ph ph-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="ph ph-gear"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-wrapper">
+
+                <!-- Report Navigation Pills -->
+                <div class="report-nav-grid">
+                    <button class="report-pill" onclick="window.location.href='reports.html'">Last Data Report</button>
+                    <button class="report-pill active" onclick="window.location.href='inverter-summary.html'">Inverter
+                        Summary</button>
+                    <button class="report-pill" onclick="window.location.href='monthly-summary.html'">Monthly
+                        Summary</button>
+                    <button class="report-pill" onclick="window.location.href='device-report.html'">Device Data</button>
+                    <button class="report-pill" onclick="window.location.href='inverter-data.html'">Inverter
+                        Data</button>
+                    <button class="report-pill"
+                        onclick="window.location.href='generation-report.html'">Generation</button>
+                    <button class="report-pill" onclick="window.location.href='fault-report.html'">Faults</button>
+                    <button class="report-pill"
+                        onclick="window.location.href='efficiency-report.html'">Efficiency</button>
+                    <button class="report-pill" onclick="window.location.href='grid-stability-report.html'">Grid
+                        Stability</button>
+                    <button class="report-pill" onclick="window.location.href='firmware-report.html'">Firmware</button>
+                    <button class="report-pill" onclick="window.location.href='warranty-report.html'">Warranty</button>
+                </div>
+
+                <div class="card form-card mt-4">
+                    <!-- Filter Area -->
+                    <div class="card-header p-4">
+                        <div class="filter-grid">
+                            <div class="search-group">
+                                <i class="ph ph-magnifying-glass"></i>
+                                <input type="text" placeholder="Search Inverter Serial...">
+                            </div>
+
+                            <div class="date-group">
+                                <input type="text" value="30 Jan 2026 -> 30 Jan 2026">
+                                <i class="ph ph-calendar"></i>
+                            </div>
+
+                            <div class="select-group">
+                                <select>
+                                    <option>All Regions</option>
+                                </select>
+                                <i class="ph ph-caret-down"></i>
+                            </div>
+
+                            <div class="select-group">
+                                <select>
+                                    <option>All Distributors</option>
+                                </select>
+                                <i class="ph ph-caret-down"></i>
+                            </div>
+
+                            <div class="select-group">
+                                <select>
+                                    <option>All Dealers</option>
+                                </select>
+                                <i class="ph ph-caret-down"></i>
+                            </div>
+
+                            <div class="select-group">
+                                <select>
+                                    <option>All Status</option>
+                                </select>
+                                <i class="ph ph-caret-down"></i>
+                            </div>
+
+                            <div class="action-group">
+                                <button class="btn btn-primary">SUBMIT</button>
+                                <button class="btn btn-secondary"><i class="ph ph-download-simple"></i>
+                                    Download</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-title-row" style="padding: 1rem 1.5rem; border-bottom: 1px solid #e5e7eb;">
+                        <h3 style="font-size: 1rem; font-weight: 700;">Inverter Summary Report</h3>
+                        <span style="font-size: 0.85rem; color: #666;">Total Devices: 5 | Date Range: 2026-01-30 to
+                            2026-01-30</span>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Inverter Serial</th>
+                                        <th>Logger IMEI</th>
+                                        <th>Total Logged Hours</th>
+                                        <th>Generating (HH:MM)</th>
+                                        <th>Idle (HH:MM)</th>
+                                        <th>Offline (HH:MM)</th>
+                                        <th>Start Yield (kWh)</th>
+                                        <th>End Yield (kWh)</th>
+                                        <th>Period Production (kWh)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>SN-INV-2024-X01</strong></td>
+                                        <td>862942074966664</td>
+                                        <td>23:59</td>
+                                        <td>08:52</td>
+                                        <td>05:11</td>
+                                        <td>00:00</td>
+                                        <td>609.5</td>
+                                        <td>610.0</td>
+                                        <td>0.5</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SN-INV-2024-X02</strong></td>
+                                        <td>862942074892654</td>
+                                        <td>23:59</td>
+                                        <td>10:40</td>
+                                        <td>02:25</td>
+                                        <td>00:00</td>
+                                        <td>999.8</td>
+                                        <td>1055.0</td>
+                                        <td>55.2</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SN-INV-2023-Y99</strong></td>
+                                        <td>862942074966516</td>
+                                        <td>23:59</td>
+                                        <td>00:00</td>
+                                        <td>00:17</td>
+                                        <td>00:43</td>
+                                        <td>10069</td>
+                                        <td>10069</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SN-INV-2025-A12</strong></td>
+                                        <td>862942074892621</td>
+                                        <td>23:59</td>
+                                        <td>04:57</td>
+                                        <td>12:00</td>
+                                        <td>07:02</td>
+                                        <td>2915.6</td>
+                                        <td>2925.8</td>
+                                        <td>10.2</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SN-INV-2024-X05</strong></td>
+                                        <td>862942074909763</td>
+                                        <td>23:59</td>
+                                        <td>23:00</td>
+                                        <td>00:59</td>
+                                        <td>00:00</td>
+                                        <td>61724.8</td>
+                                        <td>68154.4</td>
+                                        <td>6429.6</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pagination-footer">
+                            <span>Rows per page: 10</span>
+                            <div class="page-controls">
+                                <span>1-5 of 5</span>
+                                <button disabled><i class="ph ph-caret-left"></i></button>
+                                <button disabled><i class="ph ph-caret-right"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Analytics | Solar OEM Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .analytics-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .section-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e2e8f0;
+            margin-left: 1rem;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .chart-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        /* Impact Cards */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .impact-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: left;
+            position: relative;
+        }
+
+        .impact-icon {
+            font-size: 2rem;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: #f1f5f9;
+        }
+
+        .impact-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.25rem;
+        }
+
+        .impact-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Energy Flow */
+        .energy-flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 2rem 0;
+            position: relative;
+        }
+
+        .flow-node {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .flow-node.center {
+            width: 100px;
+            height: 100px;
+            border-color: #0f172a;
+            background: #0f172a;
+            color: white;
+        }
+
+        .flow-node i {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        .flow-line {
+            position: absolute;
+            height: 2px;
+            background: #cbd5e1;
+            top: 50%;
+            z-index: 1;
+        }
+
+        .flow-line.left {
+            left: 15%;
+            width: 25%;
+        }
+
+        .flow-line.right {
+            right: 15%;
+            width: 25%;
+        }
+
+        .animated-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            margin-top: -4px;
+            animation: flow 2s infinite linear;
+        }
+
+        @keyframes flow {
+            0% {
+                left: 15%;
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                left: 40%;
+                opacity: 0;
+            }
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Table for Network */
+        .network-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .network-table th {
+            text-align: left;
+            padding: 0.75rem;
+            background: #f8fafc;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .network-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+        }
+
+        .network-table tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item active"><i
+                        class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="models.html" class="nav-item"><i class="ph ph-stack"></i><span>Models</span></a>
+                <a href="accounts.html" class="nav-item"><i class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">System</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">Advanced Analytics</span>
+                </div>
+                <div class="header-actions">
+                    <select
+                        style="padding: 5px; border-radius: 4px; border: 1px solid #ddd; font-size: 0.8rem; margin-right: 10px;">
+                        <option>All Distributors</option>
+                        <option>Global Solar Dist.</option>
+                    </select>
+                    <select
+                        style="padding: 5px; border-radius: 4px; border: 1px solid #ddd; font-size: 0.8rem; margin-right: 10px;">
+                        <option>All Dealers</option>
+                        <option>SunInstallers Pro</option>
+                    </select>
+                    <button class="icon-btn"><i class="ph ph-bell"></i><span class="badge">3</span></button>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+
+                <div class="analytics-container">
+
+                    <!-- SECTION 1: LIVE SYSTEM STATUS (Original Request) -->
+                    <section>
+                        <div class="section-header">Live System Status</div>
+
+                        <!-- Top KPIs -->
+                        <div class="impact-grid">
+                            <div class="impact-card">
+                                <i class="ph ph-lightning impact-icon" style="color:#f59e0b"></i>
+                                <div class="impact-value">24.5 MW</div>
+                                <div class="impact-label">Current Fleet Pwr</div>
+                            </div>
+                            <div class="impact-card">
+                                <i class="ph ph-battery-charging impact-icon" style="color:#10b981"></i>
+                                <div class="impact-value">840 kWh</div>
+                                <div class="impact-label">Stored Energy (Global)</div>
+                            </div>
+                            <div class="impact-card">
+                                <i class="ph ph-house-line impact-icon" style="color:#6366f1"></i>
+                                <div class="impact-value">68%</div>
+                                <div class="impact-label">Fleet Self-Consumption</div>
+                            </div>
+                            <div class="impact-card">
+                                <i class="ph ph-chart-line-up impact-icon" style="color:#ef4444"></i>
+                                <div class="impact-value">230 V</div>
+                                <div class="impact-label">Avg Grid Voltage</div>
+                            </div>
+                        </div>
+
+                        <div class="analytics-grid">
+                            <!-- Fleet Power Curve -->
+                            <div class="chart-card full-width">
+                                <div class="chart-header">
+                                    <span class="chart-title">Real-Time Fleet Power Curve (Today)</span>
+                                    <div style="font-size:0.8rem; color:#64748b;">
+                                        <span style="margin-right:15px"><span
+                                                style="color:#f59e0b; font-size:1.2rem;">•</span>
+                                            Solar</span>
+                                        <span><span style="color:#0f172a; font-size:1.2rem;">•</span> Consumption</span>
+                                    </div>
+                                </div>
+                                <div
+                                    style="height: 250px; position: relative; border-bottom: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0;">
+                                    <svg width="100%" height="100%" viewBox="0 0 1000 250" preserveAspectRatio="none">
+                                        <path d="M0,250 Q150,250 250,150 T500,50 T750,150 T1000,250"
+                                            fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" stroke-width="2" />
+                                        <path d="M0,220 Q100,200 300,180 T600,150 T900,180 T1000,220" fill="transparent"
+                                            stroke="#0f172a" stroke-width="2" stroke-dasharray="5,5" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Aggregated Energy Flow -->
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <span class="chart-title">Aggregated Energy Flow</span>
+                                </div>
+                                <div class="energy-flow-container">
+                                    <div class="flow-line left"></div>
+                                    <div class="flow-line right"></div>
+                                    <div class="animated-dot"></div>
+                                    <div class="animated-dot" style="animation-delay: 1s;"></div>
+
+                                    <div class="flow-node">
+                                        <i class="ph ph-sun" style="color: #f59e0b;"></i>
+                                        <span style="font-size:0.7rem; font-weight:600;">PV</span>
+                                    </div>
+                                    <div class="flow-node center">
+                                        <i class="ph ph-arrows-left-right"></i>
+                                        <span style="font-size:0.9rem; font-weight:700;">INV</span>
+                                    </div>
+                                    <div class="flow-node">
+                                        <i class="ph ph-plug" style="color: #6366f1;"></i>
+                                        <span style="font-size:0.7rem; font-weight:600;">Grid</span>
+                                    </div>
+                                </div>
+                                <div style="text-align: center; margin-top: 1rem; font-size: 0.85rem; color: #64748b;">
+                                    Live power distribution across 4,520 active units.
+                                </div>
+                            </div>
+
+                            <!-- Battery Statistics -->
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <span class="chart-title">Battery Fleet Health (SoH)</span>
+                                </div>
+                                <div
+                                    style="display: flex; gap: 1rem; align-items: center; justify-content: center; height: 150px;">
+                                    <div style="text-align:center;">
+                                        <div style="font-size:2rem; font-weight:700; color:#10b981;">92%</div>
+                                        <div style="font-size:0.8rem; color:#64748b;">Avg SoH</div>
+                                    </div>
+                                    <div style="width: 1px; height: 50px; background:#e2e8f0;"></div>
+                                    <div style="text-align:center;">
+                                        <div style="font-size:2rem; font-weight:700; color:#0f172a;">485</div>
+                                        <div style="font-size:0.8rem; color:#64748b;">Avg Cycles</div>
+                                    </div>
+                                </div>
+                                <div style="background:#f8fafc; padding:10px; border-radius:4px; margin-top:10px;">
+                                    <div
+                                        style="display:flex; justify-content:space-between; font-size:0.75rem; color:#64748b; margin-bottom:5px;">
+                                        <span>Discharge Depth</span>
+                                        <span>65% Avg</span>
+                                    </div>
+                                    <div style="width:100%; height:8px; background:#e2e8f0; border-radius:4px;">
+                                        <div style="width:65%; height:100%; background:#3b82f6; border-radius:4px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 2: BUSINESS & ESG IMPACT (New Request) -->
+                    <section>
+                        <div class="section-header">Business & Environmental Impact</div>
+
+                        <!-- ESG KPIs -->
+                        <div class="impact-grid">
+                            <div class="impact-card">
+                                <i class="ph ph-tree impact-icon" style="color:#10b981"></i>
+                                <div class="impact-value">12,540</div>
+                                <div class="impact-label">Trees Saved</div>
+                            </div>
+                            <div class="impact-card">
+                                <i class="ph ph-plant impact-icon" style="color:#10b981"></i>
+                                <div class="impact-value">450.2 t</div>
+                                <div class="impact-label">CO2 Reduced</div>
+                            </div>
+                            <div class="impact-card">
+                                <i class="ph ph-lightning impact-icon" style="color:#f59e0b"></i>
+                                <div class="impact-value">1.2 GWh</div>
+                                <div class="impact-label">Total Generation</div>
+                            </div>
+                            <div class="impact-card">
+                                <i class="ph ph-currency-dollar impact-icon" style="color:#6366f1"></i>
+                                <div class="impact-value">$145.2k</div>
+                                <div class="impact-label">Total Revenue</div>
+                            </div>
+                        </div>
+
+                        <div class="analytics-grid">
+                            <!-- 6-Month Power Generation Trend -->
+                            <div class="chart-card full-width">
+                                <div class="chart-header">
+                                    <span class="chart-title">Power Generation Trends (Last 6 Months)</span>
+                                </div>
+                                <div
+                                    style="height: 250px; display: flex; align-items: flex-end; justify-content: space-around; padding: 20px 0;">
+                                    <div style="text-align:center; flex:1;">
+                                        <div
+                                            style="height:120px; width:40px; background:#f59e0b; margin:0 auto; border-radius:4px 4px 0 0;">
+                                        </div>
+                                        <div style="margin-top:10px; font-size:0.75rem; color:#666;">Aug</div>
+                                    </div>
+                                    <div style="text-align:center; flex:1;">
+                                        <div
+                                            style="height:140px; width:40px; background:#f59e0b; margin:0 auto; border-radius:4px 4px 0 0;">
+                                        </div>
+                                        <div style="margin-top:10px; font-size:0.75rem; color:#666;">Sep</div>
+                                    </div>
+                                    <div style="text-align:center; flex:1;">
+                                        <div
+                                            style="height:110px; width:40px; background:#f59e0b; margin:0 auto; border-radius:4px 4px 0 0;">
+                                        </div>
+                                        <div style="margin-top:10px; font-size:0.75rem; color:#666;">Oct</div>
+                                    </div>
+                                    <div style="text-align:center; flex:1;">
+                                        <div
+                                            style="height:160px; width:40px; background:#f59e0b; margin:0 auto; border-radius:4px 4px 0 0;">
+                                        </div>
+                                        <div style="margin-top:10px; font-size:0.75rem; color:#666;">Nov</div>
+                                    </div>
+                                    <div style="text-align:center; flex:1;">
+                                        <div
+                                            style="height:90px; width:40px; background:#f59e0b; margin:0 auto; border-radius:4px 4px 0 0;">
+                                        </div>
+                                        <div style="margin-top:10px; font-size:0.75rem; color:#666;">Dec</div>
+                                    </div>
+                                    <div style="text-align:center; flex:1;">
+                                        <div
+                                            style="height:130px; width:40px; background:#f59e0b; margin:0 auto; border-radius:4px 4px 0 0;">
+                                        </div>
+                                        <div style="margin-top:10px; font-size:0.75rem; color:#666;">Jan</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Inverter Status Mix (Pie) -->
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <span class="chart-title">Site Status Mix</span>
+                                </div>
+                                <div
+                                    style="display: flex; justify-content: center; align-items: center; padding: 20px;">
+                                    <div
+                                        style="width: 180px; height: 180px; border-radius: 50%; background: conic-gradient(#10b981 0% 75%, #f59e0b 75% 90%, #ef4444 90% 100%);">
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: center; gap: 15px; margin-top: 10px;">
+                                    <div style="font-size: 0.75rem; display: flex; align-items: center; gap: 5px;">
+                                        <div style="width:10px; height:10px; background:#10b981; border-radius:50%;">
+                                        </div> Online (75%)
+                                    </div>
+                                    <div style="font-size: 0.75rem; display: flex; align-items: center; gap: 5px;">
+                                        <div style="width:10px; height:10px; background:#f59e0b; border-radius:50%;">
+                                        </div> Standby (15%)
+                                    </div>
+                                    <div style="font-size: 0.75rem; display: flex; align-items: center; gap: 5px;">
+                                        <div style="width:10px; height:10px; background:#ef4444; border-radius:50%;">
+                                        </div> Faulted (10%)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Total Alert Categories (Bar) -->
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <span class="chart-title">Major Alert Categories</span>
+                                </div>
+                                <div style="padding: 20px;">
+                                    <div style="margin-bottom: 15px;">
+                                        <div
+                                            style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 5px;">
+                                            <span>Grid Faults</span> <span>45%</span></div>
+                                        <div style="width: 100%; height: 8px; background: #f1f5f9; border-radius: 4px;">
+                                            <div
+                                                style="width: 45%; height: 100%; background: #ef4444; border-radius: 4px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <div
+                                            style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 5px;">
+                                            <span>Connectivity Loss</span> <span>30%</span></div>
+                                        <div style="width: 100%; height: 8px; background: #f1f5f9; border-radius: 4px;">
+                                            <div
+                                                style="width: 30%; height: 100%; background: #f59e0b; border-radius: 4px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <div
+                                            style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 5px;">
+                                            <span>Over Temperature</span> <span>15%</span></div>
+                                        <div style="width: 100%; height: 8px; background: #f1f5f9; border-radius: 4px;">
+                                            <div
+                                                style="width: 15%; height: 100%; background: #f59e0b; border-radius: 4px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 0;">
+                                        <div
+                                            style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 5px;">
+                                            <span>Hardware Error</span> <span>10%</span></div>
+                                        <div style="width: 100%; height: 8px; background: #f1f5f9; border-radius: 4px;">
+                                            <div
+                                                style="width: 10%; height: 100%; background: #ef4444; border-radius: 4px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 3: NETWORK PERFORMANCE (Network Analytics) -->
+                    <section>
+                        <div class="section-header">Network Performance (Distributors & Dealers)</div>
+                        <div class="analytics-grid">
+                            <!-- Distributor Performance Table -->
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <span class="chart-title">Top Distributors by Yield</span>
+                                    <button
+                                        style="border:none; background:transparent; color:#3b82f6; font-size:0.8rem; cursor:pointer;">View
+                                        All</button>
+                                </div>
+                                <table class="network-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Distributor</th>
+                                            <th>Sites</th>
+                                            <th>Capacity</th>
+                                            <th>Yield (MWh)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Global Solar Dist.</td>
+                                            <td>540</td>
+                                            <td>12.5 MW</td>
+                                            <td>8,450</td>
+                                        </tr>
+                                        <tr>
+                                            <td>EuroGreen Partners</td>
+                                            <td>320</td>
+                                            <td>8.2 MW</td>
+                                            <td>5,230</td>
+                                        </tr>
+                                        <tr>
+                                            <td>AsiaPac Solar</td>
+                                            <td>150</td>
+                                            <td>3.1 MW</td>
+                                            <td>2,100</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Latam Energy</td>
+                                            <td>85</td>
+                                            <td>1.8 MW</td>
+                                            <td>1,120</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Dealer Performance Table -->
+                            <div class="chart-card">
+                                <div class="chart-header">
+                                    <span class="chart-title">Top Dealers by Active Sites</span>
+                                    <button
+                                        style="border:none; background:transparent; color:#3b82f6; font-size:0.8rem; cursor:pointer;">View
+                                        All</button>
+                                </div>
+                                <table class="network-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Dealer</th>
+                                            <th>Distributor</th>
+                                            <th>Sites</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>SunInstallers Pro</td>
+                                            <td>Global Solar</td>
+                                            <td>120</td>
+                                            <td><span style="color:#10b981; font-weight:600;">98% Online</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>EcoHome Solutions</td>
+                                            <td>EuroGreen</td>
+                                            <td>85</td>
+                                            <td><span style="color:#10b981; font-weight:600;">95% Online</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rapid Solar Fix</td>
+                                            <td>Global Solar</td>
+                                            <td>64</td>
+                                            <td><span style="color:#f59e0b; font-weight:600;">80% Online</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>TechHouse Energy</td>
+                                            <td>AsiaPac</td>
+                                            <td>42</td>
+                                            <td><span style="color:#10b981; font-weight:600;">99% Online</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

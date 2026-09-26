@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generation Report | Solar OEM Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Icon support -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .chart-placeholder {
+            width: 100%;
+            height: 300px;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #64748b;
+        }
+
+        .chart-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item"><i class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="models.html" class="nav-item"><i class="ph ph-stack"></i><span>Models</span></a>
+                <a href="accounts.html" class="nav-item"><i class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside> <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">Analytics</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">Reports</span>
+                </div>
+
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i class="ph ph-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="ph ph-gear"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-wrapper">
+
+                <!-- Report Navigation Pills -->
+                <div class="report-nav-grid">
+                    <button class="report-pill" onclick="window.location.href='reports.html'">Last Data Report</button>
+                    <button class="report-pill" onclick="window.location.href='inverter-summary.html'">Inverter
+                        Summary</button>
+                    <button class="report-pill" onclick="window.location.href='monthly-summary.html'">Monthly
+                        Summary</button>
+                    <button class="report-pill" onclick="window.location.href='device-report.html'">Device Data</button>
+                    <button class="report-pill" onclick="window.location.href='inverter-data.html'">Inverter
+                        Data</button>
+                    <button class="report-pill active"
+                        onclick="window.location.href='generation-report.html'">Generation</button>
+                    <button class="report-pill" onclick="window.location.href='fault-report.html'">Faults</button>
+                    <button class="report-pill"
+                        onclick="window.location.href='efficiency-report.html'">Efficiency</button>
+                    <button class="report-pill" onclick="window.location.href='grid-stability-report.html'">Grid
+                        Stability</button>
+                    <button class="report-pill" onclick="window.location.href='firmware-report.html'">Firmware</button>
+                    <button class="report-pill" onclick="window.location.href='warranty-report.html'">Warranty</button>
+                </div>
+
+                <div class="card form-card mt-4">
+                    <!-- Filter Area -->
+                    <div class="card-header p-4">
+                        <div class="filter-grid">
+                            <div class="search-group">
+                                <i class="ph ph-magnifying-glass"></i>
+                                <input type="text" placeholder="Search Inverter Serial...">
+                            </div>
+
+                            <div class="date-group">
+                                <input type="text" value="30 Jan 2026 -> 30 Jan 2026">
+                                <i class="ph ph-calendar"></i>
+                            </div>
+
+                            <div class="select-group">
+                                <select>
+                                    <option>Daily View</option>
+                                </select> <!-- Report Type -->
+                                <i class="ph ph-caret-down"></i>
+                            </div>
+
+                            <div class="action-group">
+                                <button class="btn btn-primary">SUBMIT</button>
+                                <button class="btn btn-secondary"><i class="ph ph-download-simple"></i>
+                                    Download</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Key Metrics Grid -->
+                    <div class="metrics-grid"
+                        style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; padding: 0 1.5rem 1.5rem 1.5rem;">
+                        <div class="metric-card"
+                            style="background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 0.8rem; color: #64748b; font-weight: 600;">Energy Produced</span>
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #0f172a; margin-top: 0.5rem;">159.5
+                                kWh</div>
+                            <span style="font-size: 0.75rem; color: #10b981;">▲ 12% vs yesterday</span>
+                        </div>
+                        <div class="metric-card"
+                            style="background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 0.8rem; color: #64748b; font-weight: 600;">Revenue Generated</span>
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #0f172a; margin-top: 0.5rem;">$15.95
+                            </div>
+                            <span style="font-size: 0.75rem; color: #10b981;">$0.10 / kWh avg</span>
+                        </div>
+                        <div class="metric-card"
+                            style="background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 0.8rem; color: #64748b; font-weight: 600;">Peak Power</span>
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #0f172a; margin-top: 0.5rem;">22.5
+                                kW</div>
+                            <span style="font-size: 0.75rem; color: #64748b;">@ 12:30 PM</span>
+                        </div>
+                        <div class="metric-card"
+                            style="background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <span style="font-size: 0.8rem; color: #64748b; font-weight: 600;">CO2 Saved</span>
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #0f172a; margin-top: 0.5rem;">112 kg
+                            </div>
+                            <span style="font-size: 0.75rem; color: #10b981;">5 Trees Equivalent</span>
+                        </div>
+                    </div>
+
+                    <!-- CSS Bar Chart Section -->
+                    <div class="chart-section" style="padding: 0 1.5rem 2rem 1.5rem;">
+                        <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem;">Daily Generation Profile
+                            (kW)</h4>
+                        <div class="bar-chart"
+                            style="display: flex; align-items: flex-end; height: 200px; gap: 4px; border-bottom: 1px solid #ccc; padding-bottom: 4px;">
+                            <!-- Mock Bars for 12 hours (6am to 6pm) -->
+                            <div title="6 AM" style="height: 10%; width: 100%; bg: #e2e8f0; background: #cbd5e1;"></div>
+                            <div title="7 AM" style="height: 25%; width: 100%; background: #94a3b8;"></div>
+                            <div title="8 AM" style="height: 40%; width: 100%; background: #64748b;"></div>
+                            <div title="9 AM" style="height: 60%; width: 100%; background: #475569;"></div>
+                            <div title="10 AM" style="height: 80%; width: 100%; background: #334155;"></div>
+                            <div title="11 AM" style="height: 95%; width: 100%; background: #1e293b;"></div>
+                            <div title="12 PM" style="height: 100%; width: 100%; background: #0f172a;"></div>
+                            <!-- Peak -->
+                            <div title="1 PM" style="height: 90%; width: 100%; background: #1e293b;"></div>
+                            <div title="2 PM" style="height: 75%; width: 100%; background: #334155;"></div>
+                            <div title="3 PM" style="height: 50%; width: 100%; background: #475569;"></div>
+                            <div title="4 PM" style="height: 30%; width: 100%; background: #64748b;"></div>
+                            <div title="5 PM" style="height: 15%; width: 100%; background: #94a3b8;"></div>
+                            <div title="6 PM" style="height: 5%; width: 100%; background: #cbd5e1;"></div>
+                        </div>
+                        <div class="chart-labels"
+                            style="display: flex; justify-content: space-between; font-size: 0.7rem; color: #666; margin-top: 0.5rem;">
+                            <span>6 AM</span>
+                            <span>9 AM</span>
+                            <span>12 PM</span>
+                            <span>3 PM</span>
+                            <span>6 PM</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Inverter Serial</th>
+                                        <th>Day Energy (kWh)</th>
+                                        <th>Peak Power (kW)</th>
+                                        <th>Grid Export (kWh)</th>
+                                        <th>Self-Consumption (kWh)</th>
+                                        <th>Revenue Est. ($)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2026-01-30</td>
+                                        <td><strong>SN-INV-2024-X01</strong></td>
+                                        <td>24.5 kWh</td>
+                                        <td>4.2 kW</td>
+                                        <td>18.0 kWh</td>
+                                        <td>6.5 kWh</td>
+                                        <td>$2.45</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2026-01-30</td>
+                                        <td><strong>SN-INV-2024-X02</strong></td>
+                                        <td>26.2 kWh</td>
+                                        <td>4.4 kW</td>
+                                        <td>20.0 kWh</td>
+                                        <td>6.2 kWh</td>
+                                        <td>$2.62</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2026-01-30</td>
+                                        <td><strong>SN-INV-2023-Y99</strong></td>
+                                        <td>85.0 kWh</td>
+                                        <td>9.8 kW</td>
+                                        <td>80.0 kWh</td>
+                                        <td>5.0 kWh</td>
+                                        <td>$8.50</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2026-01-30</td>
+                                        <td><strong>SN-INV-2024-X05</strong></td>
+                                        <td>23.8 kWh</td>
+                                        <td>4.1 kW</td>
+                                        <td>15.0 kWh</td>
+                                        <td>8.8 kWh</td>
+                                        <td>$2.38</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pagination-footer">
+                            <span>Rows per page: 10</span>
+                            <div class="page-controls">
+                                <span>1-4 of 4</span>
+                                <button disabled><i class="ph ph-caret-left"></i></button>
+                                <button disabled><i class="ph ph-caret-right"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

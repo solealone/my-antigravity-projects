@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inverter Models | Solar OEM Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Icon support -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item"><i class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="models.html" class="nav-item"><i class="ph ph-stack"></i><span>Models</span></a>
+                <a href="accounts.html" class="nav-item"><i class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside> <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">Inverter Management</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">Inverter Models</span>
+                </div>
+
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <i class="ph ph-magnifying-glass"></i>
+                        <input type="text" placeholder="Search models...">
+                    </div>
+                    <button class="icon-btn">
+                        <i class="ph ph-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="ph ph-gear"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-wrapper">
+                <div class="page-title-section">
+                    <h1>Inverter Models</h1>
+                </div>
+
+                <div class="tab-bar">
+                    <a href="sites.html" class="tab-btn">Site List</a>
+                    <a href="add-site.html" class="tab-btn">Add Site</a>
+                    <a href="models.html" class="tab-btn active">Inverter Model List</a>
+                    <a href="add-model.html" class="tab-btn">Add Model</a>
+                </div>
+
+                <!-- Models Grid -->
+                <div class="models-grid">
+
+                    <!-- Card 1 -->
+                    <div class="model-card">
+                        <div class="card-header-row">
+                            <div class="model-icon">
+                                <i class="ph ph-solar-panel"></i>
+                            </div>
+                            <div class="model-info">
+                                <h3>SunKing Pro-X</h3>
+                                <div class="subtitle">5kW Hybrid Inverter</div>
+                            </div>
+                            <button class="icon-btn-sm delete-btn"><i class="ph ph-trash"></i></button>
+                        </div>
+
+                        <div class="card-image-area">
+                            <i class="ph ph-lightning large-icon"></i>
+                            <span>No Image Available</span>
+                        </div>
+
+                        <div class="card-stats">
+                            <div class="stat-group">
+                                <label>Input / Output</label>
+                                <div class="chips">
+                                    <span class="chip"><i class="ph ph-bolt"></i> 600V DC</span>
+                                    <span class="chip"><i class="ph ph-plugs"></i> 25A AC</span>
+                                </div>
+                            </div>
+                            <div class="stat-group">
+                                <label>Efficiency</label>
+                                <div class="chips">
+                                    <span class="chip variant-green">Euro: 97.5%</span>
+                                    <span class="chip variant-blue">Max: 98.2%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="spec-row">
+                                <label>Variants:</label>
+                                <div class="variant-tags">
+                                    <span class="tag">1-Phase, 5kW</span>
+                                </div>
+                            </div>
+                            <div class="doc-link">
+                                <i class="ph ph-file-pdf"></i>
+                                <span>Manual: SunKing_ProX_UserManual.pdf</span>
+                                <i class="ph ph-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="model-card">
+                        <div class="card-header-row">
+                            <div class="model-icon">
+                                <i class="ph ph-solar-panel"></i>
+                            </div>
+                            <div class="model-info">
+                                <h3>EcoMax 10k</h3>
+                                <div class="subtitle">10kW String Inverter</div>
+                            </div>
+                            <button class="icon-btn-sm delete-btn"><i class="ph ph-trash"></i></button>
+                        </div>
+
+                        <div class="card-image-area">
+                            <i class="ph ph-lightning large-icon"></i>
+                            <span>No Image Available</span>
+                        </div>
+
+                        <div class="card-stats">
+                            <div class="stat-group">
+                                <label>Input / Output</label>
+                                <div class="chips">
+                                    <span class="chip"><i class="ph ph-bolt"></i> 800V DC</span>
+                                    <span class="chip"><i class="ph ph-plugs"></i> 40A AC</span>
+                                </div>
+                            </div>
+                            <div class="stat-group">
+                                <label>Efficiency</label>
+                                <div class="chips">
+                                    <span class="chip variant-green">Euro: 98.0%</span>
+                                    <span class="chip variant-blue">Max: 98.6%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="spec-row">
+                                <label>Variants:</label>
+                                <div class="variant-tags">
+                                    <span class="tag">3-Phase, 10kW</span>
+                                </div>
+                            </div>
+                            <div class="doc-link">
+                                <i class="ph ph-file-pdf"></i>
+                                <span>Manual: EcoMax_Series_Datasheet.pdf</span>
+                                <i class="ph ph-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="model-card">
+                        <div class="card-header-row">
+                            <div class="model-icon">
+                                <i class="ph ph-solar-panel"></i>
+                            </div>
+                            <div class="model-info">
+                                <h3>MicroGen M4</h3>
+                                <div class="subtitle">Microinverter</div>
+                            </div>
+                            <button class="icon-btn-sm delete-btn"><i class="ph ph-trash"></i></button>
+                        </div>
+
+                        <div class="card-image-area">
+                            <div class="corner-badge">New</div>
+                            <i class="ph ph-lightning large-icon"></i>
+                            <span>No Image Available</span>
+                        </div>
+
+                        <div class="card-stats">
+                            <div class="stat-group">
+                                <label>Input / Output</label>
+                                <div class="chips">
+                                    <span class="chip"><i class="ph ph-bolt"></i> 60V DC</span>
+                                    <span class="chip"><i class="ph ph-plugs"></i> 1.5A AC</span>
+                                </div>
+                            </div>
+                            <div class="stat-group">
+                                <label>Efficiency</label>
+                                <div class="chips">
+                                    <span class="chip variant-green">CEC: 96.5%</span>
+                                    <span class="chip variant-orange">MPPT: 99.8%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="spec-row">
+                                <label>Variants:</label>
+                                <div class="variant-tags">
+                                    <span class="tag">0.4kW Module</span>
+                                </div>
+                            </div>
+                            <div class="doc-link">
+                                <i class="ph ph-file-pdf"></i>
+                                <span>Manual: MicroGen_M4_Install.pdf</span>
+                                <i class="ph ph-eye"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

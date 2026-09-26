@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inverters | Solar OEM Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .tab-bar {
+            background: #0f172a;
+            padding: 0;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            margin-bottom: 0;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            color: #94a3b8;
+            font-weight: 500;
+            border: none;
+            background: transparent;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .tab-btn.active {
+            color: white;
+            border-bottom-color: #10b981;
+            background: #1e293b;
+        }
+
+        .main-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            align-items: flex-end;
+        }
+
+        /* Timeline Styles for Inverter Log */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e2e8f0;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid #cbd5e1;
+        }
+
+        .timeline-dot.active {
+            border-color: #10b981;
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-content {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-desc {
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        /* Model Card Styles (migrated) */
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        .model-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .model-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header-row {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .model-icon {
+            width: 40px;
+            height: 40px;
+            background: #f1f5f9;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: #475569;
+        }
+
+        .model-info h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .model-info .subtitle {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .card-image-area {
+            height: 140px;
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #f1f5f9;
+            position: relative;
+        }
+
+        .large-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.5;
+        }
+
+        .card-stats {
+            padding: 1rem;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .stat-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .chip {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            background: #f1f5f9;
+            border-radius: 4px;
+            color: #475569;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .chip.variant-green { background: #dcfce7; color: #166534; }
+        .chip.variant-blue { background: #dbeafe; color: #1e40af; }
+        .chip.variant-orange { background: #ffedd5; color: #9a3412; }
+
+        .card-footer {
+            margin-top: auto;
+            padding: 1rem;
+            background: #f8fafc;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .doc-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: #475569;
+            padding: 0.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .doc-link:hover {
+            border-color: #cbd5e1;
+            color: #0f172a;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="inverters.html" class="nav-item active"><i class="ph ph-lightning"></i><span>Inverters</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item"><i class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="accounts.html" class="nav-item"><i class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">System</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">Inverters</span>
+                </div>
+                <div class="header-actions">
+                     <div class="search-bar">
+                        <i class="ph ph-magnifying-glass"></i>
+                        <input type="text" placeholder="Search serial numbers, models...">
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                
+                <!-- Tabs -->
+                <div class="tab-bar">
+                    <button class="tab-btn active" onclick="showTab('all-inverters')">All Inverters</button>
+                    <button class="tab-btn" onclick="showTab('inverter-log')">Inverter Log</button>
+                    <button class="tab-btn" onclick="showTab('inverter-models')">Inverter Models</button>
+                </div>
+
+                <div class="main-card">
+                    
+                    <!-- TAB 1: ALL INVERTERS -->
+                    <div id="all-inverters-view">
+                        <div class="action-row">
+                             <div class="select-group">
+                                <select style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px;">
+                                    <option>Filter by Model</option>
+                                    <option>SunKing Pro-X</option>
+                                    <option>EcoMax 10k</option>
+                                </select>
+                            </div>
+                            <div class="select-group">
+                                <select style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px;">
+                                    <option>Filter by Status</option>
+                                    <option>Online</option>
+                                    <option>Offline</option>
+                                    <option>Faulted</option>
+                                </select>
+                            </div>
+                            <div style="margin-left: auto;">
+                                <button class="btn-black" onclick="window.location.href='add-device.html'">
+                                    <i class="ph ph-plus"></i> Add Inverter
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Serial Number</th>
+                                        <th>Model</th>
+                                        <th>Status</th>
+                                        <th>Assigned Site</th>
+                                        <th>Assigned Dealer</th>
+                                        <th>Assigned Distributor</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-weight: 600;">SN-2024-8849</td>
+                                        <td>SunKing Pro-X</td>
+                                        <td><span class="chip variant-green" style="border:none;">Online</span></td>
+                                        <td>California Villa #9</td>
+                                        <td>SunInstallers Pro</td>
+                                        <td>Global Solar Dist.</td>
+                                        <td><button class="icon-btn-sm"><i class="ph ph-eye"></i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 600;">SN-2024-9921</td>
+                                        <td>EcoMax 10k</td>
+                                        <td><span class="chip variant-orange" style="border:none;">Faulted</span></td>
+                                        <td>Munich Factory</td>
+                                        <td>EuroGreen Partners</td>
+                                        <td>EuroGreen Partners</td>
+                                        <td><button class="icon-btn-sm"><i class="ph ph-eye"></i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 600;">SN-2024-1102</td>
+                                        <td>SunKing Pro-X</td>
+                                        <td><span class="chip variant-blue" style="border:none; background:#e2e8f0; color:#475569;">In Stock</span></td>
+                                        <td>-</td>
+                                        <td>Texas Rays LLC</td>
+                                        <td>Global Solar Dist.</td>
+                                        <td><button class="icon-btn-sm"><i class="ph ph-eye"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: INVERTER LOG -->
+                    <div id="inverter-log-view" style="display: none;">
+                        <div style="padding: 2rem; text-align: center; border-bottom: 1px solid #f1f5f9;">
+                            <h3 style="margin-bottom: 1rem;">Lifecycle Search</h3>
+                            <div style="max-width: 500px; margin: 0 auto; display: flex; gap: 0.5rem;">
+                                <input type="text" placeholder="Enter Inverter Serial Number (e.g. SN-2024-8849)" style="flex: 1; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+                                <button class="btn-black">Trace</button>
+                            </div>
+                        </div>
+
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-dot active"></div>
+                                <div class="timeline-date">Oct 12, 2025 • 10:30 AM</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Commissioned at Site</div>
+                                    <div class="timeline-desc">Deployed at <strong>California Villa #9</strong>. System currently generating.</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-date">Sep 28, 2025 • 02:15 PM</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Assigned to Dealer</div>
+                                    <div class="timeline-desc">Transferred from Global Solar Dist. to <strong>SunInstallers Pro</strong>.</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-date">Sep 15, 2025 • 09:00 AM</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Assigned to Distributor</div>
+                                    <div class="timeline-desc">Shipped from OEM Warehouse to <strong>Global Solar Dist. Inc</strong> (North America).</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-date">Aug 01, 2025 • 08:30 AM</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Manufacturing Completed</div>
+                                    <div class="timeline-desc">Unit passed QC (QC-ID: #99283). Added to OEM Warehouse Inventory.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: INVERTER MODELS -->
+                    <div id="inverter-models-view" style="display: none;">
+                         <div class="action-row">
+                             <div style="margin-left: auto;">
+                                <button class="btn-black" onclick="window.location.href='add-model.html'">
+                                    <i class="ph ph-plus"></i> Add Model
+                                </button>
+                            </div>
+                        </div>
+                        <div class="models-grid">
+                             <!-- Card 1 -->
+                            <div class="model-card">
+                                <div class="card-header-row">
+                                    <div class="model-icon"><i class="ph ph-solar-panel"></i></div>
+                                    <div class="model-info">
+                                        <h3>SunKing Pro-X</h3>
+                                        <div class="subtitle">5kW Hybrid Inverter</div>
+                                    </div>
+                                    <button class="icon-btn-sm delete-btn"><i class="ph ph-trash"></i></button>
+                                </div>
+                                <div class="card-image-area">
+                                    <i class="ph ph-lightning large-icon"></i>
+                                    <span>No Image Available</span>
+                                </div>
+                                <div class="card-stats">
+                                    <div class="stat-group">
+                                        <label>Efficiency</label>
+                                        <div class="chips">
+                                            <span class="chip variant-green">Euro: 97.5%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="doc-link">
+                                        <i class="ph ph-file-pdf"></i> <span>Manual: SunKing_ProX.pdf</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                             <!-- Card 2 -->
+                            <div class="model-card">
+                                <div class="card-header-row">
+                                    <div class="model-icon"><i class="ph ph-solar-panel"></i></div>
+                                    <div class="model-info">
+                                        <h3>EcoMax 10k</h3>
+                                        <div class="subtitle">10kW String Inverter</div>
+                                    </div>
+                                    <button class="icon-btn-sm delete-btn"><i class="ph ph-trash"></i></button>
+                                </div>
+                                <div class="card-image-area">
+                                    <i class="ph ph-lightning large-icon"></i>
+                                    <span>No Image Available</span>
+                                </div>
+                                <div class="card-stats">
+                                    <div class="stat-group">
+                                        <label>Efficiency</label>
+                                        <div class="chips">
+                                            <span class="chip variant-green">Euro: 98.0%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="doc-link">
+                                        <i class="ph ph-file-pdf"></i> <span>Manual: EcoMax_10k.pdf</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all views
+            document.getElementById('all-inverters-view').style.display = 'none';
+            document.getElementById('inverter-log-view').style.display = 'none';
+            document.getElementById('inverter-models-view').style.display = 'none';
+
+            // Remove active class from buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Show selected view
+            document.getElementById(tabName + '-view').style.display = 'block';
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

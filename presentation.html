@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Transight Presentation</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #000000;
+      color: #F8F9FA;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .slide {
+      width: 1600px;
+      height: 900px;
+      display: flex;
+      flex-direction: column;
+      padding: 60px 80px;
+      position: relative;
+      overflow: hidden;
+      background: #000000;
+    }
+
+    .bg-gradient {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(255, 0, 60, 0.15), transparent 50%), radial-gradient(circle at bottom left, rgba(255, 0, 60, 0.05), transparent 50%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .slide-content {
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      flex: 1;
+    }
+
+    .header {
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      padding-bottom: 20px;
+    }
+
+    .eyebrow {
+      font-size: 20px;
+      font-weight: 700;
+      color: #FF003C;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    h2 {
+      font-size: 52px;
+      color: #FFFFFF;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-top: 10px;
+    }
+
+    p {
+      font-size: 22px;
+      line-height: 1.6;
+      color: #D1D5DB;
+      margin-bottom: 20px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    .card {
+      background: #0A0204;
+      border: 1px solid #33000C;
+      border-radius: 16px;
+      padding: 36px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    }
+
+    .card h3 {
+      font-size: 26px;
+      color: #F8F9FA;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card p {
+      font-size: 19px;
+      color: #A0AEC0;
+      margin-bottom: 0;
+    }
+
+    .img-container {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #33000C;
+      box-shadow: 0 20px 40px rgba(255, 0, 60, 0.1);
+      display: flex;
+    }
+
+    img.full-fill {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    ul.styled-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.styled-list li {
+      font-size: 20px;
+      color: #D1D5DB;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      line-height: 1.5;
+    }
+
+    ul.styled-list li::before {
+      content: "•";
+      color: #FF003C;
+      font-size: 32px;
+      line-height: 24px;
+      margin-right: 16px;
+      font-weight: bold;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .stat-box {
+      background: rgba(255, 0, 60, 0.08);
+      border: 1px solid rgba(255, 0, 60, 0.2);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .stat-box.blue {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-val {
+      font-size: 48px;
+      font-family: 'Montserrat';
+      font-weight: 800;
+      color: #FF003C;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .stat-box.blue .stat-val {
+      color: #E2E8F0;
+    }
+
+    .stat-lbl {
+      font-size: 16px;
+      font-weight: 600;
+      color: #F8F9FA;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    @media print {
+      @page {
+        size: 1600px 900px;
+        margin: 0;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .slide {
+        page-break-after: always;
+        break-after: page;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SLIDE 1 -->
+  <div class="slide">
+    <div class="bg-gradient"></div>
+    <div class="slide-content" style="justify-content: center; padding: 0 40px;">
+      <div class="eyebrow" style="font-size: 24px; margin-bottom: 20px;">Eastern Province Smart Parking</div>
+      <h1 style="font-size: 72px; color: #FFFFFF; font-weight: 800; line-height: 1.1; margin-bottom: 30px;">
+        Intelligent Operations <br />at <span style="color: #FF003C;">City Scale.</span>
+      </h1>
+      <p style="font-size: 26px; max-width: 900px; margin-bottom: 60px;">
+        Eastern Province requires a parking platform that eliminates kiosks, automates payment entirely, unifies
+        lighting execution, and remains future-proof for 15 years. We deliver a custom-built digital concession
+        ecosystem.
+      </p>
+      <div style="display: flex; gap: 40px;">
+        <div class="stat-box" style="flex: 1;">
+          <div class="stat-val">75,000</div>
+          <div class="stat-lbl">Target Capacity</div>
+        </div>
+        <div class="stat-box blue" style="flex: 1;">
+          <div class="stat-val">100%</div>
+          <div class="stat-lbl">Digital Enforcement</div>
+        </div>
+        <div class="stat-box" style="flex: 1;">
+          <div class="stat-val">15 Yrs</div>
+          <div class="stat-lbl">Concession Longevity</div>
+        </div>
+        <div class="stat-box blue" style="flex: 1;">
+          <div class="stat-val">1</div>
+          <div class="stat-lbl">Unified Dashboard</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide">
+    <div class="bg-gradient"></div>
+    <div class="slide-content">
+      <div class="header">
+        <div>
+          <div class="eyebrow">02 — Platform Operations</div>
+          <h2>Seamless Transactions, Zero Friction.</h2>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div style="display: flex; flex-direction: column; justify-content: center;">
+          <ul class="styled-list">
+            <li><strong>Instant Detection:</strong> High-precision ANPR cameras log vehicle entry automatically without
+              any human intervention.</li>
+            <li><strong>Real-Time Session Generation:</strong> Our cloud engine calculates dynamic tariffs in under 2
+              seconds.</li>
+            <li><strong>Automated Driver Alerts:</strong> Mobile push notifications provide a seamless one-tap payment
+              link.</li>
+            <li><strong>Guaranteed Compliance:</strong> Payments mark sessions compliant instantly. Unpaid sessions
+              generate legally backed incident reports.</li>
+            <li><strong>Proactive Resolution:</strong> Any hardware fault triggers immediate work orders seamlessly.
+            </li>
+          </ul>
+        </div>
+        <div class="img-container">
+          <img
+            src="/Users/user/.gemini/antigravity/brain/484bed38-cc40-4ce3-8877-ed91be61de8a/data_flow_burgundy_1775735165181.png"
+            class="full-fill" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide">
+    <div class="bg-gradient"></div>
+    <div class="slide-content">
+      <div class="header">
+        <div>
+          <div class="eyebrow">03 — Infrastructure Advantage</div>
+          <h2>The Power of the Smart Pole Ecosystem.</h2>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="img-container">
+          <img
+            src="/Users/user/.gemini/antigravity/brain/484bed38-cc40-4ce3-8877-ed91be61de8a/smart_parking_concept_1775730604166.png"
+            class="full-fill" />
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div class="card">
+            <h3>💡 Intelligent Lighting Anchor</h3>
+            <p>Pre-upgraded with our SmartTec node, the luminaire reports real-time health and guarantees stable 24/7
+              power to the attached surveillance systems.</p>
+          </div>
+          <div class="card">
+            <h3>📸 Wide-Angle ANPR Camera</h3>
+            <p>Precisely mounted to maximize bay coverage. A single unit covers up to 28 bays, eliminating the need for
+              expensive per-bay sensors.</p>
+          </div>
+          <div class="card">
+            <h3>🖥️ Edge Processing Computations</h3>
+            <p>Advanced AI reads the license plate locally at the pole, minimizing bandwidth usage and delivering
+              instant identification to the cloud platform.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide">
+    <div class="bg-gradient"></div>
+    <div class="slide-content">
+      <div class="header">
+        <div>
+          <div class="eyebrow">04 — Financial Workflow</div>
+          <h2>Flawless Payment Orchestration.</h2>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <p>The core of smart parking is revenue security. We built a payment engine that ensures every riyal owed is
+            cleanly collected or enforced.</p>
+          <div class="card" style="margin-bottom: 20px; background: rgba(255, 0, 60, 0.05); border-color: #FF003C;">
+            <h3 style="color: #FF003C;">Saudi Payment Integrity</h3>
+            <p>The platform never creates dependencies on a single wallet. A centralized Gateway normalizes STC Pay,
+              mada, and Apple Pay instantly.</p>
+          </div>
+          <div class="card" style="background: rgba(255, 255, 255, 0.05); border-color: #D1D5DB;">
+            <h3 style="color: #F8F9FA;">Absher Integration Readiness</h3>
+            <p>Government endpoints are architected securely behind sandboxes during the pilot, ensuring we flip the
+              switch seamlessly for full production without redevelopment.</p>
+          </div>
+        </div>
+        <div class="img-container">
+          <img
+            src="/Users/user/.gemini/antigravity/brain/484bed38-cc40-4ce3-8877-ed91be61de8a/payment_burgundy_1775735165181.png"
+            class="full-fill" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <div class="slide">
+    <div class="bg-gradient"></div>
+    <div class="slide-content">
+      <div class="header">
+        <div>
+          <div class="eyebrow">05 — Unified Command</div>
+          <h2>One Dashboard for Streetlights and Cameras.</h2>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="img-container">
+          <img
+            src="/Users/user/.gemini/antigravity/brain/484bed38-cc40-4ce3-8877-ed91be61de8a/dashboard_burgundy_1775735165181.png"
+            class="full-fill" />
+        </div>
+        <div>
+          <p>Managing execution in silos doubles OPEX. We unify the response into a single high-performance pipeline
+            targeted at maximum asset uptime.</p>
+          <ul class="styled-list">
+            <li><strong>Holistic Threat Logging:</strong> A camera offline or a lamp failed enters the exact same triage
+              queue instantly.</li>
+            <li><strong>Algorithmic Dispatch:</strong> Work orders are sent sequentially to contractors based on
+              geospatial proximity and skill sets in under 60 seconds.</li>
+            <li><strong>Revenue Protection:</strong> Because an offline camera loses money by the minute, our 8-hour
+              restoration SLA strictly enforces high profitability.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6 -->
+  <div class="slide">
+    <div class="bg-gradient"></div>
+    <div class="slide-content">
+      <div class="header">
+        <div>
+          <div class="eyebrow">06 — Concession Architecture</div>
+          <h2>Unbreakable Scale. Future-Proof Logic.</h2>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+          <div class="card">
+            <h3>Hardware Independence Layer</h3>
+            <p>Over 15 years, camera hardware will be refreshed twice. A proprietary Translator Layer ingests data from
+              any manufacturer brand, meaning zero backend rewrites.</p>
+          </div>
+          <div class="card">
+            <h3>Saudi First, Regional Ready</h3>
+            <p>By keeping local compliance (Wallets, Absher) in secure API adapters, launching the core platform across
+              Bahrain or Qatar becomes a configuration exercise.</p>
+          </div>
+        </div>
+        <div class="img-container">
+          <img
+            src="/Users/user/.gemini/antigravity/brain/484bed38-cc40-4ce3-8877-ed91be61de8a/architecture_diagram_1775730558788.png"
+            class="full-fill" style="object-position: top" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7 -->
+  <div class="slide">
+    <div class="bg-gradient"></div>
+    <div class="slide-content">
+      <div class="header">
+        <div>
+          <div class="eyebrow">07 — Pilot Execution Blueprint</div>
+          <h2>Testing Reality Before Committing Capital.</h2>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="img-container">
+          <img
+            src="/Users/user/.gemini/antigravity/brain/484bed38-cc40-4ce3-8877-ed91be61de8a/pilot_burgundy_1775735165181.png"
+            class="full-fill" />
+        </div>
+        <div style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div class="card" style="border-left: 4px solid #FF003C;">
+            <h3>Phase 1: Technical Validation</h3>
+            <p>Deploying 15 cameras across 3 street types to guarantee >95% ANPR daytime accuracy and calculate the
+              highest spatial unit economics.</p>
+          </div>
+          <div class="card" style="border-left: 4px solid #D1D5DB;">
+            <h3>Phase 2: Payment Journeys</h3>
+            <p>Activating 500 live tracking users. Securing our payment conversion thresholds (>65%) and establishing
+              the exact SLA baseline for incident closures.</p>
+          </div>
+          <div class="card" style="border-left: 4px solid #A0AEC0;">
+            <h3>Phase 3: Rollout Sign-off</h3>
+            <p>Presenting validated, hardened empirical data to the Eastern Province stakeholders to lock in the
+              75,000-space blueprint confidently.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8 -->
+  <div class="slide">
+    <div class="bg-gradient"></div>
+    <div class="slide-content">
+      <div class="header" style="justify-content: center; text-align: center; border: none; margin-bottom: 20px;">
+        <div>
+          <div class="eyebrow">08 — Executive Summary</div>
+          <h2>The Definitive Platform For Eastern Province.</h2>
+        </div>
+      </div>
+      <div class="grid-3" style="gap: 30px;">
+        <div class="card" style="padding: 24px;">
+          <h3 style="font-size: 20px;">1. Purpose-Built Advantage</h3>
+          <p style="font-size: 16px;">Designed exclusively around this concession's fiscal logic. Not a generic
+            platform.</p>
+        </div>
+        <div class="card" style="padding: 24px;">
+          <h3 style="font-size: 20px;">2. Payment Prioritization</h3>
+          <p style="font-size: 16px;">Financial orchestration is the heart of the engine, ensuring maximum revenue
+            capture.</p>
+        </div>
+        <div class="card" style="padding: 24px;">
+          <h3 style="font-size: 20px;">3. The SmartTec Leverage</h3>
+          <p style="font-size: 16px;">Grid-powered networking provides a unit cost advantage unmatched in the region.
+          </p>
+        </div>
+        <div class="card" style="padding: 24px;">
+          <h3 style="font-size: 20px;">4. 15-Year Scalability</h3>
+          <p style="font-size: 16px;">Hardware agility secures the software infrastructure against rapid hardware
+            depreciation.</p>
+        </div>
+        <div class="card" style="padding: 24px;">
+          <h3 style="font-size: 20px;">5. Phased De-Risking</h3>
+          <p style="font-size: 16px;">A meticulously structured pilot guarantees decision-making based on concrete
+            regional data.</p>
+        </div>
+        <div class="card" style="padding: 24px;">
+          <h3 style="font-size: 20px;">6. Immediate Action Items</h3>
+          <p style="font-size: 16px;">Ready to deliver final architectures and API alignment designs instantly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

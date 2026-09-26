@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Changer Prophetical Church | Administration</title>
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- React & Babel CDNs (UMD builds) -->
+    <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.26.10/babel.min.js"></script>
+
+    <!-- Error Handling for script loads -->
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                if (typeof React === 'undefined' || typeof ReactDOM === 'undefined' || typeof Babel === 'undefined') {
+                    document.getElementById('root').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;flex-direction:column;gap:16px;background:#000;color:#fff"><h2 style="color:#ef4444">⚠ Failed to load React Scripts</h2><p style="color:#94a3b8;max-width:500px;text-align:center">Please check your internet connection and reload the page.</p><button onclick="location.reload()" style="padding:12px 24px;background:#8b5cf6;color:white;border:none;border-radius:8px;font-weight:bold;cursor:pointer">Retry</button></div>';
+                } else {
+                    const rootEl = document.getElementById('root');
+                    const isStuck = rootEl && rootEl.textContent && rootEl.textContent.indexOf('Initializing') !== -1;
+                    if (isStuck) {
+                        console.warn("React initialization timeout. Resetting local database cache...");
+                        const keys = ['sanctus_clergy', 'sanctus_families', 'sanctus_believers', 'sanctus_tasks', 'sanctus_study_plans', 'sanctus_attendance', 'sanctus_announcements', 'sanctus_auditlogs', 'sanctus_currentuser'];
+                        keys.forEach(function(k) { localStorage.removeItem(k); });
+                        document.getElementById('root').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;flex-direction:column;gap:16px;background:#000;color:#fff"><h2 style="color:#fbbf24">⚠ Database Cache Reset</h2><p style="color:#94a3b8;max-width:500px;text-align:center">We detected an initialization failure. The local database cache has been reset to fix loading conflicts.</p><button onclick="location.reload()" style="padding:12px 24px;background:#8b5cf6;color:white;border:none;border-radius:8px;font-weight:bold;cursor:pointer">Reload to Launch</button></div>';
+                    }
+                }
+            }, 6000);
+        });
+    </script>
+</head>
+<body class="dark-theme">
+    <div id="root">
+        <!-- React App mounts here -->
+        <div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;color:#94a3b8;background:#000;">
+            <div style="text-align:center;">
+                <div style="width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top-color:#8b5cf6;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px;"></div>
+                <p style="font-family:\'Outfit\',sans-serif; font-weight:500; font-size:14px; letter-spacing:0.5px;">Initializing Life Changer Prophetical Church Portal...</p>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+
+    <!-- React App script -->
+    <script type="text/babel">
+// SANCTUS - Life Changer Prophetical Church Management App
+// React Client implementation (In-browser Babel standalone)
+
+const { useState, useEffect, useRef } = React;
+
+function App() {
+    // ----------------------------------------------------
+    // 1. STATE & ROUTING
+    // ----------------------------------------------------
+    const [activeTab, setActiveTab] = useState('dashboard');
+    const [currentUser, setCurrentUser] = useState('thomas');
+
+    // Portal data lists
+    const [clergy, setClergy] = useState([]);
+    const [families, setFamilies] = useState([]);
+    const [believers, setBelievers] = useState([]);
+    const [tasks, setTasks] = useState([]);
+    const [studyPlans, setStudyPlans] = useState([]);
+    const [attendance, setAttendance] = useState({});
+    const [announcements, setAnnouncements] = useState([]);
+    const [auditLogs, setAuditLogs] = useState([]);
+
+    // Dialog Refs
+    const addFamilyDialogRef = useRef(null);
+    const addMemberDialogRef = useRef(null);
+    const assignTaskDialogRef = useRef(null);
+    const addStudyDialogRef = useRef(null);
+
+    // Form inputs state
+    const [formFamilyName, setFormFamilyName] = useState('');
+    const [formFamilyLocation, setFormFamilyLocation] = useState('North District');
+    const [formFamilyPastor, setFormFamilyPastor] = useState('p1');
+
+    const [formMemberName, setFormMemberName] = useState('');
+    const [formMemberGender, setFormMemberGender] = useState('Male');
+    const [formMemberEmail, setFormMemberEmail] = useState('');
+    const [formMemberPhone, setFormMemberPhone] = useState('');
+    const [formMemberAddress, setFormMemberAddress] = useState('');
+    const [formMemberLocation, setFormMemberLocation] = useState('North District');
+    const [formMemberReligion, setFormMemberReligion] = useState('');
+    const [formMemberBaptism, setFormMemberBaptism] = useState('Baptized');
+    const [formMemberFamily, setFormMemberFamily] = useState('');
+    const [formMemberRole, setFormMemberRole] = useState('');
+    const [formMemberPastor, setFormMemberPastor] = useState('p1');
+    const [formMemberPrayer, setFormMemberPrayer] = useState('');
+
+    const [formTaskTitle, setFormTaskTitle] = useState('');
+    const [formTaskDesc, setFormTaskDesc] = useState('');
+    const [formTaskPastor, setFormTaskPastor] = useState('p1');
+    const [formTaskUrgency, setFormTaskUrgency] = useState('Standard');
+    const [formTaskBeliever, setFormTaskBeliever] = useState('');
+
+    const [formStudyTitle, setFormStudyTitle] = useState('');
+    const [formStudyScripture, setFormStudyScripture] = useState('');
+    const [formStudyContent, setFormStudyContent] = useState('');
+    const [formStudyAction, setFormStudyAction] = useState('');
+
+    // Quick Care visit input (for Assistant Pastors)
+    const [formVisitNote, setFormVisitNote] = useState('');
+    const [formVisitBeliever, setFormVisitBeliever] = useState('');
+
+    // Announcement broadcaster input (for Lead Pastor)
+    const [formAnnounceTitle, setFormAnnounceTitle] = useState('');
+    const [formAnnounceText, setFormAnnounceText] = useState('');
+
+    // Directory filters state
+    const [filterQuery, setFilterQuery] = useState('');
+    const [filterPastor, setFilterPastor] = useState('all');
+    const [filterLocation, setFilterLocation] = useState('all');
+
+    // Growth checkoff plan index selector
+    const [selectedStudyIndex, setSelectedStudyIndex] = useState(0);
+
+    // Attendance Sunday selector
+    const [selectedSunday, setSelectedSunday] = useState('2026-06-07');
+
+    // ----------------------------------------------------
+    // 2. STATE STORAGE & SYNCHRONIZATION
+    // ----------------------------------------------------
+    useEffect(() => {
+        // Load data from localStorage
+        const cachedClergy = localStorage.getItem('sanctus_clergy');
+        const cachedFamilies = localStorage.getItem('sanctus_families');
+        const cachedBelievers = localStorage.getItem('sanctus_believers');
+        const cachedTasks = localStorage.getItem('sanctus_tasks');
+        const cachedPlans = localStorage.getItem('sanctus_study_plans');
+        const cachedAttendance = localStorage.getItem('sanctus_attendance');
+        const cachedAnnouncements = localStorage.getItem('sanctus_announcements');
+        const cachedAuditLogs = localStorage.getItem('sanctus_auditlogs');
+        const cachedCurrentUser = localStorage.getItem('sanctus_currentuser');
+
+        try {
+            if (cachedClergy && cachedFamilies && cachedBelievers && cachedTasks && cachedPlans && cachedAttendance) {
+                const parsedClergy = JSON.parse(cachedClergy);
+                const parsedFamilies = JSON.parse(cachedFamilies);
+                const parsedBelievers = JSON.parse(cachedBelievers);
+                const parsedTasks = JSON.parse(cachedTasks);
+                const parsedPlans = JSON.parse(cachedPlans);
+                const parsedAttendance = JSON.parse(cachedAttendance);
+
+                // Validate schemas to prevent rendering crashes
+                const isValidClergy = Array.isArray(parsedClergy) && parsedClergy.every(c => c && c.id && c.name);
+                const isValidFamilies = Array.isArray(parsedFamilies) && parsedFamilies.every(f => f && f.id && f.name);
+                const isValidBelievers = Array.isArray(parsedBelievers) && parsedBelievers.every(b => b && b.id && b.name && typeof b.growthRate === 'number');
+                const isValidTasks = Array.isArray(parsedTasks) && parsedTasks.every(t => t && t.id && t.title && typeof t.status === 'string');
+                const isValidPlans = Array.isArray(parsedPlans) && parsedPlans.every(p => p && p.id && p.title);
+                const isValidAttendance = typeof parsedAttendance === 'object' && parsedAttendance !== null;
+
+                if (isValidClergy && isValidFamilies && isValidBelievers && isValidTasks && isValidPlans && isValidAttendance) {
+                    setClergy(parsedClergy);
+                    setFamilies(parsedFamilies);
+                    setBelievers(parsedBelievers);
+                    setTasks(parsedTasks);
+                    setStudyPlans(parsedPlans);
+                    setAttendance(parsedAttendance);
+                    if (cachedAnnouncements) setAnnouncements(JSON.parse(cachedAnnouncements));
+                    if (cachedAuditLogs) setAuditLogs(JSON.parse(cachedAuditLogs));
+                    if (cachedCurrentUser) setCurrentUser(cachedCurrentUser);
+                } else {
+                    throw new Error("Invalid schema detected in cache");
+                }
+            } else {
+                throw new Error("Missing cached keys");
+            }
+        } catch (err) {
+            console.warn("Storage parse error, resetting state database...", err);
+            const seedClergy = [
+                { id: 'p1', name: 'Pastor Joseph', district: 'North District', avatar: 'PJ' },
+                { id: 'p2', name: 'Pastor Matthew', district: 'East District', avatar: 'PM' },
+                { id: 'p3', name: 'Pastor Luke', district: 'South District', avatar: 'PL' }
+            ];
+            const seedFamilies = [
+                { id: 'f1', name: 'Adams Family', subPriestId: 'p1', location: 'North District' },
+                { id: 'f2', name: 'Carter Family', subPriestId: 'p2', location: 'East District' },
+                { id: 'f3', name: 'Evans Family', subPriestId: 'p3', location: 'South District' },
+                { id: 'f4', name: 'Davis Family', subPriestId: 'p2', location: 'East District' }
+            ];
+            const seedBelievers = [
+                { id: 'b1', name: 'John Adams', gender: 'Male', email: 'john.adams@example.com', phone: '+1 (555) 101-2020', address: '45 Grace Way', location: 'North District', dateJoined: '2024-01-15', religion: 'Baptist', baptism: 'Baptized', familyId: 'f1', role: 'Father', subPriestId: 'p1', prayer: 'Family spiritual growth.', studyCompleted: true, studyDate: '2026-06-08', growthRate: 85 },
+                { id: 'b2', name: 'Mary Adams', gender: 'Female', email: 'mary.adams@example.com', phone: '+1 (555) 101-2021', address: '45 Grace Way', location: 'North District', dateJoined: '2024-01-15', religion: 'Methodist', baptism: 'Baptized', familyId: 'f1', role: 'Mother', subPriestId: 'p1', prayer: 'Wisdom raising kids in faith.', studyCompleted: true, studyDate: '2026-06-08', growthRate: 90 },
+                { id: 'b3', name: 'David Adams', gender: 'Male', email: 'david.adams@example.com', phone: '+1 (555) 101-2022', address: '45 Grace Way', location: 'North District', dateJoined: '2024-01-15', religion: 'Baptist', baptism: 'Baptized', familyId: 'f1', role: 'Son', subPriestId: 'p1', prayer: 'Focus in high school studies.', studyCompleted: false, studyDate: null, growthRate: 60 },
+                { id: 'b4', name: 'Sarah Adams', gender: 'Female', email: 'sarah.adams@example.com', phone: '+1 (555) 101-2023', address: '45 Grace Way', location: 'North District', dateJoined: '2024-01-15', religion: 'Baptist', baptism: 'Non-Baptized', familyId: 'f1', role: 'Daughter', subPriestId: 'p1', prayer: 'Preparing for water baptism.', studyCompleted: false, studyDate: null, growthRate: 70 },
+                { id: 'b5', name: 'Robert Carter', gender: 'Male', email: 'robert.c@example.com', phone: '+1 (555) 202-3030', address: '12 Sanctuary Road', location: 'East District', dateJoined: '2025-03-10', religion: 'None', baptism: 'Baptized', familyId: 'f2', role: 'Father', subPriestId: 'p2', prayer: 'Job security & career.', studyCompleted: true, studyDate: '2026-06-09', growthRate: 75 },
+                { id: 'b6', name: 'Helen Carter', gender: 'Female', email: 'helen.c@example.com', phone: '+1 (555) 202-3031', address: '12 Sanctuary Road', location: 'East District', dateJoined: '2025-03-10', religion: 'Lutheran', baptism: 'Baptized', familyId: 'f2', role: 'Mother', subPriestId: 'p2', prayer: 'Recovery from surgery pain.', studyCompleted: true, studyDate: '2026-06-09', growthRate: 80 },
+                { id: 'b7', name: 'Chloe Carter', gender: 'Female', email: 'chloe.c@example.com', phone: '+1 (555) 202-3032', address: '12 Sanctuary Road', location: 'East District', dateJoined: '2025-04-12', religion: 'None', baptism: 'Non-Baptized', familyId: 'f2', role: 'Daughter', subPriestId: 'p2', prayer: 'Spiritual guidance for college.', studyCompleted: false, studyDate: null, growthRate: 40 },
+                { id: 'b8', name: 'James Davis', gender: 'Male', email: 'james.d@example.com', phone: '+1 (555) 404-5050', address: '39 Heaven St', location: 'East District', dateJoined: '2024-11-20', religion: 'Anglican', baptism: 'Baptized', familyId: 'f4', role: 'Father', subPriestId: 'p2', prayer: 'Wisdom for parenting teenagers.', studyCompleted: true, studyDate: '2026-06-08', growthRate: 85 },
+                { id: 'b9', name: 'Patricia Davis', gender: 'Female', email: 'patricia.d@example.com', phone: '+1 (555) 404-5051', address: '39 Heaven St', location: 'East District', dateJoined: '2024-11-20', religion: 'Anglican', baptism: 'Baptized', familyId: 'f4', role: 'Mother', subPriestId: 'p2', prayer: 'Health in the household.', studyCompleted: true, studyDate: '2026-06-08', growthRate: 80 },
+                { id: 'b10', name: 'Michael Davis', gender: 'Male', email: 'mike.d@example.com', phone: '+1 (555) 404-5052', address: '39 Heaven St', location: 'East District', dateJoined: '2024-11-20', religion: 'Anglican', baptism: 'Non-Baptized', familyId: 'f4', role: 'Son', subPriestId: 'p2', prayer: 'Overcoming academic anxiety.', studyCompleted: false, studyDate: null, growthRate: 50 },
+                { id: 'b11', name: 'William Evans', gender: 'Male', email: 'william.e@example.com', phone: '+1 (555) 505-6060', address: '88 Covenant Way', location: 'South District', dateJoined: '2025-08-14', religion: 'Presbyterian', baptism: 'Baptized', familyId: 'f3', role: 'Father', subPriestId: 'p3', prayer: 'Leading local Bible group.', studyCompleted: true, studyDate: '2026-06-09', growthRate: 95 },
+                { id: 'b12', name: 'Karen Evans', gender: 'Female', email: 'karen.e@example.com', phone: '+1 (555) 505-6061', address: '88 Covenant Way', location: 'South District', dateJoined: '2025-08-14', religion: 'Baptist', baptism: 'Baptized', familyId: 'f3', role: 'Mother', subPriestId: 'p3', prayer: 'Recovery for aging parents.', studyCompleted: true, studyDate: '2026-06-09', growthRate: 90 },
+                { id: 'b13', name: 'Thomas Evans', gender: 'Male', email: 'tom.e@example.com', phone: '+1 (555) 505-6062', address: '88 Covenant Way', location: 'South District', dateJoined: '2025-08-14', religion: 'Baptist', baptism: 'Baptized', familyId: 'f3', role: 'Son', subPriestId: 'p3', prayer: 'University guidance.', studyCompleted: false, studyDate: null, growthRate: 65 },
+                { id: 'b14', name: 'Elizabeth Baker', gender: 'Female', email: 'liz.baker@example.com', phone: '+1 (555) 303-4040', address: '78 Faith Blvd', location: 'North District', dateJoined: '2026-05-01', religion: 'Catholic', baptism: 'Non-Baptized', familyId: '', role: '', subPriestId: 'p1', prayer: 'Newcomer adjustment.', studyCompleted: false, studyDate: null, growthRate: 50 },
+                { id: 'b15', name: 'Christopher King', gender: 'Male', email: 'chris.k@example.com', phone: '+1 (555) 909-8080', address: '11 Prophetical Lane', location: 'South District', dateJoined: '2026-05-20', religion: 'Pentecostal', baptism: 'Baptized', familyId: '', role: '', subPriestId: 'p3', prayer: 'Spiritual grounding.', studyCompleted: true, studyDate: '2026-06-09', growthRate: 70 }
+            ];
+            const seedTasks = [
+                { id: 't1', title: 'Visit the Carter Family', desc: 'Check in on Helen Carter after surgery and pray for healing.', priestId: 'p2', urgency: 'Critical', believerId: 'b6', status: 'pending', dateCreated: '2026-06-07' },
+                { id: 't2', title: 'Baptism Preparation Class', desc: 'Host baptism class for Sarah Adams and Elizabeth Baker.', priestId: 'p1', urgency: 'Urgent', believerId: '', status: 'in_progress', dateCreated: '2026-06-05' },
+                { id: 't3', title: 'Deliver Welcome Basket to Baker Home', desc: 'Deliver newcomer basket to Elizabeth Baker and run intake counseling.', priestId: 'p1', urgency: 'Standard', believerId: 'b14', status: 'completed', dateCreated: '2026-05-02' },
+                { id: 't4', title: 'Counsel Michael Davis on anxiety', desc: 'Discuss biblical strategies for managing academic stress.', priestId: 'p2', urgency: 'Standard', believerId: 'b10', status: 'pending', dateCreated: '2026-06-08' }
+            ];
+            const seedPlans = [
+                { id: 'sp1', title: 'The Power of Grace', scripture: 'Ephesians 2:8-9', content: 'Grace is a free gift, not something earned. We are saved through faith, not works, so that no one can boast.', action: 'Write down 3 things you are thankful for that you did not earn.' }
+            ];
+            const seedAttendance = {
+                '2026-06-07': { 'b1': true, 'b2': true, 'b3': true, 'b4': false, 'b5': true, 'b6': true, 'b7': false, 'b8': true, 'b9': true, 'b10': false, 'b11': true, 'b12': true, 'b13': true, 'b14': true, 'b15': true },
+                '2026-05-31': { 'b1': true, 'b2': true, 'b3': false, 'b4': false, 'b5': true, 'b6': false, 'b7': false, 'b8': true, 'b9': true, 'b10': true, 'b11': true, 'b12': true, 'b13': false, 'b14': false, 'b15': true },
+                '2026-05-24': { 'b1': true, 'b2': true, 'b3': true, 'b4': true, 'b5': false, 'b6': true, 'b7': false, 'b8': true, 'b9': true, 'b10': false, 'b11': true, 'b12': true, 'b13': true, 'b14': true, 'b15': false }
+            };
+            const seedAnnouncements = [
+                { id: "a1", title: "Monthly Leaders Assembly", sender: "Pastor Thomas", text: "All staff pastors, please prepare your district attendance sheets for the governance meeting this Saturday at 9 AM.", time: "10:15" },
+                { id: "a2", title: "Baptism Service", sender: "Pastor Thomas", text: "We will conduct a water baptism assembly next Sunday. Coordinate with your unbaptized believers.", time: "Yesterday" }
+            ];
+            const seedAuditLogs = [
+                { msg: "Pastor Thomas initialized Sanctus Web portal dashboard.", time: "10:00" },
+                { msg: "Pastor Joseph updated task 'Visit the Carter Family' status to Pending.", time: "10:05" },
+                { msg: "Pastor Thomas published Bible Study lesson Ephesians 2.", time: "10:10" }
+            ];
+
+            setClergy(seedClergy);
+            setFamilies(seedFamilies);
+            setBelievers(seedBelievers);
+            setTasks(seedTasks);
+            setStudyPlans(seedPlans);
+            setAttendance(seedAttendance);
+            setAnnouncements(seedAnnouncements);
+            setAuditLogs(seedAuditLogs);
+            setCurrentUser('thomas');
+
+            localStorage.setItem('sanctus_clergy', JSON.stringify(seedClergy));
+            localStorage.setItem('sanctus_families', JSON.stringify(seedFamilies));
+            localStorage.setItem('sanctus_believers', JSON.stringify(seedBelievers));
+            localStorage.setItem('sanctus_tasks', JSON.stringify(seedTasks));
+            localStorage.setItem('sanctus_study_plans', JSON.stringify(seedPlans));
+            localStorage.setItem('sanctus_attendance', JSON.stringify(seedAttendance));
+            localStorage.setItem('sanctus_announcements', JSON.stringify(seedAnnouncements));
+            localStorage.setItem('sanctus_auditlogs', JSON.stringify(seedAuditLogs));
+            localStorage.setItem('sanctus_currentuser', 'thomas');
+        }
+
+        const handleStorageChange = () => {
+            try {
+                const cClergy = localStorage.getItem('sanctus_clergy');
+                const cFamilies = localStorage.getItem('sanctus_families');
+                const cBelievers = localStorage.getItem('sanctus_believers');
+                const cTasks = localStorage.getItem('sanctus_tasks');
+                const cPlans = localStorage.getItem('sanctus_study_plans');
+                const cAttendance = localStorage.getItem('sanctus_attendance');
+                const cAnnouncements = localStorage.getItem('sanctus_announcements');
+                const cAuditLogs = localStorage.getItem('sanctus_auditlogs');
+                const cCurrentUser = localStorage.getItem('sanctus_currentuser');
+
+                if (cClergy) setClergy(JSON.parse(cClergy));
+                if (cFamilies) setFamilies(JSON.parse(cFamilies));
+                if (cBelievers) setBelievers(JSON.parse(cBelievers));
+                if (cTasks) setTasks(JSON.parse(cTasks));
+                if (cPlans) setStudyPlans(JSON.parse(cPlans));
+                if (cAttendance) setAttendance(JSON.parse(cAttendance));
+                if (cAnnouncements) setAnnouncements(JSON.parse(cAnnouncements));
+                if (cAuditLogs) setAuditLogs(JSON.parse(cAuditLogs));
+                if (cCurrentUser) setCurrentUser(cCurrentUser);
+            } catch (err) {
+                console.error("Storage change parsing error:", err);
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, []);
+
+    // ----------------------------------------------------
+    // 3. CORE LOGIC WRAPPERS
+    // ----------------------------------------------------
+    const saveAllToStorage = (updatedState) => {
+        if (updatedState.clergy) {
+            setClergy(updatedState.clergy);
+            localStorage.setItem('sanctus_clergy', JSON.stringify(updatedState.clergy));
+        }
+        if (updatedState.families) {
+            setFamilies(updatedState.families);
+            localStorage.setItem('sanctus_families', JSON.stringify(updatedState.families));
+        }
+        if (updatedState.believers) {
+            setBelievers(updatedState.believers);
+            localStorage.setItem('sanctus_believers', JSON.stringify(updatedState.believers));
+        }
+        if (updatedState.tasks) {
+            setTasks(updatedState.tasks);
+            localStorage.setItem('sanctus_tasks', JSON.stringify(updatedState.tasks));
+        }
+        if (updatedState.studyPlans) {
+            setStudyPlans(updatedState.studyPlans);
+            localStorage.setItem('sanctus_study_plans', JSON.stringify(updatedState.studyPlans));
+        }
+        if (updatedState.attendance) {
+            setAttendance(updatedState.attendance);
+            localStorage.setItem('sanctus_attendance', JSON.stringify(updatedState.attendance));
+        }
+        if (updatedState.announcements) {
+            setAnnouncements(updatedState.announcements);
+            localStorage.setItem('sanctus_announcements', JSON.stringify(updatedState.announcements));
+        }
+        if (updatedState.auditLogs) {
+            setAuditLogs(updatedState.auditLogs);
+            localStorage.setItem('sanctus_auditlogs', JSON.stringify(updatedState.auditLogs));
+        }
+    };
+
+    const addAuditLog = (msg) => {
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const updated = [{ msg, time }, ...auditLogs];
+        saveAllToStorage({ auditLogs: updated });
+    };
+
+    const getClergyIdFromRole = (role) => {
+        if (role === 'joseph') return 'p1';
+        if (role === 'matthew') return 'p2';
+        if (role === 'luke') return 'p3';
+        return 'thomas';
+    };
+
+    const getActivePastorName = () => {
+        if (currentUser === 'thomas') return 'Pastor Thomas';
+        const p = clergy.find(c => c.id === getClergyIdFromRole(currentUser));
+        return p ? p.name : 'Pastor Thomas';
+    };
+
+    // Filter helpers based on RBAC
+    const isSuper = currentUser === 'thomas';
+    const activeClergyId = getClergyIdFromRole(currentUser);
+
+    const getFilteredBelievers = () => {
+        return believers.filter(b => isSuper || b.subPriestId === activeClergyId);
+    };
+
+    const getFilteredFamilies = () => {
+        return families.filter(f => isSuper || f.subPriestId === activeClergyId);
+    };
+
+    const getFilteredTasks = () => {
+        return tasks.filter(t => isSuper || t.priestId === activeClergyId);
+    };
+
+    // Statistics Calculations
+    const getStats = () => {
+        const myBelievers = getFilteredBelievers();
+        const myFamilies = getFilteredFamilies();
+        const total = myBelievers.length;
+        const totalFamilies = myFamilies.length;
+
+        // Attendance rate (for selected Sunday)
+        let attendanceRate = '0%';
+        const dayRecord = attendance[selectedSunday];
+        if (dayRecord && total > 0) {
+            let present = 0;
+            myBelievers.forEach(b => {
+                if (dayRecord[b.id]) present++;
+            });
+            attendanceRate = `${Math.round((present / total) * 100)}%`;
+        }
+
+        // Bible Study Plan rate
+        let studyRate = '0%';
+        if (total > 0) {
+            const completed = myBelievers.filter(b => b.studyCompleted).length;
+            studyRate = `${Math.round((completed / total) * 100)}%`;
+        }
+
+        return { total, totalFamilies, attendanceRate, studyRate };
+    };
+
+    const stats = getStats();
+
+    // ----------------------------------------------------
+    // 4. ACTION HANDLERS
+    // ----------------------------------------------------
+    const handleRoleChange = (e) => {
+        const role = e.target.value;
+        setCurrentUser(role);
+        localStorage.setItem('sanctus_currentuser', role);
+        const name = role === 'thomas' ? 'Pastor Thomas' : (clergy.find(c => c.id === getClergyIdFromRole(role))?.name || 'Pastor');
+        addAuditLog(`${name} switched session profile.`);
+    };
+
+    const handleAddFamily = (e) => {
+        e.preventDefault();
+        const id = 'f' + (families.length + 1);
+        const newFam = {
+            id,
+            name: formFamilyName,
+            subPriestId: formFamilyPastor,
+            location: formFamilyLocation
+        };
+        const updated = [...families, newFam];
+        saveAllToStorage({ families: updated });
+        addAuditLog(`${getActivePastorName()} added new family group: ${formFamilyName}.`);
+        
+        // Reset and close
+        setFormFamilyName('');
+        addFamilyDialogRef.current.close();
+    };
+
+    const handleAddMember = (e) => {
+        e.preventDefault();
+        const id = 'b' + (believers.length + 1);
+        const newBeliever = {
+            id,
+            name: formMemberName,
+            gender: formMemberGender,
+            email: formMemberEmail || 'N/A',
+            phone: formMemberPhone || 'N/A',
+            address: formMemberAddress || 'N/A',
+            location: formMemberLocation,
+            dateJoined: new Date().toISOString().split('T')[0],
+            religion: formMemberReligion || 'None',
+            baptism: formMemberBaptism,
+            familyId: formMemberFamily || '',
+            role: formMemberRole || '',
+            subPriestId: formMemberPastor,
+            prayer: formMemberPrayer || 'Spiritual growth.',
+            studyCompleted: false,
+            studyDate: null,
+            growthRate: 50
+        };
+
+        const updated = [...believers, newBeliever];
+        saveAllToStorage({ believers: updated });
+        addAuditLog(`${getActivePastorName()} registered new believer: ${formMemberName}.`);
+
+        // Reset and close
+        setFormMemberName('');
+        setFormMemberEmail('');
+        setFormMemberPhone('');
+        setFormMemberAddress('');
+        setFormMemberReligion('');
+        setFormMemberPrayer('');
+        addMemberDialogRef.current.close();
+    };
+
+    const handleAddTask = (e) => {
+        e.preventDefault();
+        const id = 't' + (tasks.length + 1);
+        const newTask = {
+            id,
+            title: formTaskTitle,
+            desc: formTaskDesc,
+            priestId: formTaskPastor,
+            urgency: formTaskUrgency,
+            believerId: formTaskBeliever || '',
+            status: 'pending',
+            dateCreated: new Date().toISOString().split('T')[0]
+        };
+
+        const updated = [...tasks, newTask];
+        saveAllToStorage({ tasks: updated });
+        const pastorName = clergy.find(c => c.id === formTaskPastor)?.name || 'Pastor';
+        addAuditLog(`${getActivePastorName()} delegated task to ${pastorName}: "${formTaskTitle}".`);
+
+        // Reset and close
+        setFormTaskTitle('');
+        setFormTaskDesc('');
+        setFormTaskBeliever('');
+        assignTaskDialogRef.current.close();
+    };
+
+    const handleAddStudyPlan = (e) => {
+        e.preventDefault();
+        const id = 'sp' + (studyPlans.length + 1);
+        const newPlan = {
+            id,
+            title: formStudyTitle,
+            scripture: formStudyScripture,
+            content: formStudyContent,
+            action: formStudyAction
+        };
+        const updated = [...studyPlans, newPlan];
+        saveAllToStorage({ studyPlans: updated });
+        addAuditLog(`${getActivePastorName()} created discipleship plan: "${formStudyTitle}".`);
+
+        // Reset and close
+        setFormStudyTitle('');
+        setFormStudyScripture('');
+        setFormStudyContent('');
+        setFormStudyAction('');
+        addStudyDialogRef.current.close();
+    };
+
+    const handleLogVisit = (e) => {
+        e.preventDefault();
+        if (!formVisitNote || !formVisitBeliever) return;
+        const believerName = believers.find(b => b.id === formVisitBeliever)?.name || 'Believer';
+        addAuditLog(`${getActivePastorName()} logged pastoral care visit note to ${believerName}: "${formVisitNote}".`);
+        setFormVisitNote('');
+        alert('Care visit report submitted successfully to Lead Pastor.');
+    };
+
+    const handleBroadcastAnnouncement = (e) => {
+        e.preventDefault();
+        if (!formAnnounceTitle || !formAnnounceText) return;
+        const id = 'a' + (announcements.length + 1);
+        const newAnnounce = {
+            id,
+            title: formAnnounceTitle,
+            sender: getActivePastorName(),
+            text: formAnnounceText,
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        const updated = [newAnnounce, ...announcements];
+        saveAllToStorage({ announcements: updated });
+        addAuditLog(`${getActivePastorName()} broadcasted church announcement: "${formAnnounceTitle}".`);
+        
+        setFormAnnounceTitle('');
+        setFormAnnounceText('');
+    };
+
+    const toggleTaskStatus = (taskId, currentStatus) => {
+        let nextStatus = 'pending';
+        if (currentStatus === 'pending') nextStatus = 'in_progress';
+        else if (currentStatus === 'in_progress') nextStatus = 'completed';
+
+        const updated = tasks.map(t => {
+            if (t.id === taskId) {
+                return { ...t, status: nextStatus };
+            }
+            return t;
+        });
+        saveAllToStorage({ tasks: updated });
+        const taskTitle = tasks.find(t => t.id === taskId)?.title || 'Task';
+        addAuditLog(`${getActivePastorName()} updated task "${taskTitle}" status to ${nextStatus.toUpperCase().replace('_', ' ')}.`);
+    };
+
+    const toggleDiscipleshipReadings = (believerId, isChecked) => {
+        const updated = believers.map(b => {
+            if (b.id === believerId) {
+                return {
+                    ...b,
+                    studyCompleted: isChecked,
+                    studyDate: isChecked ? new Date().toISOString().split('T')[0] : null,
+                    growthRate: isChecked ? Math.min(b.growthRate + 10, 100) : Math.max(b.growthRate - 10, 0)
+                };
+            }
+            return b;
+        });
+        saveAllToStorage({ believers: updated });
+        const name = believers.find(b => b.id === believerId)?.name || 'Believer';
+        addAuditLog(`${getActivePastorName()} updated Bible study progress for ${name}.`);
+    };
+
+    const toggleAttendanceCheckbox = (believerId, isChecked) => {
+        const dayRecord = { ...(attendance[selectedSunday] || {}) };
+        if (isChecked) {
+            dayRecord[believerId] = true;
+        } else {
+            delete dayRecord[believerId];
+        }
+        const updated = {
+            ...attendance,
+            [selectedSunday]: dayRecord
+        };
+        saveAllToStorage({ attendance: updated });
+        const name = believers.find(b => b.id === believerId)?.name || 'Believer';
+        addAuditLog(`${getActivePastorName()} updated Sunday attendance check for ${name} on ${selectedSunday}.`);
+    };
+
+    // ----------------------------------------------------
+    // 5. RENDER HELPER SEGMENTS
+    // ----------------------------------------------------
+    const currentPlan = studyPlans[selectedStudyIndex] || null;
+
+    // Get directories
+    const directoryBelievers = getFilteredBelievers().filter(b => {
+        const q = filterQuery.toLowerCase();
+        const matchesQuery = b.name.toLowerCase().includes(q) || b.location.toLowerCase().includes(q);
+        const matchesPastor = filterPastor === 'all' || b.subPriestId === filterPastor;
+        const matchesLocation = filterLocation === 'all' || b.location === filterLocation;
+        return matchesQuery && matchesPastor && matchesLocation;
+    });
+
+    const directoryFamilies = getFilteredFamilies().filter(f => {
+        const matchesPastor = filterPastor === 'all' || f.subPriestId === filterPastor;
+        const matchesLocation = filterLocation === 'all' || f.location === filterLocation;
+        return matchesPastor && matchesLocation;
+    });
+
+    return (
+        <div className="app-container">
+            {/* Sidebar Navigation */}
+            <aside className="sidebar">
+                <div className="sidebar-brand">
+                    <div className="brand-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <span>Life Changer Prophetical Church</span>
+                </div>
+                
+                <nav className="sidebar-menu">
+                    <button onClick={() => setActiveTab('dashboard')} className={`menu-item ${activeTab === 'dashboard' ? 'active' : ''}`} style={{background:'none', border:'none', width:'100%', textAlign:'left', cursor:'pointer'}}>
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                        <span>Dashboard</span>
+                    </button>
+                    <button onClick={() => setActiveTab('directory')} className={`menu-item ${activeTab === 'directory' ? 'active' : ''}`} style={{background:'none', border:'none', width:'100%', textAlign:'left', cursor:'pointer'}}>
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <span>Directory</span>
+                    </button>
+                    <button onClick={() => setActiveTab('clergy')} className={`menu-item ${activeTab === 'clergy' ? 'active' : ''}`} style={{background:'none', border:'none', width:'100%', textAlign:'left', cursor:'pointer'}}>
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        <span>Pastors & Tasks</span>
+                    </button>
+                    <button onClick={() => setActiveTab('growth')} className={`menu-item ${activeTab === 'growth' ? 'active' : ''}`} style={{background:'none', border:'none', width:'100%', textAlign:'left', cursor:'pointer'}}>
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                        <span>Bible Study Plans</span>
+                    </button>
+                    <button onClick={() => setActiveTab('attendance')} className={`menu-item ${activeTab === 'attendance' ? 'active' : ''}`} style={{background:'none', border:'none', width:'100%', textAlign:'left', cursor:'pointer'}}>
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        <span>Attendance Log</span>
+                    </button>
+                    <a href="mobile.html" className="menu-item" target="_blank" style={{marginTop: '20px', border: '1px dashed rgba(234, 179, 8, 0.3)', borderRadius: '8px', color: 'var(--color-gold)'}}>
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                        <span>Mobile App Simulator</span>
+                    </a>
+                </nav>
+
+                <div className="sidebar-footer">
+                    <div className="user-profile">
+                        <div className="avatar-glow">
+                            <div className="avatar">{isSuper ? 'LT' : clergy.find(c => c.id === activeClergyId)?.avatar || 'PT'}</div>
+                        </div>
+                        <div className="user-info">
+                            <span className="username">{getActivePastorName()}</span>
+                            <span className="user-role">{isSuper ? 'Lead Pastor' : 'Assistant Pastor'}</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            {/* Main Panel */}
+            <main className="main-panel">
+                {/* Header */}
+                <header className="main-header">
+                    <div className="header-title">
+                        <h1>{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Portal</h1>
+                        <p>Welcome back, {getActivePastorName()}. Here is the spiritual state of Life Changer Prophetical Church.</p>
+                    </div>
+                    <div className="header-actions" style={{display:'flex', alignItems:'center', gap:'16px'}}>
+                        <div className="rbac-select-group" style={{display:'flex', alignItems:'center', gap:'8px'}}>
+                            <span style={{fontSize:'11px', fontWeight:700, color:'var(--color-gold)', textTransform:'uppercase', letterSpacing:'0.5px'}}>Active Profile:</span>
+                            <select value={currentUser} onChange={handleRoleChange} style={{background:'var(--color-card-bg)', color:'#fff', border:'1px solid var(--color-card-border)', fontSize:'12px', fontWeight:600, padding:'6px 12px', borderRadius:'8px', outline:'none', cursor:'pointer'}}>
+                                <option value="thomas">Pastor Thomas (Super Admin)</option>
+                                <option value="joseph">Pastor Joseph (Assistant Pastor)</option>
+                                <option value="matthew">Pastor Matthew (Assistant Pastor)</option>
+                                <option value="luke">Pastor Luke (Assistant Pastor)</option>
+                            </select>
+                        </div>
+                        <button className="btn btn-outline" onClick={() => addFamilyDialogRef.current.showModal()}>
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="19" y2="14"></line><line x1="16" y1="11" x2="22" y2="11"></line></svg>
+                            <span>Add Family</span>
+                        </button>
+                        <button className="btn btn-primary" onClick={() => addMemberDialogRef.current.showModal()}>
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Add Member</span>
+                        </button>
+                    </div>
+                </header>
+
+                {/* TAB: DASHBOARD */}
+                {activeTab === 'dashboard' && (
+                    <section className="tab-content active">
+                        {/* Stats Cards */}
+                        <div className="stats-grid">
+                            <div className="stat-card">
+                                <div className="stat-icon icon-gold">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                </div>
+                                <div className="stat-details">
+                                    <span className="stat-label">Total Believers</span>
+                                    <span className="stat-value">{stats.total}</span>
+                                </div>
+                                <div className="stat-footer text-positive">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                    <span>+4 this month</span>
+                                </div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="stat-icon icon-indigo">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                </div>
+                                <div className="stat-details">
+                                    <span className="stat-label">Parish Families</span>
+                                    <span className="stat-value">{stats.totalFamilies}</span>
+                                </div>
+                                <div className="stat-footer text-positive">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                    <span>+1 new family</span>
+                                </div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="stat-icon icon-green">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                </div>
+                                <div className="stat-details">
+                                    <span className="stat-label">Sunday Attendance</span>
+                                    <span className="stat-value">{stats.attendanceRate}</span>
+                                </div>
+                                <div className="stat-footer text-muted">
+                                    <span>Avg. past 4 weeks</span>
+                                </div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="stat-icon icon-pink">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                                </div>
+                                <div className="stat-details">
+                                    <span className="stat-label">Study Completion</span>
+                                    <span className="stat-value">{stats.studyRate}</span>
+                                </div>
+                                <div className="stat-footer text-positive">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                    <span>+8% vs last week</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Charts and Task logs */}
+                        <div className="dashboard-content-layout">
+                            <div className="card glass-card span-2">
+                                <div className="card-header">
+                                    <div>
+                                        <h3 className="card-title">Weekly Attendance & Growth Trends</h3>
+                                        <p className="card-subtitle text-muted">Believer attendance trend vs Bible Study completion rates</p>
+                                    </div>
+                                    <div className="card-header-actions">
+                                        <span className="badge badge-primary">2026 Season</span>
+                                    </div>
+                                </div>
+                                <div className="card-body">
+                                    <div className="chart-container">
+                                        <svg className="trend-chart" viewBox="0 0 500 200">
+                                            <defs>
+                                                <linearGradient id="chart-grad-indigo" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="0%" stopColor="var(--color-indigo)" stopOpacity="0.4"/>
+                                                    <stop offset="100%" stopColor="var(--color-indigo)" stopOpacity="0"/>
+                                                </linearGradient>
+                                                <linearGradient id="chart-grad-gold" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="0%" stopColor="var(--color-gold)" stopOpacity="0.4"/>
+                                                    <stop offset="100%" stopColor="var(--color-gold)" stopOpacity="0"/>
+                                                </linearGradient>
+                                                <filter id="react-glow-indigo" x="-20%" y="-20%" width="140%" height="140%">
+                                                    <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur1" />
+                                                    <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur2" />
+                                                    <feMerge>
+                                                        <feMergeNode in="blur2" />
+                                                        <feMergeNode in="blur1" />
+                                                        <feMergeNode in="SourceGraphic" />
+                                                    </feMerge>
+                                                </filter>
+                                                <filter id="react-glow-gold" x="-20%" y="-20%" width="140%" height="140%">
+                                                    <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur1" />
+                                                    <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur2" />
+                                                    <feMerge>
+                                                        <feMergeNode in="blur2" />
+                                                        <feMergeNode in="blur1" />
+                                                        <feMergeNode in="SourceGraphic" />
+                                                    </feMerge>
+                                                </filter>
+                                            </defs>
+                                            
+                                            <line x1="40" y1="20" x2="480" y2="20" stroke="rgba(255,255,255,0.05)" strokeDasharray="4"/>
+                                            <line x1="40" y1="60" x2="480" y2="60" stroke="rgba(255,255,255,0.05)" strokeDasharray="4"/>
+                                            <line x1="40" y1="100" x2="480" y2="100" stroke="rgba(255,255,255,0.05)" strokeDasharray="4"/>
+                                            <line x1="40" y1="140" x2="480" y2="140" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+                                            <line x1="40" y1="170" x2="480" y2="170" stroke="rgba(255,255,255,0.1)"/>
+                                            
+                                            <text x="15" y="25" fill="rgba(255,255,255,0.3)" fontSize="10">100%</text>
+                                            <text x="15" y="65" fill="rgba(255,255,255,0.3)" fontSize="10">75%</text>
+                                            <text x="15" y="105" fill="rgba(255,255,255,0.3)" fontSize="10">50%</text>
+                                            <text x="15" y="145" fill="rgba(255,255,255,0.3)" fontSize="10">25%</text>
+                                            
+                                            <text x="60" y="190" fill="rgba(255,255,255,0.4)" fontSize="10" textAnchor="middle">Week 1</text>
+                                            <text x="160" y="190" fill="rgba(255,255,255,0.4)" fontSize="10" textAnchor="middle">Week 2</text>
+                                            <text x="260" y="190" fill="rgba(255,255,255,0.4)" fontSize="10" textAnchor="middle">Week 3</text>
+                                            <text x="360" y="190" fill="rgba(255,255,255,0.4)" fontSize="10" textAnchor="middle">Week 4</text>
+                                            <text x="460" y="190" fill="rgba(255,255,255,0.4)" fontSize="10" textAnchor="middle">Week 5</text>
+                                            
+                                            <path d="M 60 170 L 60 80 L 160 72 L 260 55 L 360 48 L 460 40 L 460 170 Z" fill="url(#chart-grad-indigo)"/>
+                                            <path d="M 60 170 L 60 110 L 160 100 L 260 90 L 360 78 L 460 70 L 460 170 Z" fill="url(#chart-grad-gold)"/>
+                                            
+                                            <path d="M 60 80 L 160 72 L 260 55 L 360 48 L 460 40" fill="none" stroke="var(--color-indigo)" strokeWidth="3" strokeLinecap="round" filter="url(#react-glow-indigo)"/>
+                                            <path d="M 60 110 L 160 100 L 260 90 L 360 78 L 460 70" fill="none" stroke="var(--color-gold)" strokeWidth="3" strokeLinecap="round" filter="url(#react-glow-gold)"/>
+                                            
+                                            <circle cx="60" cy="80" r="4" fill="var(--color-indigo)"/>
+                                            <circle cx="160" cy="72" r="4" fill="var(--color-indigo)"/>
+                                            <circle cx="260" cy="55" r="4" fill="var(--color-indigo)"/>
+                                            <circle cx="360" cy="48" r="4" fill="var(--color-indigo)"/>
+                                            <circle cx="460" cy="40" r="4" fill="var(--color-indigo)"/>
+                                            
+                                            <circle cx="60" cy="110" r="4" fill="var(--color-gold)"/>
+                                            <circle cx="160" cy="100" r="4" fill="var(--color-gold)"/>
+                                            <circle cx="260" cy="90" r="4" fill="var(--color-gold)"/>
+                                            <circle cx="360" cy="78" r="4" fill="var(--color-gold)"/>
+                                            <circle cx="460" cy="70" r="4" fill="var(--color-gold)"/>
+                                        </svg>
+                                    </div>
+                                    <div className="chart-legend">
+                                        <div className="legend-item"><span className="legend-dot bg-indigo"></span><span>Attendance Trend</span></div>
+                                        <div className="legend-item"><span className="legend-dot bg-gold"></span><span>Bible Study Plan Completion</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="card glass-card">
+                                <div className="card-header">
+                                    <div>
+                                        <h3 className="card-title">Pastoral Tasks</h3>
+                                        <p className="card-subtitle text-muted">Active duties delegated to assistant pastors</p>
+                                    </div>
+                                    {isSuper && (
+                                        <button className="btn-icon" onClick={() => assignTaskDialogRef.current.showModal()} title="Assign New Task">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                        </button>
+                                    )}
+                                </div>
+                                <div className="card-body">
+                                    <div className="task-list-simple">
+                                        {getFilteredTasks().slice(0, 3).map(task => {
+                                            const staffPastor = clergy.find(c => c.id === task.priestId)?.name || 'Pastor';
+                                            return (
+                                                <div key={task.id} className={`task-item-simple urgency-${task.urgency}`}>
+                                                    <div className="task-meta-simple">
+                                                        <span>Assigned to: {staffPastor}</span>
+                                                        <span className="badge badge-gold">{task.urgency}</span>
+                                                    </div>
+                                                    <span className="task-title-simple">{task.title}</span>
+                                                    <span style={{fontSize:'10px', color:'var(--color-text-muted)', display:'flex', justifyContent:'space-between'}}>
+                                                        <span>Status: {task.status.toUpperCase().replace('_', ' ')}</span>
+                                                        <span>{task.dateCreated}</span>
+                                                    </span>
+                                                </div>
+                                            );
+                                        })}
+                                        {getFilteredTasks().length === 0 && <p className="text-muted" style={{fontSize:'12px'}}>No active tasks found.</p>}
+                                    </div>
+                                </div>
+                                <div className="card-footer">
+                                    <button onClick={() => setActiveTab('clergy')} className="footer-link text-indigo" style={{background:'none', border:'none', cursor:'pointer', textAlign:'left'}}>Manage all tasks &rarr;</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* RBAC specific dashboard containers */}
+                        <div className="dashboard-content-layout">
+                            {isSuper ? (
+                                <React.Fragment>
+                                    {/* Tithes & Finances */}
+                                    <div className="card glass-card">
+                                        <div className="card-header">
+                                            <div>
+                                                <h3 className="card-title">Tithes & Ministry Funds</h3>
+                                                <p className="card-subtitle text-muted">Weekly tithing distribution and reserves</p>
+                                            </div>
+                                            <span className="badge badge-green" style={{fontWeight:700}}>$14,250.00 Total</span>
+                                        </div>
+                                        <div className="card-body" style={{display:'flex', flexDirection:'column', gap:'16px'}}>
+                                            {[
+                                                { label: 'Outreach & Missions', rate: '35%', val: '$4,987.50', color: 'var(--color-indigo)' },
+                                                { label: 'Charitable Reserves', rate: '25%', val: '$3,562.50', color: 'var(--color-green)' },
+                                                { label: 'Church Governance & Salaries', rate: '20%', val: '$2,850.00', color: 'var(--color-gold)' },
+                                                { label: 'Facilities Maintenance', rate: '20%', val: '$2,850.00', color: 'var(--color-pink)' }
+                                            ].map((budget, i) => (
+                                                <div key={i} style={{display:'flex', flexDirection:'column', gap:'4px'}}>
+                                                    <div style={{display:'flex', justifyContent:'space-between', fontSize:'11px', fontWeight:600}}>
+                                                        <span>{budget.label} ({budget.rate})</span>
+                                                        <span style={{color: budget.color}}>{budget.val}</span>
+                                                    </div>
+                                                    <div style={{height:'6px', background:'rgba(255,255,255,0.05)', borderRadius:'3px', overflow:'hidden'}}>
+                                                        <div style={{width: budget.rate, height:'100%', backgroundColor: budget.color}}></div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Announcements Broadcaster */}
+                                    <div className="card glass-card">
+                                        <div className="card-header">
+                                            <div>
+                                                <h3 className="card-title">Broadcast Announcement</h3>
+                                                <p className="card-subtitle text-muted">Send urgent alerts to all staff members</p>
+                                            </div>
+                                        </div>
+                                        <form onSubmit={handleBroadcastAnnouncement} className="card-body" style={{display:'flex', flexDirection:'column', gap:'12px'}}>
+                                            <div className="form-group">
+                                                <label>Title</label>
+                                                <input type="text" value={formAnnounceTitle} onChange={(e) => setFormAnnounceTitle(e.target.value)} placeholder="E.g., Leaders Meeting" required />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Content Text</label>
+                                                <textarea value={formAnnounceText} onChange={(e) => setFormAnnounceText(e.target.value)} placeholder="Write details here..." style={{height:'80px', resize:'none'}} required></textarea>
+                                            </div>
+                                            <button type="submit" className="btn btn-primary btn-sm btn-block">Broadcast Alert</button>
+                                        </form>
+                                    </div>
+
+                                    {/* Global Audit timeline */}
+                                    <div className="card glass-card span-2" style={{gridColumn:'span 2'}}>
+                                        <div className="card-header">
+                                            <div>
+                                                <h3 className="card-title">Global Governance Action Trail</h3>
+                                                <p className="card-subtitle text-muted">Chronological timeline of all system logs and pastor updates</p>
+                                            </div>
+                                        </div>
+                                        <div className="card-body">
+                                            <div style={{display:'flex', flexDirection:'column', gap:'16px'}}>
+                                                {auditLogs.slice(0, 5).map((log, index) => (
+                                                    <div key={index} style={{display:'flex', gap:'16px', borderBottom:'1px solid rgba(255,255,255,0.02)', paddingBottom:'10px'}}>
+                                                        <div style={{fontSize:'12px', color:'var(--color-gold)', fontWeight:700, width:'60px'}}>{log.time}</div>
+                                                        <div style={{fontSize:'13px', color:'var(--color-text-primary)'}}>{log.msg}</div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </React.Fragment>
+                            ) : (
+                                <React.Fragment>
+                                    {/* Assistant Pastors: Quick Care Visit logging */}
+                                    <div className="card glass-card">
+                                        <div className="card-header">
+                                            <div>
+                                                <h3 className="card-title">Quick Care Visit Log</h3>
+                                                <p className="card-subtitle text-muted">Register a completed home check or counseling visit</p>
+                                            </div>
+                                        </div>
+                                        <form onSubmit={handleLogVisit} className="card-body" style={{display:'flex', flexDirection:'column', gap:'12px'}}>
+                                            <div className="form-group">
+                                                <label>Parishioner visited</label>
+                                                <select value={formVisitBeliever} onChange={(e) => setFormVisitBeliever(e.target.value)} required>
+                                                    <option value="">-- Select Believer --</option>
+                                                    {getFilteredBelievers().map(b => (
+                                                        <option key={b.id} value={b.id}>{b.name}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Visit Summary Note</label>
+                                                <textarea value={formVisitNote} onChange={(e) => setFormVisitNote(e.target.value)} placeholder="Describe prayer point or counseling summary..." style={{height:'100px', resize:'none'}} required></textarea>
+                                            </div>
+                                            <button type="submit" className="btn btn-primary btn-sm btn-block">Log Visit Report</button>
+                                        </form>
+                                    </div>
+
+                                    {/* Announcements List */}
+                                    <div className="card glass-card">
+                                        <div className="card-header">
+                                            <div>
+                                                <h3 className="card-title">Ministry Announcements</h3>
+                                                <p className="card-subtitle text-muted">Updates posted by Lead Pastor Thomas</p>
+                                            </div>
+                                        </div>
+                                        <div className="card-body" style={{display:'flex', flexDirection:'column', gap:'14px'}}>
+                                            {announcements.slice(0, 3).map(announce => (
+                                                <div key={announce.id} style={{padding:'12px', background:'rgba(255,255,255,0.02)', borderLeft:'3px solid var(--color-indigo)', borderRadius:'8px'}}>
+                                                    <div style={{display:'flex', justifyContent:'space-between', fontSize:'11px', marginBottom:'4px', color:'var(--color-text-muted)'}}>
+                                                        <strong>{announce.sender}</strong>
+                                                        <span>{announce.time}</span>
+                                                    </div>
+                                                    <div style={{fontSize:'13px', fontWeight:600, color:'#fff', marginBottom:'4px'}}>{announce.title}</div>
+                                                    <p style={{fontSize:'12px', color:'var(--color-text-muted)'}}>{announce.text}</p>
+                                                </div>
+                                            ))}
+                                            {announcements.length === 0 && <p className="text-muted" style={{fontSize:'12px'}}>No announcements broadcasted yet.</p>}
+                                        </div>
+                                    </div>
+                                </React.Fragment>
+                            )}
+                        </div>
+                    </section>
+                )}
+
+                {/* TAB: DIRECTORY */}
+                {activeTab === 'directory' && (
+                    <section className="tab-content active">
+                        {/* Filters Panel */}
+                        <div className="card glass-card" style={{marginBottom:'24px', padding:'16px'}}>
+                            <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(200px, 1fr))', gap:'16px', alignItems:'center'}}>
+                                <div className="form-group">
+                                    <label>Search Directory</label>
+                                    <input type="text" value={filterQuery} onChange={(e) => setFilterQuery(e.target.value)} placeholder="Search name or district..." />
+                                </div>
+                                {isSuper && (
+                                    <div className="form-group">
+                                        <label>Filter by Pastor</label>
+                                        <select value={filterPastor} onChange={(e) => setFilterPastor(e.target.value)}>
+                                            <option value="all">All Pastors</option>
+                                            {clergy.map(c => (
+                                                <option key={c.id} value={c.id}>{c.name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                )}
+                                <div className="form-group">
+                                    <label>Filter by District</label>
+                                    <select value={filterLocation} onChange={(e) => setFilterLocation(e.target.value)}>
+                                        <option value="all">All Districts</option>
+                                        <option value="North District">North District</option>
+                                        <option value="East District">East District</option>
+                                        <option value="South District">South District</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Accordion / Folders layout */}
+                        <div style={{display:'grid', gridTemplateColumns:'1.2fr 2fr', gap:'24px'}}>
+                            {/* Left: Families List */}
+                            <div className="card glass-card">
+                                <div className="card-header">
+                                    <h3 className="card-title">Parish Families ({directoryFamilies.length})</h3>
+                                </div>
+                                <div className="card-body" style={{display:'flex', flexDirection:'column', gap:'12px'}}>
+                                    {directoryFamilies.map(fam => {
+                                        const famMembers = directoryBelievers.filter(b => b.familyId === fam.id);
+                                        const pastorName = clergy.find(c => c.id === fam.subPriestId)?.name || 'Pastor';
+                                        return (
+                                            <details key={fam.id} className="family-accordion" style={{background:'rgba(255,255,255,0.01)', border:'1px solid rgba(255,255,255,0.05)', borderRadius:'12px', padding:'10px 14px'}}>
+                                                <summary style={{fontWeight:600, fontSize:'14px', cursor:'pointer', color:'var(--color-gold)', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                                                    <span>{fam.name} ({famMembers.length})</span>
+                                                    <span style={{fontSize:'10px', color:'var(--color-text-muted)'}}>{fam.location}</span>
+                                                </summary>
+                                                <div style={{marginTop:'12px', paddingLeft:'10px', display:'flex', flexDirection:'column', gap:'8px', borderLeft:'1px solid rgba(255,255,255,0.08)'}}>
+                                                    <div style={{fontSize:'10px', color:'var(--color-text-muted)', textTransform:'uppercase'}}>Sub-Pastor: {pastorName}</div>
+                                                    {famMembers.map(member => (
+                                                        <div key={member.id} style={{fontSize:'13px', display:'flex', justifyContent:'space-between'}}>
+                                                            <span>{member.name} ({member.role})</span>
+                                                            <span style={{fontSize:'11px', color: member.studyCompleted ? 'var(--color-green)' : 'var(--color-danger)'}}>{member.studyCompleted ? 'Finished Study' : 'Plan Pending'}</span>
+                                                        </div>
+                                                    ))}
+                                                    {famMembers.length === 0 && <p className="text-muted" style={{fontSize:'12px'}}>No members listed.</p>}
+                                                </div>
+                                            </details>
+                                        );
+                                    })}
+                                    {directoryFamilies.length === 0 && <p className="text-muted">No families match the filters.</p>}
+                                </div>
+                            </div>
+
+                            {/* Right: Individual Believers Profiler Cards */}
+                            <div style={{display:'flex', flexDirection:'column', gap:'16px'}}>
+                                <h3 style={{fontSize:'18px', fontFamily:'var(--font-display)', color:'#fff'}}>Believer Profiles</h3>
+                                {directoryBelievers.map(b => {
+                                    const pastorName = clergy.find(c => c.id === b.subPriestId)?.name || 'Pastor';
+                                    return (
+                                        <div key={b.id} className="card glass-card" style={{padding:'20px'}}>
+                                            <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:'14px'}}>
+                                                <div>
+                                                    <h4 style={{fontSize:'16px', fontWeight:700, color:'var(--color-gold)'}}>{b.name}</h4>
+                                                    <span style={{fontSize:'11px', color:'var(--color-text-muted)'}}>{b.location} • Joined {b.dateJoined}</span>
+                                                </div>
+                                                <span className={`badge ${b.baptism === 'Baptized' ? 'badge-green' : 'badge-gold'}`}>{b.baptism}</span>
+                                            </div>
+                                            <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px', fontSize:'12px', color:'var(--color-text-muted)', marginBottom:'14px'}}>
+                                                <div><strong>Email:</strong> {b.email}</div>
+                                                <div><strong>Phone:</strong> {b.phone}</div>
+                                                <div><strong>District Sub-Pastor:</strong> {pastorName}</div>
+                                                <div><strong>Family Role:</strong> {b.role || 'Independent'}</div>
+                                            </div>
+                                            <div style={{padding:'10px', background:'rgba(0,0,0,0.2)', borderRadius:'8px', marginBottom:'14px'}}>
+                                                <div style={{fontSize:'11px', fontWeight:700, color:'var(--color-cyan)', textTransform:'uppercase'}}>Prayer Request:</div>
+                                                <p style={{fontSize:'12px', fontStyle:'italic', color:'#fff'}}>&ldquo;{b.prayer}&rdquo;</p>
+                                            </div>
+
+                                            {/* Spiritual Growth Metric */}
+                                            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', borderTop:'1px solid rgba(255,255,255,0.04)', paddingTop:'14px'}}>
+                                                <div style={{display:'flex', alignItems:'center', gap:'10px'}}>
+                                                    <span style={{fontSize:'11px', fontWeight:600}}>Spiritual Growth Rate:</span>
+                                                    <div style={{display:'flex', alignItems:'center', gap:'6px'}}>
+                                                        <div style={{width:'80px', height:'6px', background:'rgba(255,255,255,0.05)', borderRadius:'3px', overflow:'hidden'}}>
+                                                            <div style={{width: `${b.growthRate}%`, height:'100%', background:'var(--gradient-neon)'}}></div>
+                                                        </div>
+                                                        <span style={{fontSize:'11px', fontWeight:700, color:'var(--color-pink)'}}>{b.growthRate}%</span>
+                                                    </div>
+                                                </div>
+                                                <div style={{display:'flex', alignItems:'center', gap:'8px'}}>
+                                                    <span style={{fontSize:'11px', color:'var(--color-text-muted)'}}>Bible study reading:</span>
+                                                    <input type="checkbox" checked={b.studyCompleted} onChange={(e) => toggleDiscipleshipReadings(b.id, e.target.checked)} style={{cursor:'pointer', width:'15px', height:'15px'}} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                                {directoryBelievers.length === 0 && <p className="text-muted">No believers match the current search filters.</p>}
+                            </div>
+                        </div>
+                    </section>
+                )}
+
+                {/* TAB: PASTORS & TASKS */}
+                {activeTab === 'clergy' && (
+                    <section className="tab-content active">
+                        {/* Pastor workload roster */}
+                        {isSuper && (
+                            <div style={{marginBottom:'30px'}}>
+                                <h3 style={{fontSize:'18px', fontFamily:'var(--font-display)', color:'#fff', marginBottom:'16px'}}>Staff Workload Overview</h3>
+                                <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(240px, 1fr))', gap:'20px'}}>
+                                    {clergy.map(pastor => {
+                                        const pendingTasksCount = tasks.filter(t => t.priestId === pastor.id && t.status !== 'completed').length;
+                                        const completedTasksCount = tasks.filter(t => t.priestId === pastor.id && t.status === 'completed').length;
+                                        return (
+                                            <div key={pastor.id} className="card glass-card">
+                                                <div className="card-header">
+                                                    <div style={{display:'flex', alignItems:'center', gap:'12px'}}>
+                                                        <div className="avatar" style={{background:'var(--color-indigo-glow)', color:'var(--color-indigo)'}}>{pastor.avatar}</div>
+                                                        <div>
+                                                            <h4 style={{fontSize:'14px', fontWeight:700}}>{pastor.name}</h4>
+                                                            <span style={{fontSize:'11px', color:'var(--color-text-muted)'}}>{pastor.district}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="card-body" style={{display:'flex', flexDirection:'column', gap:'12px'}}>
+                                                    <div style={{display:'flex', justifyContent:'space-between', fontSize:'12px'}}>
+                                                        <span>Active Workload:</span>
+                                                        <strong style={{color:'var(--color-pink)'}}>{pendingTasksCount} Pending</strong>
+                                                    </div>
+                                                    <div style={{display:'flex', justifyContent:'space-between', fontSize:'12px'}}>
+                                                        <span>Tasks Completed:</span>
+                                                        <strong style={{color:'var(--color-green)'}}>{completedTasksCount} Closed</strong>
+                                                    </div>
+                                                    <div style={{display:'flex', flexDirection:'column', gap:'4px'}}>
+                                                        <div style={{fontSize:'11px', color:'var(--color-text-muted)'}}>Work delegation meter:</div>
+                                                        <div style={{height:'6px', background:'rgba(255,255,255,0.05)', borderRadius:'3px', overflow:'hidden'}}>
+                                                            <div style={{width: `${Math.min((pendingTasksCount / 5) * 100, 100)}%`, height:'100%', background: pendingTasksCount > 2 ? 'var(--color-danger)' : 'var(--color-indigo)'}}></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Roster Kanban board */}
+                        <div>
+                            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'16px'}}>
+                                <h3 style={{fontSize:'18px', fontFamily:'var(--font-display)', color:'#fff'}}>Work delegation Task Board</h3>
+                                {isSuper && (
+                                    <button className="btn btn-primary btn-sm" onClick={() => assignTaskDialogRef.current.showModal()}>
+                                        Assign New Task
+                                    </button>
+                                )}
+                            </div>
+
+                            <div style={{display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:'20px'}}>
+                                {/* Lane: PENDING */}
+                                <div className="card glass-card" style={{background:'rgba(10, 10, 12, 0.4)'}}>
+                                    <div className="card-header" style={{borderBottom:'2px solid var(--color-danger)'}}>
+                                        <h4 style={{fontSize:'14px', fontWeight:700, color:'var(--color-danger)'}}>PENDING ({getFilteredTasks().filter(t => t.status === 'pending').length})</h4>
+                                    </div>
+                                    <div className="card-body" style={{display:'flex', flexDirection:'column', gap:'12px', padding:'12px'}}>
+                                        {getFilteredTasks().filter(t => t.status === 'pending').map(t => (
+                                            <div key={t.id} style={{padding:'14px', background:'rgba(0,0,0,0.3)', border:'1px solid rgba(255,255,255,0.05)', borderRadius:'12px', display:'flex', flexDirection:'column', gap:'8px'}}>
+                                                <div style={{display:'flex', justifyContent:'space-between', fontSize:'10px'}}>
+                                                    <span className="badge badge-gold">{t.urgency}</span>
+                                                    <span>{t.dateCreated}</span>
+                                                </div>
+                                                <h5 style={{fontSize:'13px', fontWeight:600, color:'#fff'}}>{t.title}</h5>
+                                                <p style={{fontSize:'11px', color:'var(--color-text-muted)'}}>{t.desc}</p>
+                                                <button onClick={() => toggleTaskStatus(t.id, t.status)} className="btn btn-primary btn-sm" style={{width:'100%', marginTop:'6px'}}>Start Task &rarr;</button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Lane: IN PROGRESS */}
+                                <div className="card glass-card" style={{background:'rgba(10, 10, 12, 0.4)'}}>
+                                    <div className="card-header" style={{borderBottom:'2px solid var(--color-gold)'}}>
+                                        <h4 style={{fontSize:'14px', fontWeight:700, color:'var(--color-gold)'}}>IN PROGRESS ({getFilteredTasks().filter(t => t.status === 'in_progress').length})</h4>
+                                    </div>
+                                    <div className="card-body" style={{display:'flex', flexDirection:'column', gap:'12px', padding:'12px'}}>
+                                        {getFilteredTasks().filter(t => t.status === 'in_progress').map(t => (
+                                            <div key={t.id} style={{padding:'14px', background:'rgba(0,0,0,0.3)', border:'1px solid rgba(255,255,255,0.05)', borderRadius:'12px', display:'flex', flexDirection:'column', gap:'8px'}}>
+                                                <div style={{display:'flex', justifyContent:'space-between', fontSize:'10px'}}>
+                                                    <span className="badge badge-gold">{t.urgency}</span>
+                                                    <span>{t.dateCreated}</span>
+                                                </div>
+                                                <h5 style={{fontSize:'13px', fontWeight:600, color:'#fff'}}>{t.title}</h5>
+                                                <p style={{fontSize:'11px', color:'var(--color-text-muted)'}}>{t.desc}</p>
+                                                <button onClick={() => toggleTaskStatus(t.id, t.status)} className="btn btn-outline btn-sm" style={{width:'100%', marginTop:'6px', color:'var(--color-green)', borderColor:'var(--color-green)'}}>Complete Task &check;</button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Lane: CLOSED */}
+                                <div className="card glass-card" style={{background:'rgba(10, 10, 12, 0.4)'}}>
+                                    <div className="card-header" style={{borderBottom:'2px solid var(--color-green)'}}>
+                                        <h4 style={{fontSize:'14px', fontWeight:700, color:'var(--color-green)'}}>CLOSED ({getFilteredTasks().filter(t => t.status === 'completed').length})</h4>
+                                    </div>
+                                    <div className="card-body" style={{display:'flex', flexDirection:'column', gap:'12px', padding:'12px'}}>
+                                        {getFilteredTasks().filter(t => t.status === 'completed').map(t => (
+                                            <div key={t.id} style={{padding:'14px', background:'rgba(0,0,0,0.2)', border:'1px solid rgba(255,255,255,0.03)', borderRadius:'12px', display:'flex', flexDirection:'column', gap:'8px', opacity:0.8}}>
+                                                <div style={{display:'flex', justifyContent:'space-between', fontSize:'10px'}}>
+                                                    <span className="badge badge-green" style={{background:'rgba(52,211,153,0.1)'}}>Closed</span>
+                                                    <span>{t.dateCreated}</span>
+                                                </div>
+                                                <h5 style={{fontSize:'13px', fontWeight:600, color:'rgba(255,255,255,0.7)', textDecoration:'line-through'}}>{t.title}</h5>
+                                                <p style={{fontSize:'11px', color:'var(--color-text-muted)'}}>{t.desc}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                )}
+
+                {/* TAB: BIBLE STUDY PLANS */}
+                {activeTab === 'growth' && (
+                    <section className="tab-content active">
+                        <div style={{display:'grid', gridTemplateColumns:'1.5fr 2.5fr', gap:'24px'}}>
+                            <div className="card glass-card">
+                                <div className="card-header" style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                                    <h3 className="card-title">Study Programs</h3>
+                                    {isSuper && (
+                                        <button onClick={() => addStudyDialogRef.current.showModal()} className="btn btn-outline btn-sm">
+                                            New Plan
+                                        </button>
+                                    )}
+                                </div>
+                                <div className="card-body" style={{display:'flex', flexDirection:'column', gap:'12px'}}>
+                                    {studyPlans.map((plan, index) => (
+                                        <div key={plan.id} onClick={() => setSelectedStudyIndex(index)} className={`menu-item ${selectedStudyIndex === index ? 'active' : ''}`} style={{cursor:'pointer', padding:'12px 14px', background:'rgba(255,255,255,0.01)', border:'1px solid rgba(255,255,255,0.05)', borderRadius:'10px', display:'flex', flexDirection:'column', alignItems:'flex-start', gap:'4px'}}>
+                                            <span style={{fontSize:'13px', fontWeight:700, color:'#fff'}}>{plan.title}</span>
+                                            <span style={{fontSize:'10px', color:'var(--color-gold)'}}>{plan.scripture}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {currentPlan && (
+                                <div style={{display:'flex', flexDirection:'column', gap:'20px'}}>
+                                    <div className="card glass-card">
+                                        <div className="card-header">
+                                            <div>
+                                                <h3 className="card-title text-indigo" style={{fontSize:'20px', color:'var(--color-gold)'}}>{currentPlan.title}</h3>
+                                                <span style={{fontSize:'12px', color:'var(--color-text-muted)'}}>Focus Verse: {currentPlan.scripture}</span>
+                                            </div>
+                                        </div>
+                                        <div className="card-body">
+                                            <div style={{padding:'14px', background:'rgba(0,0,0,0.3)', borderRadius:'12px', border:'1px solid rgba(255,255,255,0.05)', marginBottom:'16px'}}>
+                                                <p style={{fontSize:'13px', lineHeight:'1.6', color:'var(--color-text-primary)'}}>{currentPlan.content}</p>
+                                            </div>
+                                            <div style={{padding:'12px', borderLeft:'3px solid var(--color-cyan)', background:'var(--color-cyan-glow)', borderRadius:'4px'}}>
+                                                <strong style={{fontSize:'11px', textTransform:'uppercase', color:'var(--color-cyan)', display:'block', marginBottom:'4px'}}>Spiritual Action Plan:</strong>
+                                                <p style={{fontSize:'12px', color:'#fff'}}>{currentPlan.action}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="card glass-card">
+                                        <div className="card-header">
+                                            <h3 className="card-title">Plan Completion Tracker ({getActivePastorName()})</h3>
+                                            <p className="card-subtitle text-muted">Toggle check to log study module readings</p>
+                                        </div>
+                                        <div className="card-body" style={{display:'flex', flexDirection:'column', gap:'10px'}}>
+                                            {getFilteredBelievers().map(b => (
+                                                <div key={b.id} style={{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'8px 12px', background:'rgba(255,255,255,0.01)', border:'1px solid rgba(255,255,255,0.04)', borderRadius:'8px'}}>
+                                                    <div>
+                                                        <span style={{fontSize:'13px', fontWeight:600}}>{b.name}</span>
+                                                        <span style={{fontSize:'10px', color:'var(--color-text-muted)', display:'block'}}>{b.role || 'Independent'} • District: {b.location}</span>
+                                                    </div>
+                                                    <input type="checkbox" checked={b.studyCompleted} onChange={(e) => toggleDiscipleshipReadings(b.id, e.target.checked)} style={{cursor:'pointer', width:'16px', height:'16px'}} />
+                                                </div>
+                                            ))}
+                                            {getFilteredBelievers().length === 0 && <p className="text-muted">No parishioners found in district.</p>}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </section>
+                )}
+
+                {/* TAB: ATTENDANCE */}
+                {activeTab === 'attendance' && (
+                    <section className="tab-content active">
+                        <div className="card glass-card" style={{marginBottom:'24px', padding:'16px'}}>
+                            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                                <div style={{display:'flex', alignItems:'center', gap:'12px'}}>
+                                    <span style={{fontSize:'13px', fontWeight:600, color:'var(--color-gold)'}}>SELECT SUNDAY ASSEMBLY:</span>
+                                    <select value={selectedSunday} onChange={(e) => setSelectedSunday(e.target.value)} style={{background:'var(--color-card-bg)', color:'#fff', border:'1px solid var(--color-card-border)', padding:'6px 12px', borderRadius:'8px', outline:'none', cursor:'pointer', fontSize:'13px'}}>
+                                        <option value="2026-06-14">June 14, 2026</option>
+                                        <option value="2026-06-07">June 07, 2026</option>
+                                        <option value="2026-05-31">May 31, 2026</option>
+                                        <option value="2026-05-24">May 24, 2026</option>
+                                    </select>
+                                </div>
+                                <span className="badge badge-green" style={{fontSize:'12px', padding:'6px 12px'}}>Attendance Rate: {stats.attendanceRate}</span>
+                            </div>
+                        </div>
+
+                        <div className="card glass-card">
+                            <div className="card-header">
+                                <h3 className="card-title">Parishioners Attendance Checklist</h3>
+                                <p className="card-subtitle text-muted">Sunday roll call check for active parishioners</p>
+                            </div>
+                            <div className="card-body" style={{display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(260px, 1fr))', gap:'16px'}}>
+                                {getFilteredBelievers().map(b => {
+                                    const isPresent = !!(attendance[selectedSunday] && attendance[selectedSunday][b.id]);
+                                    return (
+                                        <div key={b.id} style={{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'12px', background: isPresent ? 'rgba(52,211,153,0.03)' : 'rgba(255,255,255,0.01)', border: isPresent ? '1px solid rgba(52,211,153,0.15)' : '1px solid rgba(255,255,255,0.04)', borderRadius:'10px', transition:'all 0.2s'}}>
+                                            <div>
+                                                <span style={{fontSize:'13px', fontWeight:700, color: isPresent ? 'var(--color-green)' : '#fff'}}>{b.name}</span>
+                                                <span style={{fontSize:'10px', color:'var(--color-text-muted)', display:'block'}}>{b.location} • {b.role || 'Independent'}</span>
+                                            </div>
+                                            <input type="checkbox" checked={isPresent} onChange={(e) => toggleAttendanceCheckbox(b.id, e.target.checked)} style={{cursor:'pointer', width:'18px', height:'18px'}} />
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </section>
+                )}
+            </main>
+
+            {/* MODALS */}
+            <dialog ref={addFamilyDialogRef} className="glass-dialog">
+                <div className="dialog-header">
+                    <h3>Register New Parish Family Group</h3>
+                    <button className="btn-close" onClick={() => addFamilyDialogRef.current.close()}>&times;</button>
+                </div>
+                <form onSubmit={handleAddFamily} className="card-body" style={{display:'flex', flexDirection:'column', gap:'16px'}}>
+                    <div className="form-group">
+                        <label>Family Surname / Group Name *</label>
+                        <input type="text" value={formFamilyName} onChange={(e) => setFormFamilyName(e.target.value)} placeholder="E.g., Miller Family" required />
+                    </div>
+                    <div className="form-group">
+                        <label>Assigned Assistant Pastor *</label>
+                        <select value={formFamilyPastor} onChange={(e) => setFormFamilyPastor(e.target.value)} required>
+                            {clergy.map(c => (
+                                <option key={c.id} value={c.id}>{c.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>District Territory *</label>
+                        <select value={formFamilyLocation} onChange={(e) => setFormFamilyLocation(e.target.value)} required>
+                            <option value="North District">North District</option>
+                            <option value="East District">East District</option>
+                            <option value="South District">South District</option>
+                        </select>
+                    </div>
+                    <div className="dialog-actions">
+                        <button type="button" className="btn btn-outline btn-sm" onClick={() => addFamilyDialogRef.current.close()}>Cancel</button>
+                        <button type="submit" className="btn btn-primary btn-sm">Add Family Group</button>
+                    </div>
+                </form>
+            </dialog>
+
+            <dialog ref={addMemberDialogRef} className="glass-dialog" style={{maxWidth:'650px'}}>
+                <div className="dialog-header">
+                    <h3>Register New Believer / Parishioner</h3>
+                    <button className="btn-close" onClick={() => addMemberDialogRef.current.close()}>&times;</button>
+                </div>
+                <form onSubmit={handleAddMember} className="card-body" style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'16px'}}>
+                    <div className="form-group" style={{gridColumn:'span 2'}}>
+                        <label>Full Name *</label>
+                        <input type="text" value={formMemberName} onChange={(e) => setFormMemberName(e.target.value)} placeholder="Full Name" required />
+                    </div>
+                    <div className="form-group">
+                        <label>Gender *</label>
+                        <select value={formMemberGender} onChange={(e) => setFormMemberGender(e.target.value)} required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" value={formMemberPhone} onChange={(e) => setFormMemberPhone(e.target.value)} placeholder="+1 (555) 000-0000" />
+                    </div>
+                    <div className="form-group">
+                        <label>Email Address</label>
+                        <input type="email" value={formMemberEmail} onChange={(e) => setFormMemberEmail(e.target.value)} placeholder="email@example.com" />
+                    </div>
+                    <div className="form-group">
+                        <label>Residence Address</label>
+                        <input type="text" value={formMemberAddress} onChange={(e) => setFormMemberAddress(e.target.value)} placeholder="Street Address" />
+                    </div>
+                    <div className="form-group">
+                        <label>District Territory *</label>
+                        <select value={formMemberLocation} onChange={(e) => setFormMemberLocation(e.target.value)} required>
+                            <option value="North District">North District</option>
+                            <option value="East District">East District</option>
+                            <option value="South District">South District</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Assigned Assistant Pastor *</label>
+                        <select value={formMemberPastor} onChange={(e) => setFormMemberPastor(e.target.value)} required>
+                            {clergy.map(c => (
+                                <option key={c.id} value={c.id}>{c.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Parish Family Group (Optional)</label>
+                        <select value={formMemberFamily} onChange={(e) => setFormMemberFamily(e.target.value)}>
+                            <option value="">-- No Family Group --</option>
+                            {families.map(f => (
+                                <option key={f.id} value={f.id}>{f.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Family Role / Relationship (Optional)</label>
+                        <input type="text" value={formMemberRole} onChange={(e) => setFormMemberRole(e.target.value)} placeholder="Father, Mother, Son, Newcomer..." />
+                    </div>
+                    <div className="form-group">
+                        <label>Baptism Status *</label>
+                        <select value={formMemberBaptism} onChange={(e) => setFormMemberBaptism(e.target.value)} required>
+                            <option value="Baptized">Water Baptized</option>
+                            <option value="Non-Baptized">Non-Baptized</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Former Religion Denomination</label>
+                        <input type="text" value={formMemberReligion} onChange={(e) => setFormMemberReligion(e.target.value)} placeholder="E.g., Baptist, Catholic, None" />
+                    </div>
+                    <div className="form-group" style={{gridColumn:'span 2'}}>
+                        <label>Active Prayer Need / Request Summary</label>
+                        <input type="text" value={formMemberPrayer} onChange={(e) => setFormMemberPrayer(e.target.value)} placeholder="Prayer point summary..." />
+                    </div>
+                    <div className="dialog-actions" style={{gridColumn:'span 2', marginTop:'8px'}}>
+                        <button type="button" className="btn btn-outline btn-sm" onClick={() => addMemberDialogRef.current.close()}>Cancel</button>
+                        <button type="submit" className="btn btn-primary btn-sm">Register Believer</button>
+                    </div>
+                </form>
+            </dialog>
+
+            <dialog ref={assignTaskDialogRef} className="glass-dialog">
+                <div className="dialog-header">
+                    <h3>Delegate Roster Care Task</h3>
+                    <button className="btn-close" onClick={() => assignTaskDialogRef.current.close()}>&times;</button>
+                </div>
+                <form onSubmit={handleAddTask} className="card-body" style={{display:'flex', flexDirection:'column', gap:'16px'}}>
+                    <div className="form-group">
+                        <label>Duty Title *</label>
+                        <input type="text" value={formTaskTitle} onChange={(e) => setFormTaskTitle(e.target.value)} placeholder="E.g., Visit sick child" required />
+                    </div>
+                    <div className="form-group">
+                        <label>Duty Description Details</label>
+                        <textarea value={formTaskDesc} onChange={(e) => setFormTaskDesc(e.target.value)} placeholder="Describe details..." style={{height:'80px', resize:'none'}}></textarea>
+                    </div>
+                    <div className="form-group">
+                        <label>Assign To (Staff Pastor) *</label>
+                        <select value={formTaskPastor} onChange={(e) => setFormTaskPastor(e.target.value)} required>
+                            {clergy.map(c => (
+                                <option key={c.id} value={c.id}>{c.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Select Target Parishioner (Optional)</label>
+                        <select value={formTaskBeliever} onChange={(e) => setFormTaskBeliever(e.target.value)}>
+                            <option value="">-- No Specific Parishioner --</option>
+                            {believers.map(b => (
+                                <option key={b.id} value={b.id}>{b.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Urgency Priority *</label>
+                        <select value={formTaskUrgency} onChange={(e) => setFormTaskUrgency(e.target.value)} required>
+                            <option value="Standard">Standard</option>
+                            <option value="Urgent">Urgent</option>
+                            <option value="Critical">Critical</option>
+                        </select>
+                    </div>
+                    <div className="dialog-actions">
+                        <button type="button" className="btn btn-outline btn-sm" onClick={() => assignTaskDialogRef.current.close()}>Cancel</button>
+                        <button type="submit" className="btn btn-primary btn-sm">Assign Task</button>
+                    </div>
+                </form>
+            </dialog>
+
+            <dialog ref={addStudyDialogRef} className="glass-dialog">
+                <div className="dialog-header">
+                    <h3>Create Discipleship Lesson Plan</h3>
+                    <button className="btn-close" onClick={() => addStudyDialogRef.current.close()}>&times;</button>
+                </div>
+                <form onSubmit={handleAddStudyPlan} className="card-body" style={{display:'flex', flexDirection:'column', gap:'16px'}}>
+                    <div className="form-group">
+                        <label>Plan Title *</label>
+                        <input type="text" value={formStudyTitle} onChange={(e) => setFormStudyTitle(e.target.value)} placeholder="E.g., Living in Faith" required />
+                    </div>
+                    <div className="form-group">
+                        <label>Focus Scripture Verse *</label>
+                        <input type="text" value={formStudyScripture} onChange={(e) => setFormStudyScripture(e.target.value)} placeholder="E.g., Hebrews 11:1" required />
+                    </div>
+                    <div className="form-group">
+                        <label>Lesson Reading Content *</label>
+                        <textarea value={formStudyContent} onChange={(e) => setFormStudyContent(e.target.value)} placeholder="Outline details..." style={{height:'100px', resize:'none'}} required></textarea>
+                    </div>
+                    <div className="form-group">
+                        <label>Action Challenge Verse / Exercise *</label>
+                        <input type="text" value={formStudyAction} onChange={(e) => setFormStudyAction(e.target.value)} placeholder="E.g., Morning prayer commitment." required />
+                    </div>
+                    <div className="dialog-actions">
+                        <button type="button" className="btn btn-outline btn-sm" onClick={() => addStudyDialogRef.current.close()}>Cancel</button>
+                        <button type="submit" className="btn btn-primary btn-sm">Create Program</button>
+                    </div>
+                </form>
+            </dialog>
+        </div>
+    );
+}
+
+// Render React App
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+</script>
+</body>
+</html>

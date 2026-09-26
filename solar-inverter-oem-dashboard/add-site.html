@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Site | Solar OEM Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Icon support -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <span class="logo-text">SOLAR<span class="highlight">OEM</span></span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item"><i class="ph ph-squares-four"></i><span>Dashboard</span></a>
+                <a href="sites.html" class="nav-item"><i class="ph ph-house-line"></i><span>Sites</span></a>
+                <a href="devices.html" class="nav-item"><i class="ph ph-cpu"></i><span>Devices</span></a>
+                <a href="analytics.html" class="nav-item"><i class="ph ph-chart-bar"></i><span>Analytics</span></a>
+                <a href="models.html" class="nav-item"><i class="ph ph-stack"></i><span>Models</span></a>
+                <a href="accounts.html" class="nav-item"><i class="ph ph-users-three"></i><span>Accounts</span></a>
+                <a href="reports.html" class="nav-item"><i class="ph ph-file-text"></i><span>Reports</span></a>
+                <a href="ota.html" class="nav-item"><i class="ph ph-broadcast"></i><span>OTA</span></a>
+                <a href="alerts.html" class="nav-item"><i class="ph ph-bell"></i><span>Alerts</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="settings.html" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="login.html" class="nav-item" style="color: #ef4444;">
+                    <i class="ph ph-sign-out"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </aside> <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    <span class="crumb">Inverter Management</span>
+                    <i class="ph ph-caret-right"></i>
+                    <span class="crumb active">Add Site</span>
+                </div>
+
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <i class="ph ph-magnifying-glass"></i>
+                        <input type="text" placeholder="Search inverters, clients...">
+                    </div>
+                    <button class="icon-btn">
+                        <i class="ph ph-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="ph ph-gear"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-wrapper">
+                <div class="page-title-section">
+                    <h1>Register New Site</h1>
+                    <p>Onboard new inverters and associate them with distributors and sites.</p>
+                </div>
+
+                <div class="tab-bar">
+                    <a href="sites.html" class="tab-btn">Site List</a>
+                    <a href="add-site.html" class="tab-btn active">Add Site</a>
+                    <a href="models.html" class="tab-btn">Inverter Model List</a>
+                    <a href="add-model.html" class="tab-btn">Add Model</a>
+                </div>
+
+                <div class="card form-card"
+                    style="border-top-left-radius: 0; border-top-right-radius: 0; border-top: none;">
+                    <div class="card-header">
+                        <div class="tabs">
+                            <button class="tab-btn active" data-tab="single">
+                                <i class="ph ph-file-plus"></i> Single Upload
+                            </button>
+                            <button class="tab-btn" data-tab="bulk">
+                                <i class="ph ph-upload-simple"></i> Bulk Upload
+                            </button>
+                            <button class="tab-btn" data-tab="assign">
+                                <i class="ph ph-user-switch"></i> Site Assignment
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Single Upload Form -->
+                        <form id="single-upload-form" class="active-form">
+
+                            <!-- Section: Assignment -->
+                            <div class="form-section">
+                                <h3 class="section-title">
+                                    <i class="ph ph-buildings"></i> Site Details
+                                </h3>
+                                <div class="grid-2">
+                                    <div class="form-group">
+                                        <label>Site Name <span class="required">*</span></label>
+                                        <input type="text" placeholder="e.g. California Villa #9">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Type of Site</label>
+                                        <div class="select-wrapper">
+                                            <select>
+                                                <option value="">Select Type</option>
+                                                <option>Residential (House)</option>
+                                                <option>Commercial (Office)</option>
+                                                <option>Industrial (Factory)</option>
+                                                <option>Educational (School)</option>
+                                                <option>Agricultural</option>
+                                            </select>
+                                            <i class="ph ph-caret-down"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid-2 mt-4">
+                                    <div class="form-group">
+                                        <label>Distributor</label>
+                                        <div class="select-wrapper">
+                                            <select>
+                                                <option value="">Select Distributor</option>
+                                                <option>SolarWest Distribution</option>
+                                                <option>EcoEnergy Supplies</option>
+                                            </select>
+                                            <i class="ph ph-caret-down"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Installer / Dealer</label>
+                                        <div class="select-wrapper">
+                                            <select>
+                                                <option value="">Select Installer</option>
+                                                <option>GreenTech Solutions</option>
+                                                <option>SunPower Installers</option>
+                                            </select>
+                                            <i class="ph ph-caret-down"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: POC Details -->
+                            <div class="form-section">
+                                <h3 class="section-title">
+                                    <i class="ph ph-user"></i> Point of Contact (POC)
+                                </h3>
+                                <div class="grid-3">
+                                    <div class="form-group">
+                                        <label>POC Name</label>
+                                        <input type="text" placeholder="e.g. John Doe">
+                                        <i class="ph ph-user input-icon"></i>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Phone Number</label>
+                                        <input type="tel" placeholder="+1 555-0123">
+                                        <i class="ph ph-phone input-icon"></i>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email Address</label>
+                                        <input type="email" placeholder="john@example.com">
+                                        <i class="ph ph-envelope input-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: Device Identity -->
+                            <div class="form-section">
+                                <h3 class="section-title">
+                                    <i class="ph ph-cpu"></i> Device Identification
+                                </h3>
+                                <div class="grid-2">
+                                    <div class="form-group">
+                                        <label>IoT Device IMEI <span class="required">*</span></label>
+                                        <input type="text" placeholder="e.g. 865432045678901" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Inverter Serial Number <span class="required">*</span></label>
+                                        <input type="text" placeholder="e.g. SN-INV-2024-X99" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: Technical Specs -->
+                            <div class="form-section">
+                                <h3 class="section-title">
+                                    <i class="ph ph-faders"></i> Specifications
+                                </h3>
+                                <div class="grid-2">
+                                    <div class="form-group">
+                                        <label>Inverter Model</label>
+                                        <div class="select-wrapper">
+                                            <select>
+                                                <option value="">Select Model</option>
+                                                <option>SunKing 5000 Pro</option>
+                                                <option>EcoMax 10k</option>
+                                                <option>Hybrid X3</option>
+                                            </select>
+                                            <i class="ph ph-caret-down"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Inverter Type</label>
+                                        <div class="select-wrapper">
+                                            <select>
+                                                <option value="">Select Type</option>
+                                                <option>String Inverter</option>
+                                                <option>Microinverter</option>
+                                                <option>Hybrid Inverter</option>
+                                            </select>
+                                            <i class="ph ph-caret-down"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Capacity (kW)</label>
+                                        <input type="number" placeholder="e.g. 5.5">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>MPPT Count</label>
+                                        <input type="number" placeholder="2">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: Dates -->
+                            <div class="form-section">
+                                <h3 class="section-title">
+                                    <i class="ph ph-calendar-check"></i> Dates & Meta
+                                </h3>
+                                <div class="grid-2">
+                                    <div class="form-group">
+                                        <label>Manufacture Date</label>
+                                        <div class="input-icon-wrapper">
+                                            <input type="date">
+                                            <i class="ph ph-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Installation Date</label>
+                                        <div class="input-icon-wrapper">
+                                            <input type="date">
+                                            <i class="ph ph-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary">Reset</button>
+                                <button type="submit" class="btn btn-primary">Add Site</button>
+                            </div>
+                        </form>
+
+                        <!-- Bulk Upload Form (Placeholder) -->
+                        <div id="bulk-upload-content" class="hidden-content">
+                            <div class="empty-state">
+                                <i class="ph ph-file-csv"></i>
+                                <h3>Upload CSV/Excel</h3>
+                                <p>Drag and drop your device list here to upload multiple inverters at once.</p>
+                                <button class="btn btn-outline">Browse Files</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

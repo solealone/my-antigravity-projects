@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annual Day Presentation 2026-27</title>
+    <style>
+        :root {
+            --bg-light: #FFFFFF; 
+            --bg-card: #FFFFFF; 
+            --dark-burgundy: #800020; 
+            --card-border: rgba(128, 0, 32, 0.15);
+            --text-main: #000000; 
+            --text-heading: #800020;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Times New Roman", Times, serif;
+            background-color: #E2E8F0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            color: var(--text-main);
+        }
+
+        /* Bonvoice Theme Override */
+        .slide-container.bonvoice-theme {
+            --dark-burgundy: #00509E; /* Re-mapped to Bonvoice Corporate Blue */
+            --text-heading: #00509E;
+            --card-border: rgba(0, 80, 158, 0.15);
+        }
+
+        /* Presentation Wrapper */
+        .presentation-wrapper {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 1920x1080 Container */
+        .slide-container {
+            width: 1920px;
+            height: 1080px;
+            background-color: var(--bg-light);
+            position: absolute;
+            display: none; /* hidden by default */
+            flex-direction: column;
+            box-sizing: border-box;
+            padding: 50px 70px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            background-image: none;
+            transform-origin: center center;
+        }
+        
+        .slide-container.active {
+            display: flex;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 2px solid rgba(128, 0, 32, 0.2);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-section::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 300px;
+            height: 4px;
+            background: var(--dark-burgundy);
+        }
+
+        .header-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title {
+            font-size: 64px; 
+            font-weight: bold;
+            margin: 0 0 10px 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-heading);
+        }
+
+        .subtitle {
+            font-size: 26px; 
+            color: #000000;
+            margin: 0;
+            font-style: italic;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Content Area */
+        .content-area {
+            display: grid;
+            gap: 40px;
+            flex: 1;
+            z-index: 10;
+        }
+        
+        .grid-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        
+        .grid-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            padding: 30px 40px; 
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03); 
+            border-radius: 6px;
+        }
+        
+        /* Specific tweak for the 3-col card padding so it fits well */
+        .grid-3 .section-card, .dense .section-card {
+            padding: 25px 30px;
+        }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--dark-burgundy);
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+
+        .section-title {
+            font-size: 36px; 
+            font-weight: bold;
+            color: var(--text-heading);
+            margin: 0 0 25px 0;
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(128, 0, 32, 0.1);
+            padding-bottom: 15px;
+        }
+        
+        .grid-3 .section-title, .dense .section-title {
+            font-size: 32px;
+            margin: 0 0 20px 0;
+            padding-bottom: 10px;
+        }
+
+        .sub-category {
+            font-size: 24px; 
+            font-weight: bold;
+            color: var(--text-heading); 
+            margin: 20px 0 10px 0;
+            font-style: italic;
+        }
+        
+        .sub-category:first-of-type {
+            margin-top: 0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            font-size: 24px; 
+            line-height: 1.4;
+            margin-bottom: 20px; 
+            position: relative;
+            padding-left: 25px;
+            color: var(--text-main); 
+        }
+        
+        .grid-3 li, .dense li {
+            font-size: 21px;
+            margin-bottom: 14px;
+            padding-left: 20px;
+        }
+
+        li::before {
+            content: '■';
+            position: absolute;
+            left: 0;
+            top: 4px;
+            font-size: 16px;
+            color: var(--dark-burgundy);
+        }
+        
+        .grid-3 li::before, .dense li::before {
+            top: 2px;
+            font-size: 14px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: var(--text-heading); 
+        }
+
+        .footer {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 2px solid rgba(128, 0, 32, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+            color: #000000;
+            font-weight: bold;
+            z-index: 10;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .page-number {
+            color: var(--text-heading);
+        }
+
+        /* Navigation overlay */
+        .nav-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            background: var(--dark-burgundy);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-btn:hover {
+            opacity: 1;
+        }
+        
+        .nav-hint {
+            position: absolute;
+            bottom: 25px;
+            left: 20px;
+            z-index: 100;
+            color: #666;
+            font-family: sans-serif;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        /* Print styling for PDF export */
+        @media print {
+            @page {
+                size: 1920px 1080px;
+                margin: 0;
+            }
+            body, html {
+                height: auto !important;
+                overflow: visible !important;
+                background-color: var(--bg-light) !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .presentation-wrapper {
+                height: auto !important;
+                display: block !important;
+            }
+            .slide-container {
+                position: relative !important;
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                page-break-after: always;
+                break-inside: avoid;
+                transform: none !important;
+                box-shadow: none !important;
+                width: 1920px !important;
+                height: 1080px !important;
+            }
+            .nav-controls, .nav-hint {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-wrapper">
+        
+        <div class="nav-hint">Use Right/Left Arrow Keys or buttons to navigate</div>
+        
+        <div class="nav-controls">
+            <button class="nav-btn" onclick="prevSlide()">&#8592; Prev</button>
+            <button class="nav-btn" onclick="nextSlide()">Next &#8594;</button>
+        </div>
+
+        <!-- Slide 1: Hardware R&D -->
+        <div class="slide-container active">
+            <div class="header-section">
+                <div class="header-text">
+                    <h1 class="title">HARDWARE R&D</h1>
+                    <p class="subtitle">Transight Systems Pvt. Ltd. | R&D Department</p>
+                </div>
+            </div>
+
+            <div class="content-area grid-3">
+                <div class="section-card">
+                    <h2 class="section-title">Strategic Execution</h2>
+                    <div class="sub-category">OEM & Enterprise Integrations</div>
+                    <ul>
+                        <li><span class="highlight">28 Active POCs</span> deployed across major OEMs (Zypp, Tata Motors, Bgauss, KG, Jindal, Carnot)</li>
+                        <li>Successful clearance of <span class="highlight">Railway 1st-level POC</span> validation.</li>
+                    </ul>
+                    <div class="sub-category">Hardware Optimization</div>
+                    <ul>
+                        <li>Implemented advanced <span class="highlight">Low-Power Modes</span> across product lines.</li>
+                        <li>Achieved <span class="highlight">~30% BOM Optimization</span> across both Compass & Discovery platforms.</li>
+                        <li><span class="highlight">Binary Packet 2.0</span> architecture resulting in 60% payload reduction.</li>
+                    </ul>
+                </div>
+
+                <div class="section-card">
+                    <h2 class="section-title">Product & Infrastructure</h2>
+                    <div class="sub-category">Current Innovations (2025-26)</div>
+                    <ul>
+                        <li><span class="highlight">4G Compass Implementations</span> actively running for CDAC and NIC.</li>
+                        <li><span class="highlight">2G Compass Revamp</span> underway for CDAC integration.</li>
+                        <li><span class="highlight">ASR-based Low-Cost Compass</span> currently in active progress.</li>
+                        <li>Deployment of <span class="highlight">Discovery AC</span> for Cold-chain Monitoring.</li>
+                    </ul>
+                    <div class="sub-category">Engineering Infrastructure</div>
+                    <ul>
+                        <li><span class="highlight">JIRA & Git</span> fully rolled out for unified agile management.</li>
+                        <li>Integration of <span class="highlight">AI Co-Pilot</span> for accelerated engineering workflows.</li>
+                        <li>Procured advanced <span class="highlight">HIL (Hardware-in-the-Loop) System</span> for validation.</li>
+                    </ul>
+                </div>
+
+                <div class="section-card">
+                    <h2 class="section-title">Future Roadmaps</h2>
+                    <div class="sub-category">Next-Gen Architectures</div>
+                    <ul>
+                        <li><span class="highlight">NXP-Discovery</span> & <span class="highlight">NXP-Compass</span> (OEM tailored hardware).</li>
+                        <li>Scaling <span class="highlight">ASR-based Low-Cost</span> models across both platforms.</li>
+                    </ul>
+                    <div class="sub-category">Advanced Mobility Tech</div>
+                    <ul>
+                        <li>Implementation of <span class="highlight">Vision Systems</span> (DMS and ADAS).</li>
+                        <li><span class="highlight">AVAS Integration</span> (Acoustic Vehicle Alerting Systems for EVs).</li>
+                    </ul>
+                    <div class="sub-category">Ecosystem Expansion</div>
+                    <ul>
+                        <li>Development of <span class="highlight">BLE-based Dongles</span>.</li>
+                        <li><span class="highlight">UDS / J1939 Stack integration</span> for broader compatibility.</li>
+                        <li><span class="highlight">CAN Configurator</span> deployment.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer">
+                <span>Corporate Roadmap 2025-2026</span>
+                <span class="page-number">01</span>
+            </div>
+        </div>
+
+        <!-- Slide 2: Product & Client Services -->
+        <div class="slide-container">
+            <div class="header-section">
+                <div class="header-text">
+                    <h1 class="title">Product & Client Services</h1>
+                    <p class="subtitle">Transight Systems Pvt. Ltd. | Corporate Review</p>
+                </div>
+            </div>
+
+            <div class="content-area grid-2">
+                <div class="section-card">
+                    <h2 class="section-title">Last Year – Key Highlights</h2>
+                    <ul>
+                        <li>Successfully delivered <span class="highlight">multiple PoCs</span>, validating core device capabilities and platform features.</li>
+                        <li>Achieved strong traction with high-volume enterprise clients including <span class="highlight">Zypp Electric, Kinetic Green, BGauss, and Tata Motors</span>.</li>
+                        <li>Effectively managed customer expectations and deliverables within a highly dynamic environment.</li>
+                    </ul>
+                </div>
+
+                <div class="section-card">
+                    <h2 class="section-title">Looking Forward – 2026-27 Priorities</h2>
+                    <ul>
+                        <li>Drive strategic transition from the <span class="highlight">PoC to Production</span> stage.</li>
+                        <li>Stabilise core operations and build a robust, scalable <span class="highlight">customer support system</span>.</li>
+                        <li>Enhance platform features focusing on <span class="highlight">ECU FOTA, UDS, and J1939</span> integrations.</li>
+                        <li>Implement strictly defined <span class="highlight">stage gates</span> to streamline onboarding for future customers.</li>
+                        <li>Discover and develop <span class="highlight">additional use cases</span> to expand market reach.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer">
+                <span>Corporate Roadmap 2025-2026</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <!-- Slide 3: Software R&D -->
+        <div class="slide-container">
+            <div class="header-section">
+                <div class="header-text">
+                    <h1 class="title">SOFTWARE R&D</h1>
+                    <p class="subtitle">Transight Systems Pvt. Ltd. | Software & QA Department</p>
+                </div>
+            </div>
+
+            <div class="content-area grid-2">
+                <div class="section-card">
+                    <h2 class="section-title">Last Year – Achievements</h2>
+                    <ul>
+                        <li><span class="highlight">Fleet Platform Revamp</span> completed and successfully released to Production.</li>
+                        <li>Commenced <span class="highlight">EV Platform</span> production deployments.</li>
+                        <li>Successfully integrated <span class="highlight">Video Telematics</span> capabilities.</li>
+                        <li>Significantly improved <span class="highlight">Product Quality</span> & Release Stability.</li>
+                        <li>Established robust <span class="highlight">QA Processes</span> driving continuous improvements.</li>
+                        <li>Elevated overall <span class="highlight">Customer Experience</span>.</li>
+                    </ul>
+                </div>
+
+                <div class="section-card">
+                    <h2 class="section-title">Looking Forward – Plans</h2>
+                    <ul>
+                        <li>Establish a dedicated <span class="highlight">Separate Team for Operations</span>.</li>
+                        <li>Launch new strategic projects including <span class="highlight">Solar Compliance</span> and <span class="highlight">Miles</span>.</li>
+                        <li><span class="highlight">Upskill Developers & QA Engineers</span> in the advanced use of AI tools.</li>
+                        <li>Target a <span class="highlight">30–40% increase</span> in automated testing coverage.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer">
+                <span>Corporate Roadmap 2025-2026</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <!-- Slide 4: Software R&D Bonvoice -->
+        <div class="slide-container bonvoice-theme">
+            <div class="header-section">
+                <div class="header-text">
+                    <h1 class="title">SOFTWARE R&D - BONVOICE</h1>
+                    <p class="subtitle">Transight Systems Pvt. Ltd. | Bonvoice Division</p>
+                </div>
+            </div>
+
+            <div class="content-area grid-2">
+                <div class="section-card">
+                    <h2 class="section-title">Core Technologies & AI</h2>
+                    <ul>
+                        <li>Established a dedicated, <span class="highlight">Inhouse AI/ML Division</span> to drive innovation.</li>
+                        <li>Successfully developed and deployed <span class="highlight">AI Sentiment Analysis</span>.</li>
+                        <li>Introduced robust <span class="highlight">Call Transcript Support</span>, fully supporting multiple Regional Languages.</li>
+                    </ul>
+                </div>
+
+                <div class="section-card">
+                    <h2 class="section-title">Platform Scale & Enhancements</h2>
+                    <ul>
+                        <li>Achieved major scaling milestone, successfully crossing <span class="highlight">1 Lakh Calls / Day</span>.</li>
+                        <li>Implemented <span class="highlight">WebRTC</span> architecture for low-latency communications.</li>
+                        <li>Significantly enhanced the Contact Centre with advanced <span class="highlight">Predictive & Progressive Dialers</span>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer">
+                <span>Corporate Roadmap 2025-2026</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <!-- Slide 5: Product & Operations Bonvoice -->
+        <div class="slide-container bonvoice-theme">
+            <div class="header-section">
+                <div class="header-text">
+                    <h1 class="title">PRODUCT & OPERATIONS - BONVOICE</h1>
+                    <p class="subtitle">Transight Systems Pvt. Ltd. | Bonvoice Division</p>
+                </div>
+            </div>
+
+            <div class="content-area grid-2 dense">
+                <!-- Column 1: Product -->
+                <div class="section-card">
+                    <h2 class="section-title">Product Team</h2>
+                    
+                    <div class="sub-category">Last Year – Achievements</div>
+                    <ul>
+                        <li><span class="highlight">Implemented AI Solutions</span> – Industry first AI Sentiment Analysis along with Voice bot.</li>
+                        <li><span class="highlight">WebRTC</span> – Implemented Inhouse Virtual Calling Solution.</li>
+                        <li>Developed <span class="highlight">Predictive and Progressive Dialers</span>.</li>
+                    </ul>
+
+                    <div class="sub-category">Looking Forward – Priorities</div>
+                    <ul>
+                        <li>Revamp of Web & Mobile App into a <span class="highlight">Unified Communication Platform</span>.</li>
+                        <li>Integration of Contact Center with <span class="highlight">Meta</span>.</li>
+                        <li>Industry unique <span class="highlight">WABA Voice Call</span>.</li>
+                        <li><span class="highlight">Inhouse AI Solution</span> development.</li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: Operations -->
+                <div class="section-card">
+                    <h2 class="section-title">Operations Team</h2>
+                    
+                    <div class="sub-category">Last Year – Achievements</div>
+                    <ul>
+                        <li><span class="highlight">Implementation of Ticketing System</span>.</li>
+                        <li><span class="highlight">Pan India Expansion</span> of operations.</li>
+                        <li>Razor Pay Implementation.</li>
+                        <li><span class="highlight">Onboarded new service operators</span> – Tata Karnataka, Airtel – Gujarat.</li>
+                        <li><span class="highlight">Regional distribution of manpower</span> for business easiness.</li>
+                    </ul>
+
+                    <div class="sub-category">Looking Forward – Priorities</div>
+                    <ul>
+                        <li><span class="highlight">SOP Implementation</span>.</li>
+                        <li>Acquiring more servers <span class="highlight">Pan India</span>.</li>
+                        <li><span class="highlight">CRM Automation Implementation</span> for the support team.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer">
+                <span>Corporate Roadmap 2025-2026</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <!-- Slide 6: Operations & Manufacturing -->
+        <div class="slide-container">
+            <div class="header-section">
+                <div class="header-text">
+                    <h1 class="title">OPERATIONS & MANUFACTURING</h1>
+                    <p class="subtitle">Transight Systems Pvt. Ltd. | Corporate Review</p>
+                </div>
+            </div>
+
+            <div class="content-area grid-3 dense">
+                
+                <!-- Column 1: Manufacturing -->
+                <div class="section-card">
+                    <h2 class="section-title">Manufacturing</h2>
+                    
+                    <div class="sub-category">Major Achievements</div>
+                    <ul>
+                        <li><span class="highlight">Produced 50k+ Compass devices</span> at our SMD facility, achieving 70k+ total from installation.</li>
+                        <li>Completed <span class="highlight">1L+ external PCBA assemblies</span> at SMD, driving 9L additional segment revenue.</li>
+                        <li>Qualified <span class="highlight">34 new product variants</span> (including external clients & R&D prototypes).</li>
+                        <li>Improved AOI yield from <span class="highlight">98.5% to 99%</span> for Compass production.</li>
+                        <li>Successfully certified SMD line with <span class="highlight">IATF-16949</span>.</li>
+                    </ul>
+
+                    <div class="sub-category">Future Plans</div>
+                    <ul>
+                        <li><span class="highlight">Revamp EMS sector</span> to onboard new customers and maximize revenue generation.</li>
+                        <li>Targeting <span class="highlight">100k+ Compass</span> production volume.</li>
+                        <li>Establish dedicated manufacturing line for Discovery series, including <span class="highlight">advanced test setups</span>.</li>
+                        <li>Implement <span class="highlight">Lean Manufacturing</span>, process optimization, and complete line balancing.</li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: QA & SCM (Stacked) -->
+                <div style="display: flex; flex-direction: column; gap: 40px;">
+                    <!-- QA Section -->
+                    <div class="section-card" style="flex: 1;">
+                        <h2 class="section-title">QA</h2>
+                        <div class="sub-category">Major Achievements</div>
+                        <ul>
+                            <li>Completed <span class="highlight">IATF 16949:2016</span> Surveillance Audit (Nov 2025); all 6 minor non-conformities resolved.</li>
+                            <li>Achieved <span class="highlight">ISO:27001:2022</span> certification (Feb 2026).</li>
+                        </ul>
+                        <div class="sub-category">Future Plans</div>
+                        <ul>
+                            <li>Continuous monitoring of corrective action effectiveness for all non-conformities.</li>
+                        </ul>
+                    </div>
+
+                    <!-- SCM Section -->
+                    <div class="section-card" style="flex: 1;">
+                        <h2 class="section-title">SCM</h2>
+                        <div class="sub-category">Future Plans</div>
+                        <ul>
+                            <li>Drive cost optimization through <span class="highlight">alternate sourcing</span>.</li>
+                            <li>Strategic supplier development.</li>
+                            <li>Advanced Material Planning and <span class="highlight">Inventory control</span>.</li>
+                            <li>Deploy <span class="highlight">ERP automations</span> within supply chain management.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Column 3: M2M -->
+                <div class="section-card">
+                    <h2 class="section-title">M2M</h2>
+                    
+                    <div class="sub-category">Major Achievements</div>
+                    <ul>
+                        <li><span class="highlight">Slashed SIM activation time</span> from 4-5 days down to a maximum of 1 day.</li>
+                        <li><span class="highlight">Optimized expenses</span> by purging unused active numbers via database cleanup.</li>
+                    </ul>
+
+                    <div class="sub-category">Future Plans</div>
+                    <ul>
+                        <li>Ensure <span class="highlight">100% SLA adherence</span> for meeting the timeline requirements of Sales, Renewals, and Production.</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer">
+                <span>Corporate Roadmap 2025-2026</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+
+        <!-- Slide 7: HCM / HR -->
+        <div class="slide-container">
+            <div class="header-section">
+                <div class="header-text">
+                    <h1 class="title">HUMAN CAPITAL MANAGEMENT</h1>
+                    <p class="subtitle">Transight Systems Pvt. Ltd. | HR Department</p>
+                </div>
+            </div>
+
+            <div class="content-area grid-2">
+                <!-- Column 1: Rewind -->
+                <div class="section-card">
+                    <h2 class="section-title">HCM Rewind – Last Year</h2>
+                    <ul>
+                        <li><span class="highlight">GET Programme:</span> Successfully completed 3 batches of Graduate Engineer Trainee campus recruitment for Firmware & Hardware R&D.</li>
+                        <li><span class="highlight">Diversity Hiring Initiative:</span> Recruited female talent into the Production Department, significantly improving our gender diversity ratio and inclusivity.</li>
+                        <li><span class="highlight">Headcount Expansion:</span> Rapid workforce scaling across divisions:
+                            <ul style="margin-top: 15px; margin-bottom: 0;">
+                                <li style="margin-bottom: 10px;">Transight Headcount: <span class="highlight">221</span></li>
+                                <li style="margin-bottom: 5px;">Bonvoice Headcount: <span class="highlight">54</span></li>
+                            </ul>
+                        </li>
+                        <li><span class="highlight">ISMS Training:</span> Made Information Security Management mandatory from Day 1 to strengthen organizational compliance and security awareness.</li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: Future Forward -->
+                <div class="section-card">
+                    <h2 class="section-title">Future Forward – Priorities</h2>
+                    <ul>
+                        <li><span class="highlight">HRMS Migration:</span> Transitioning to Zeta HRMS by the end of May.</li>
+                        <li><span class="highlight">Performance Tracking:</span> Implementing quarterly KPI updates and structural performance tracking via the new HRMS platform.</li>
+                        <li><span class="highlight">Automated Appraisals:</span> End-to-end automation of the Annual Appraisal workflow within HRMS.</li>
+                        <li><span class="highlight">Strategic Initiatives:</span> Driving proactive Industry-Academia tie-ups and hosting corporate Hackathons.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer">
+                <span>Corporate Roadmap 2025-2026</span>
+                <span class="page-number">07</span>
+            </div>
+        </div>
+
+        <!-- Slide 8: Finance -->
+        <div class="slide-container">
+            <div class="header-section">
+                <div class="header-text">
+                    <h1 class="title">FINANCE DEPARTMENT</h1>
+                    <p class="subtitle">Transight Systems Pvt. Ltd. | Corporate Review</p>
+                </div>
+            </div>
+
+            <div class="content-area grid-2">
+                <!-- Column 1: Compliance -->
+                <div class="section-card">
+                    <h2 class="section-title">Compliance & Audits</h2>
+                    <ul>
+                        <li><span class="highlight">Financial Data Readiness:</span> Successfully compiled all corporate financial data, fully prepared for the upcoming audit next month.</li>
+                        <li><span class="highlight">International Accounting:</span> Completed comprehensive accounts procedures and reconciliation for Saudi operations spanning the last 2 years.</li>
+                        <li><span class="highlight">Taxation & Expansion:</span> Successfully secured 3 new GST registrations for the Bonvoice division to support regional scaling.</li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: Systems -->
+                <div class="section-card">
+                    <h2 class="section-title">Systems & Planning</h2>
+                    <ul>
+                        <li><span class="highlight">ERP Implementation:</span> Successfully implemented robust, department-wise budgeted planning systems within the <span class="highlight">ODOO</span> platform to drive financial accountability and tracking.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer">
+                <span>Corporate Roadmap 2025-2026</span>
+                <span class="page-number">08</span>
+            </div>
+        </div>
+
+        <!-- Slide 9: Marketing -->
+        <div class="slide-container">
+            <div class="header-section">
+                <div class="header-text">
+                    <h1 class="title">MARKETING DEPARTMENT</h1>
+                    <p class="subtitle">Transight Systems Pvt. Ltd. | Corporate Review</p>
+                </div>
+            </div>
+
+            <div class="content-area grid-2">
+                <!-- Column 1: Digital Presence -->
+                <div class="section-card">
+                    <h2 class="section-title">Digital Presence & Authority</h2>
+                    <ul>
+                        <li><span class="highlight">SEO Dominance:</span> Successfully ranked 10+ strategic target keywords on Google's first page, drastically improving organic visibility.</li>
+                        <li><span class="highlight">AI Recognition:</span> Achieved <span class="highlight">50+ AI Citations</span>, establishing strong brand authority across modern search engines and AI models.</li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: Revenue -->
+                <div class="section-card">
+                    <h2 class="section-title">Lead Generation & Revenue</h2>
+                    <ul>
+                        <li><span class="highlight">Explosive Lead Growth:</span> Increased organic form submissions by a staggering <span class="highlight">4,475%</span>.</li>
+                        <li><span class="highlight">Revenue Scaling:</span> Drove direct business impact, resulting in revenue growth of <span class="highlight">almost 2x</span> over the past 8 months.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer">
+                <span>Corporate Roadmap 2025-2026</span>
+                <span class="page-number">09</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide-container');
+
+        function showSlide(index) {
+            if (index < 0) index = 0;
+            if (index >= slides.length) index = slides.length - 1;
+            
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        function resizeSlide() {
+            const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+            slides.forEach(slide => {
+                slide.style.transform = `scale(${scale})`;
+            });
+        }
+        
+        window.addEventListener('resize', resizeSlide);
+        document.addEventListener('DOMContentLoaded', resizeSlide);
+    </script>
+</body>
+</html>
